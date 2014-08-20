@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Bad Ass Customer Interviews...Live! | Customer Development Labs</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Optional theme -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+                <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+        <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+
+        <!-- Bootstrap -->
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+        <!-- Firepad -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
+
+        <!-- Firechat -->
+        <link rel="stylesheet" href="firechat/firechat-default.css" />
+        <script src="firechat/firechat-default.js"></script>
+
+        <!-- BootstrapValidator -->
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+
+    </head>
+
+    <body>
+
+<div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-horizontal" id="welcomeForm">
+        <div class="modal-header">
+          <h2 class="modal-title" id="myModalLabel">Welcome to <b>Customer Interviews...Live<b>!</h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <h4>What's your name?</h4>
+              <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="Just yo' first name">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Let's go!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+      <script>
+        $(document).ready(function() {
+          init();
+        });
+
+        function init() {
+          initModal();
+        }
+
+        function initModal() {
+          $('#welcomeForm').bootstrapValidator({
+              message: 'This value is not valid',
+              feedbackIcons: {
+                  valid: 'glyphicon glyphicon-ok',
+                  invalid: 'glyphicon glyphicon-remove',
+                  validating: 'glyphicon glyphicon-refresh'
+              },
+              fields: {
+                  firstName: {
+                      message: "That's not your name",
+                      validators: {
+                          notEmpty: {
+                              message: 'We need your name'
+                          },
+                          stringLength: {
+                              min: 2,
+                              max: 20,
+                              message: 'We can do names between 2 and 20 characters'
+                          }
+                      }
+                  }
+              }
+          });
+
+          $('#welcomeModal').modal({
+            keyboard: false,
+            backdrop: 'static'
+          });
+        }
+        </script>
+    </body>
+
+</html>

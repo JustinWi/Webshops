@@ -1,0 +1,404 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
+  <!-- Download from https://github.com/firebase/Firechat -->
+  <link rel="stylesheet" href="firechat/firechat-default.css" />
+  <script src="firechat/firechat-default.js"></script>
+  <style>
+    .firechatUI {
+      height: 475px;
+      max-width: 325px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      margin: 50px auto;
+      text-align: center;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      -webkit-box-shadow: 0 5px 25px #666;
+      -moz-box-shadow: 0 5px 25px #666;
+      box-shadow: 0 5px 25px #666;
+    }
+  </style>
+</head>
+
+<!--
+  Example: Anonymous Authentication
+
+  This example uses Firebase Simple Login to create 'anonymous' user sessions in Firebase,
+  meaning that user credentials are not required, though a user has a valid Firebase
+  authentication token and security rules still apply.
+
+  Requirements: in order to use this example with your own Firebase, you'll need to do the following:
+    1. Apply the security rules at https://github.com/firebase/firechat/blob/master/rules.json
+    2. Enable the 'Anonymous' authentication provider in Forge
+    3. Update the URL below to reference your Firebase
+    4. Update the room id for auto-entry with a public room you have created
+ -->
+<body>
+  <div id="private-firechat-wrapper" class="firechatUI">private</div>
+  <div id="public-firechat-wrapper" class="firechatUI">public</div>
+  <script type='text/javascript'>
+    var firebaseRoot = "https://cdlwebshops.firebaseio.com";
+
+    //var privateChatRef = new Firebase(firebaseRoot + "/privateChat");
+    var publicChatRef = new Firebase(firebaseRoot);
+    var attendeesRef = new Firebase(firebaseRoot + "/attendees");
+    var soloRef = new Firebase(firebaseRoot + "/solos");
+    var partnershipsRef = new Firebase(firebaseRoot + "/partnerships");
+
+    //var privateChat = new FirechatUI(privateChatRef, document.getElementById("private-firechat-wrapper"));
+    var privateChat = null;
+    var publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"));
+
+    var me;
+
+    init();
+
+    function init() {
+      logInToChat(publicChatRef, publicChat, '-JUbqhsuzS2kFLa183lK', true);
+      //logInToChat(privateChatRef, privateChat);
+    }
+
+    function logInToChat(chatRef, chatUI, roomId, getPartner) {
+      var simpleLogin = new FirebaseSimpleLogin(chatRef, function(err, user) {
+        if (user) {
+          me = user;
+          chatUI.setUser(user.id, 'Hey ' + user.id.substr(0, 8));
+
+          if (roomId != null) {
+            setTimeout(function() {
+              chatUI._chat.enterRoom(roomId);
+            }, 500);
+          }
+
+          if (getPartner) {
+            searchForPartner(user);
+          }
+
+        } else {
+          simpleLogin.login('anonymous', {
+            rememberMe: true
+          });
+        }
+      });
+    }
+
+    function getPrivateChat() {
+      if (privateChat == null) {
+        //privateChat = new FirechatUI(publicChatRef, document.getElementById("private-firechat-wrapper"));
+      }
+
+      return publicChat;
+    }
+
+    function joinPartnership(user, partnership) {
+      user.partnership = partnership;
+      attendeesRef.child(user.id).update(user);
+
+      // add firepads
+      // join chat room
+      partnershipsRef.child(partnership).on('value', function(partSnap) {
+        var part = partSnap.val();
+
+        if (part == null) {
+          console.log("Room isn't ready. Will try again.");
+          return;
+        }
+
+        console.log("Entering our partner chat room: " + part.room);
+        //publicChat._chat.enterRoom(part.room);
+        getPrivateChat()._chat.enterRoom(part.room);
+      });
+    }
+
+    function joinSoloList(user) {
+      soloRef.child(user.id).setWithPriority(user, 1);
+      console.log("Added myself to the solo list.");
+
+      //soloRef.child(user.id).on('child_changed', function(soloSnap) {
+      soloRef.on('child_changed', function(soloSnap) {
+        var solo = soloSnap.val();
+
+        if (solo.id != user.id) {
+          console.log("Someone's solo changed");
+          return;
+        }
+
+        console.log("Our solo changed...");
+
+        if (solo.partnership == null) {
+          console.log("but no one added a partnership. Not sure what's up.");
+        }
+        else {
+          console.log("and we have a new partnership!");
+
+          soloRef.child(user.id).remove(function(error) {
+            if (error) {
+              console.log("Error removing myself from the solo list", error);
+            }
+            else {
+              console.log("Successfully removed myself from the solo list", error);
+            }
+          });
+
+          joinPartnership(user, solo.partnership);
+        }
+      });
+    }
+
+    function partnerWithFirstSolo(user, attemptNum) {
+      if (attemptNum != null) {
+        console.log("This is attempt #" + (attemptNum + 1) + " to find a partner on the solo list.");
+      }
+
+      var firstSolo = soloRef.startAt().limit(1);
+
+      firstSolo.once('value', function(solosSnap) {
+        // Are there any solos?
+
+        var solos = solosSnap.val();
+
+        if (solos == null) {
+          console.log('There are no available solos.');
+          joinSoloList(user);
+          return;
+        }
+
+        firstSolo.once('child_added', function(soloSnap) {
+          // iterate the solos
+          var solo = soloSnap.val();
+
+          soloRef.child(solo.id).transaction(function(currentData) {
+            if (currentData == null) {
+              // This is just an inconsistent state. Keep going.
+              return null;
+            }
+
+            if (currentData.partnership == null) {
+              // let's make a baby!
+              var partnership;
+
+              if (user.id.localeCompare(solo.id) < 0) {
+                partnership = user.id + solo.id;
+              }
+              else {
+                partnership = solo.id + user.id;
+              }
+
+              user.partnership = partnership;
+              currentData.partnership = partnership;
+
+              return currentData;
+            }
+
+            // user already has a partnership, let's get out of here
+            // not returning anything so we can retry on the solo list
+          }, function(error, committed, snapshot) {
+            if (error != null) {
+              console.log('Transaction failed abnormally!', error);
+            }
+            else if (!committed) {
+              console.log("This solo is no longer solo!");
+
+              // There were solos available, but we had a conflict trying to partner with one
+              // Wait a bit and try again
+              var MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO = 5;
+              var attempt = attemptNum == null ? 0 : attemptNum;
+
+              if (attempt >= MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO) {
+                console.log("Exceeded max # of attempts to find a partner on the solo list. Skipping the solo search");
+
+                joinSoloList(user);
+              }
+              else {
+                setTimeout(partnerWithFirstSolo(user, ++attempt), 500);
+                return;
+              }
+            }
+            else {
+              console.log('Successfully claimed this solo');
+
+              getPrivateChat()._chat.createRoom(user.partnership, 'private', function(roomId) {
+                console.log('Created our partnership chat room');
+                partnershipsRef.child(user.partnership).update({"room": roomId});
+
+                joinPartnership(user, user.partnership);
+              });
+            }
+          }, true);
+        });
+
+      });
+    }
+
+    function searchForSolos(user) {
+      // Make sure we're not on the solo list
+      soloRef.child(user.id).transaction(function(currentData) {
+
+        // Always return null because we want off this list
+        return null;
+
+      }, function(error, committed, snapshot) {
+        if (error != null) {
+          console.log('Transaction failed abnormally!', error);
+          return;
+        }
+        else if (!committed) {
+          console.log("I wasn't on the solo list. Proceed as planned.");
+        }
+        else {
+          console.log('Successfully removed myself from the solo list');
+        }
+
+        partnerWithFirstSolo(user);
+      }, true);
+    }
+
+    function checkAttendeeList(user) {
+      attendeesRef.child(user.id).once('value', function(attendeeSnap) {
+        var attendee = attendeeSnap.val();
+
+        if (attendee == null) {
+          console.log("I am not on the attendee list. Let's add me!");
+
+          attendeesRef.child(user.id).set(user);
+        }
+        else if (attendee.partnership != null) {
+          console.log("I already have a partnership: " + attendee.partnership);
+
+          partnerFound = true;
+          joinPartnership(user, attendee.partnership);
+          return;
+        }
+        else {
+          console.log("I am an attendee without a partnership");
+        }
+
+        searchForSolos(user);
+      });
+    }
+
+    function searchForPartner(user) {
+      console.log("My user id is: " + user.id);
+
+      checkAttendeeList(user);
+    }
+
+      //var partneredRef = new Firebase(firebaseRoot + "/partnered/" + user.id);
+      // if (partneredRef != null && partneredRef.val() != null && partneredRef.val().partnership != null) {
+      //     console.log("I already have a partner: " + partneredRef.val().partnership);
+      //
+      //     joinPartnership(partneredRef.val().partnership);
+      //     return;
+      // }
+      // console.log("I don't have a partner yet. Let's get one!");
+
+
+
+
+
+
+    //   if (partnerFound) {
+    //     console.log('I gotta partner. Time to join her.');
+    //     joinPartnership(user, partnership);
+    //
+    //     return;
+    //   }
+    //
+    //   // No partner found
+    //   if (solosAvailable) {
+    //   }
+    //   else {
+    //
+    //   }
+    // }
+    //
+    //
+      // usersRef.once('value', function(users) {
+      //   if (users != null && users.val() != null) {
+      //     var partnerFound = false;
+      //
+      //     users.forEach(function(userRef) {
+      //       var potentialPartner = userRef.val();
+      //       console.log("Will user " + potentialPartner.id + " be my partner?");
+      //
+      //       if (potentialPartner.partner == null && potentialPartner.id != user.id) {
+      //         console.log('User "' + potentialPartner.id + '" does not have a partner');
+      //
+      //         potentialPartner.partner = user.id;
+      //         usersRef.child(potentialPartner.id).transaction(function(currentData) {
+      //           if (currentData.partner == null) {
+      //             console.log('No partner found. That is good news.');
+      //             return potentialPartner;
+      //           }
+      //         }, function(error, committed, snapshot) {
+      //           if (error != null) {
+      //             console.log('Transaction failed abnormally!', error);
+      //           } else if (!committed) {
+      //             console.log('We aborted the transaction because this user already has a partner. Keep going.');
+      //           } else {
+      //             console.log('Successfully claimed this partner!');
+      //
+      //             user.partner = potentialPartner.id;
+      //             partnerFound = true;
+      //
+      //             var usersRef2 = new Firebase("https://cdlwebshops.firebaseio.com/attendees/");
+      //             usersRef2.child(user.id).transaction(function(currentData2) {
+      //                 if (currentData2.partner == null) {
+      //                   console.log('I do not have a partner. That is good news.');
+      //                   return user;
+      //                 }
+      //               }, function(error, committed, snapshot) {
+      //                   if (error != null) {
+      //                     console.log('Transaction failed abnormally!', error);
+      //                   } else if (!committed) {
+      //                     console.log('I already have a partner! Let my previous potential partner go!');
+      //
+      //                     potentialPartner.partner = null;
+      //
+      //                     usersRef.child(potentialPartner.id).transaction(function(currentData) {
+      //                       if (currentData.partner == user.id) {
+      //                         console.log('Disolving our partnership');
+      //                         return potentialPartner;
+      //                       }
+      //                     }, function(error, committed, snapshot) {
+      //                       if (error != null) {
+      //                         console.log('Transaction failed abnormally!', error);
+      //                       } else if (!committed) {
+      //                         console.log('Someone else claimed the partnership. Nothing to worry about now.');
+      //                       } else {
+      //                         console.log('Successfully disolved a mismatched partnership');
+      //                       }
+      //                     });
+      //                   } else {
+      //                     console.log('Successfully claimed this partner!');
+      //                   }
+      //               });
+      //           }
+      //
+      //           console.log("Partner's final data: ", snapshot.val());
+      //         });
+      //       }
+      //
+      //       if (partnerFound) {
+      //         // stop iterating users
+      //         return true;
+      //       }
+      //     });
+      //   }
+
+      //   // Save this user's state. If a partner was found, it'll be noted.
+      //   // If one wasn't, this user will be discoverable by a future partner
+      //   usersRef.child(user.id).set(user);
+      // });
+    // }
+  </script>
+</body>
+</html>

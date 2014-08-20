@@ -1,0 +1,122 @@
+<!doctype html>
+<!-- See http://www.firepad.io/docs/ for detailed embedding docs. -->
+<html>
+
+<head>
+  <title>Bad Ass Customer Interviews...Live! | Customer Development Labs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+
+  <!-- CodeMirror -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+  <!-- Firepad -->
+  <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+  <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
+
+  <style type="text/css">
+      body {
+          padding-top: 20px;
+          padding-bottom: 20px;
+      }
+
+      .fpad {
+        height: 300px;
+      }
+  </style>
+
+  <style>
+    html { height: 100%; }
+    body { margin: 0; height: 100%; position: relative; }
+      /* Height / width / positioning can be customized for your use case.
+         For demo purposes, we make firepad fill the entire browser. */
+    #firepad-container {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+
+</head>
+
+<body>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <p>Welcome to...</p>
+            <center>
+                <h1>Bad Ass Customer Interviews...Live!</h1>
+            </center>
+            <p style="float:right">...by <a href="http://customerdevlabs.com" target="_blank">Customer Development Labs</a></p><!-- <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>        -->
+        </div>
+    </div>
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-lg-8">
+                <h2>Video</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+                <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <h2>Word Cloud</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+                <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Interview Questions</h2>
+                This notepad is shared with your Workshop Partner. <br/>
+                One of you should use it to write down the questions Justin asks the customer he interviews.
+                <div id="questionsPad" class="fpad"></div>
+            </div>
+            <div class="col-lg-6">
+                <h2>Interview Responses</h2>
+                <!--<div id="responsesPad" class="fpad"></div>-->
+                <div id="firepad-container"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Partner Chat</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+                <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+            </div>
+            <div class="col-lg-6">
+                <h2>Group Chat</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+                <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+            </div>
+        </div><hr>
+        <footer>
+            <p>&copy; Company 2013</p>
+        </footer>
+    </div><!-- /container -->
+
+    <script>
+      function init() {
+        //// Initialize Firebase.
+
+        var firepadRef = new Firebase('https://cdlwebshops.firebaseio.com/firepads/2');
+
+        //// Create CodeMirror (with lineWrapping on).
+        var codeMirror = CodeMirror(document.getElementById('firepad-container'), { lineWrapping: true });
+
+        //// Create Firepad (with rich text toolbar and shortcuts enabled).
+        var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+            { richTextToolbar: false, richTextShortcuts: true });
+      }
+
+      init();
+    </script>
+
+  </body>
+</html>

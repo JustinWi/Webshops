@@ -1,0 +1,499 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Bad Ass Customer Interviews...Live! | Customer Development Labs</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+        <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+
+        <!-- Bootstrap -->
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+        <!-- Firepad -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
+
+        <!-- Firechat -->
+        <link rel="stylesheet" href="firechat/firechat-default.css" />
+        <script src="firechat/firechat-default.js"></script>
+
+        <!-- BootstrapValidator -->
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+        <style type="text/css">
+            body {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            .fpad {
+              height: 300px;
+              margin-top: 10px;
+            }
+
+            .interviewRow {
+              background-color: #eee;
+              /*padding: 20px;*/
+              padding-top: 0px;
+            }
+
+            #firepad-container {
+              /*width: 300px;*/
+              height: 250px;
+            }
+
+            .firechatUI {
+              height: 475px;
+              /*max-width: 325px;*/
+              padding: 10px;
+              border: 1px solid #ccc;
+              background-color: #fff;
+              margin: 50px auto;
+              text-align: center;
+              -webkit-border-radius: 4px;
+              -moz-border-radius: 4px;
+              border-radius: 4px;
+              -webkit-box-shadow: 0 5px 25px #666;
+              -moz-box-shadow: 0 5px 25px #666;
+              box-shadow: 0 5px 25px #666;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form class="form-horizontal" id="welcomeForm">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="myModalLabel">Welcome to <b>Customer Interviews...Live</b>!</h2>
+                </div>
+                <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
+                    <div class="form-group">
+                      <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Let's go!</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <p>Welcome to...</p>
+                <center>
+                    <h1>Bad Ass Customer Interviews...Live!</h1>
+                </center>
+                <p style="float:right">By <a href="http://customerdevlabs.com" target="_blank">Customer Development Labs</a></p><!-- <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>        -->
+            </div>
+        </div>
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Live Stream</h2>
+                    <iframe width="100%" height="720px" src="//www.youtube.com/embed/H3PG41gAYJQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="row" style="margin-top:30px">
+                <div class="col-sm-12">
+                  <h2><span id="partnerName">Looking for a partner for you...</span></h2>
+                    <!-- <div class="alert alert-info" role="alert">
+                    </div> -->
+                </div>
+<!--                <div class="col-sm-4">
+                    <input type="button" class="btn btn-default">Get a New Partner</input>
+                </div>-->
+            </div>
+            <div class="row container well well-small" style="margin-top:30px">
+                <div class="col-sm-6">
+                    <h2>Interview Questions</h2>
+                    This notepad is <b>shared</b> with your Workshop Partner.
+                    <div id="questionsPad" class="fpad"></div>
+                </div>
+                <div class="col-sm-6">
+                    <h2>Interview Responses</h2>
+                    This notepad is <b>shared</b> with your Workshop Partner.
+                    <div id="responsesPad" class="fpad"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2><a name="chat"></a>Chat with your Partner or Everyone</h2>
+                    <p>Use the <b>tabs</b> below to switch between chatting with your <b>partner</b> and <b>everyone in the workshop</b>.</p>
+                    <div id="public-firechat-wrapper" class="firechatUI"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Want a <b>faster</b>, <b>better</b> Customer Development?</h2>
+                    <center>
+                        <h3>Join your <a href="http://cat.customerdevlabs.com" target="_blank">Customer Acquisition Team</a>!</h3>
+                        <p>Weekly, collaborative, Lean Startup meetings that provide:</p>
+                        <a href="http://cat.customerdevlabs.com" target="_blank"><img src="http://customerdevlabs.com/wp-content/uploads/2014/06/features.png" /></a>
+                        <h3>If you like today's workshop, I promise, you'll love <a href="http://cat.customerdevlabs.com" target="_blank">Customer Acquisition Teams</a>.</h3>
+                        <p>They were made for founders practicing Customer Development, just like you.</p>
+                        <h3>Deadline: <a href="http://cat.customerdevlabs.com" target="_blank">Aug. 29th</a></h3>
+                    </center>
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>&copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2014 - Powered by <a href="http://firebase.com" target="_blank">Firebase</a></p>
+            </footer>
+        </div><!-- /container -->
+      </div>
+
+      <script>
+        var firebaseRoot = "https://cdlwebshops.firebaseio.com";
+
+        var firepadRef = new Firebase(firebaseRoot + "/firepads");
+        var publicChatRef = new Firebase(firebaseRoot);
+        var attendeesRef = new Firebase(firebaseRoot + "/attendees");
+        var soloRef = new Firebase(firebaseRoot + "/solos");
+        var partnershipsRef = new Firebase(firebaseRoot + "/partnerships");
+
+        var publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"));
+
+        var firstName = null;
+
+        $(document).ready(function() {
+          init();
+        });
+
+        function init() {
+          firstName = getParameterByName('firstName');
+
+          if (firstName == null) {
+            initModal();
+            return;
+          }
+
+          //initPad('https://cdlwebshops.firebaseio.com/firepads/q1', 'questionsPad', "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you <b>and your partner</b> have read it. Ask she/he's finished in the chat below!");
+          //initPad('https://cdlwebshops.firebaseio.com/firepads/r1', 'responsesPad', "Work with your partner to take <b>extensive notes</b> on the customer's resposes.<p/><br/><p/>(Delete this too :)");
+
+          logInToChat(publicChatRef, publicChat, '-JUbqhsuzS2kFLa183lK', true);
+        }
+
+        function initModal() {
+          $('#welcomeForm').bootstrapValidator({
+              message: 'This value is not valid',
+              feedbackIcons: {
+                  valid: 'glyphicon glyphicon-ok',
+                  invalid: 'glyphicon glyphicon-remove',
+                  validating: 'glyphicon glyphicon-refresh'
+              },
+              fields: {
+                  firstName: {
+                      message: "That's not your name",
+                      validators: {
+                          notEmpty: {
+                              message: 'We need your name'
+                          },
+                          stringLength: {
+                              min: 2,
+                              max: 20,
+                              message: 'We can do names between 2 and 20 characters'
+                          }
+                      }
+                  }
+              }
+          });
+
+          $( "#welcomeForm" ).submit(function(event) {
+            firstName = $("#attendeeName").val();
+          });
+
+          $('#welcomeModal').modal({
+            keyboard: false,
+            backdrop: 'static'
+          });
+        }
+
+        function initPad(url, div, msg) {
+          // Create CodeMirror (with lineWrapping on).
+          var codeMirror = CodeMirror(document.getElementById(div), { lineWrapping: true });
+
+          // Create Firepad (with rich text toolbar and shortcuts enabled).
+          var firepad = Firepad.fromCodeMirror(firepadRef.child(url), codeMirror,
+              { richTextToolbar: false, richTextShortcuts: true });
+
+          firepad.on('ready', function() {
+            if (firepad.isHistoryEmpty()) {
+              firepad.setHtml(msg);
+            }
+          });
+        }
+
+        function logInToChat(chatRef, chatUI, roomId, getPartner) {
+          var simpleLogin = new FirebaseSimpleLogin(chatRef, function(err, user) {
+            if (user) {
+              user.firstName = firstName;
+              chatUI.setUser(user.id, firstName);
+
+              if (roomId != null) {
+                setTimeout(function() {
+                  chatUI._chat.enterRoom(roomId);
+                }, 500);
+              }
+
+              if (getPartner) {
+                searchForPartner(user);
+              }
+
+            } else {
+              simpleLogin.login('anonymous', {
+                rememberMe: true
+              });
+            }
+          });
+        }
+
+        function loadFirepads(user, addDefaultText) {
+          initPad(user.questionsPad, 'questionsPad', addDefaultText ? "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you <b>and your partner</b> have read it. Ask she/he's finished in the chat below!" : "");
+          initPad(user.responsesPad, 'responsesPad', addDefaultText ? "Work with your partner to take <b>extensive notes</b> on the customer's resposes.<p/><br/><p/>(Delete this too :)"  : "");
+        }
+
+        function joinPartnership(user, partnership) {
+          user.partnership = partnership;
+          attendeesRef.child(user.id).update(user);
+
+          // join chat room
+          partnershipsRef.child(partnership).on('value', function(partSnap) {
+            var part = partSnap.val();
+
+            if (part == null) {
+              console.log("Room isn't ready. Will try again.");
+              return;
+            }
+
+            console.log("Entering our partner chat room: " + part.room);
+            publicChat._chat.enterRoom(part.room);
+          });
+
+          // intro partners
+          $("#partnerName").html("Hey " + user.firstName + ", say hi to your workshop partner...<b><a href='#chat'>" + user.partnerName + "</a></b>!");
+        }
+
+        function joinSoloList(user) {
+          soloRef.child(user.id).setWithPriority(user, 1);
+          console.log("Added myself to the solo list.");
+
+          // since I'm the first to the meeting, use my id to key the firepads
+          // my partner will hook into these pads
+          user.questionsPad = "q-" + user.id;
+          user.responsesPad = "r-" + user.id;
+
+          // store my pad addresses
+          attendeesRef.child(user.id).update(user);
+
+          loadFirepads(user, true);
+
+          soloRef.on('child_changed', function(soloSnap) {
+            var solo = soloSnap.val();
+
+            if (solo.id != user.id) {
+              console.log("Someone's solo changed");
+              return;
+            }
+
+            console.log("Our solo changed...");
+
+            if (solo.partnership == null) {
+              console.log("but no one added a partnership. Not sure what's up.");
+            }
+            else {
+              console.log("and we have a new partnership!");
+
+              soloRef.child(user.id).remove(function(error) {
+                if (error) {
+                  console.log("Error removing myself from the solo list", error);
+                }
+                else {
+                  console.log("Successfully removed myself from the solo list", error);
+                }
+              });
+
+              user.partnerName = solo.partnerName;
+
+              joinPartnership(user, solo.partnership);
+            }
+          });
+        }
+
+        function partnerWithFirstSolo(user, attemptNum) {
+          if (attemptNum != null) {
+            console.log("This is attempt #" + (attemptNum + 1) + " to find a partner on the solo list.");
+          }
+
+          var firstSolo = soloRef.startAt().limit(1);
+
+          firstSolo.once('value', function(solosSnap) {
+            // Are there any solos?
+
+            var solos = solosSnap.val();
+
+            if (solos == null) {
+              console.log('There are no available solos.');
+              joinSoloList(user);
+              return;
+            }
+
+            firstSolo.once('child_added', function(soloSnap) {
+              // iterate the solos
+              var solo = soloSnap.val();
+
+              soloRef.child(solo.id).transaction(function(currentData) {
+                if (currentData == null) {
+                  // This is just an inconsistent state. Keep going.
+                  return null;
+                }
+
+                if (currentData.partnership == null) {
+                  // let's make a baby!
+                  var partnership;
+
+                  if (user.id.localeCompare(solo.id) < 0) {
+                    partnership = user.id + solo.id;
+                  }
+                  else {
+                    partnership = solo.id + user.id;
+                  }
+
+                  user.partnership = partnership;
+                  user.partnerName = currentData.firstName;
+                  user.questionsPad = "q-" + solo.id;
+                  user.responsesPad = "r-" + solo.id;
+
+                  currentData.partnership = partnership;
+                  currentData.partnerName = user.firstName;
+
+                  return currentData;
+                }
+
+                // user already has a partnership, let's get out of here
+                // not returning anything so we can retry on the solo list
+              }, function(error, committed, snapshot) {
+                if (error != null) {
+                  console.log('Transaction failed abnormally!', error);
+                }
+                else if (!committed) {
+                  console.log("This solo is no longer solo!");
+
+                  // There were solos available, but we had a conflict trying to partner with one
+                  // Wait a bit and try again
+                  var MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO = 5;
+                  var attempt = attemptNum == null ? 0 : attemptNum;
+
+                  if (attempt >= MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO) {
+                    console.log("Exceeded max # of attempts to find a partner on the solo list. Skipping the solo search");
+
+                    joinSoloList(user);
+                  }
+                  else {
+                    setTimeout(partnerWithFirstSolo(user, ++attempt), 500);
+                    return;
+                  }
+                }
+                else {
+                  console.log('Successfully claimed this solo');
+
+                  loadFirepads(user, false);
+
+                  publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function(roomId) {
+                    console.log('Created our partnership chat room');
+                    partnershipsRef.child(user.partnership).update({"room": roomId});
+
+                    joinPartnership(user, user.partnership);
+                  });
+                }
+              }, true);
+            });
+
+          });
+        }
+
+        function searchForSolos(user) {
+          // Make sure we're not on the solo list
+          soloRef.child(user.id).transaction(function(currentData) {
+
+            // Always return null because we want off this list
+            return null;
+
+          }, function(error, committed, snapshot) {
+            if (error != null) {
+              console.log('Transaction failed abnormally!', error);
+              return;
+            }
+            else if (!committed) {
+              console.log("I wasn't on the solo list. Proceed as planned.");
+            }
+            else {
+              console.log('Successfully removed myself from the solo list');
+            }
+
+            partnerWithFirstSolo(user);
+          }, true);
+        }
+
+        function checkAttendeeList(user) {
+          attendeesRef.child(user.id).once('value', function(attendeeSnap) {
+            var attendee = attendeeSnap.val();
+
+            if (attendee == null) {
+              console.log("I am not on the attendee list. Let's add me!");
+
+              attendeesRef.child(user.id).set(user);
+            }
+            else if (attendee.partnership != null) {
+              console.log("I already have a partnership: " + attendee.partnership);
+
+              partnerFound = true;
+              loadFirepads(attendee);
+              joinPartnership(attendee, attendee.partnership);
+              return;
+            }
+            else {
+              console.log("I am an attendee without a partnership");
+            }
+
+            searchForSolos(user);
+          });
+        }
+
+        function searchForPartner(user) {
+          console.log("My user id is: " + user.id);
+
+          checkAttendeeList(user);
+        }
+
+        function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+              results = regex.exec(location.search);
+          return results == null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+      </script>
+
+    </body>
+
+</html>
