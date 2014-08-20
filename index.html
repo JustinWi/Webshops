@@ -188,7 +188,7 @@
             return;
           }
 
-          //initPad('https://cdlwebshops.firebaseio.com/firepads/q1', 'questionsPad', "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you <b>and your partner</b> have read it. Ask she/he's finished in the chat below!");
+          //initPad('https://cdlwebshops.firebaseio.com/firepads/q1', 'questionsPad', "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you <b>and your partner</b> have read it. Ask if she/he's finished in the chat below!");
           //initPad('https://cdlwebshops.firebaseio.com/firepads/r1', 'responsesPad', "Work with your partner to take <b>extensive notes</b> on the customer's resposes.<p/><br/><p/>(Delete this too :)");
 
           logInToChat(publicChatRef, publicChat, '-JUbqhsuzS2kFLa183lK', true);
@@ -269,7 +269,7 @@
         }
 
         function loadFirepads(user, addDefaultText) {
-          initPad(user.questionsPad, 'questionsPad', addDefaultText ? "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you <b>and your partner</b> have read it. Ask she/he's finished in the chat below!" : "");
+          initPad(user.questionsPad, 'questionsPad', addDefaultText ? "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you <b>and your partner</b> have read it. Ask if she/he's finished in the chat below!" : "");
           initPad(user.responsesPad, 'responsesPad', addDefaultText ? "Work with your partner to take <b>extensive notes</b> on the customer's resposes.<p/><br/><p/>(Delete this too :)"  : "");
         }
 
