@@ -153,6 +153,37 @@
                         <h3>If you like today's workshop, I promise, you'll love <a href="http://cat.customerdevlabs.com" target="_blank">Customer Acquisition Teams</a>.</h3>
                         <p>They were made for founders practicing Customer Development, just like you.</p>
                         <h3>Deadline: <a href="http://cat.customerdevlabs.com" target="_blank">Aug. 29th</a></h3>
+
+
+                        <div id="cat-carousel" class="carousel slide" data-ride="carousel">
+                          <!-- Indicators -->
+                          <ol class="carousel-indicators">
+                            <li data-target="#cat-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#cat-carousel" data-slide-to="1"></li>
+                            <li data-target="#cat-carousel" data-slide-to="2"></li>
+                          </ol>
+
+                          <!-- Wrapper for slides -->
+                          <div class="carousel-inner">
+                            <div class="item active">
+                              <a href="http://cat.customerdevlabs.com" target="_blank"><img src="http://i0.wp.com/customerdevlabs.com/wp-content/uploads/2014/06/terry_testimonial.png" alt="I've gotten more done with my CAT team in the last 3 weeks, than I have in the last year! -Terry W."></a>
+                            </div>
+                            <div class="item">
+                              <a href="http://cat.customerdevlabs.com" target="_blank"><img src="http://i0.wp.com/customerdevlabs.com/wp-content/uploads/2014/06/stuart_testimonial.png?resize=888%2C362" alt="I was feeling down before my CAT meeting. I was having trouble sleeping. I talked to my CAT and it renewed my entrepreneurial spirit. It reminded me what I love about this whole struggle."></a>
+                            </div>
+                            <div class="item">
+                              <a href="http://cat.customerdevlabs.com" target="_blank"><img src="http://i1.wp.com/customerdevlabs.com/wp-content/uploads/2014/06/yazin_testimonial.png?resize=886%2C396" alt="We're hooked now and will suffer withdrawal symptoms."></a>
+                            </div>
+                          </div>
+
+                          <!-- Controls -->
+                          <a class="left carousel-control" href="#cat-carousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                          </a>
+                          <a class="right carousel-control" href="#cat-carousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                          </a>
+                        </div>
                     </center>
                 </div>
             </div>
@@ -182,6 +213,10 @@
 
         function init() {
           firstName = getParameterByName('firstName');
+
+          $('.carousel').carousel({
+            interval: 5000
+          });
 
           if (firstName == null) {
             initModal();
