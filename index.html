@@ -205,6 +205,8 @@
 
         var publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"));
 
+        publicChat.maxLengthMessage = 1024;
+
         var firstName = null;
 
         $(document).ready(function() {
@@ -379,8 +381,13 @@
           if (attemptNum != null) {
             console.log("This is attempt #" + (attemptNum + 1) + " to find a partner on the solo list.");
           }
+          else {
+            console.log("This is attempt #1 to find a partner on the solo list.");
+          }
 
-          var firstSolo = soloRef.startAt().limit(1);
+          //var firstSolo = soloRef.startAt().limit(1);
+          var firstSolo = soloRef.startAt();
+          var potentialPartnerFound = false;
 
           firstSolo.once('value', function(solosSnap) {
             // Are there any solos?
@@ -393,75 +400,86 @@
               return;
             }
 
-            firstSolo.once('child_added', function(soloSnap) {
-              // iterate the solos
+            console.log("Iterating solos...");
+            solosSnap.forEach(function(soloSnap) {
+              // iterate the solos looking for one without a partner
               var solo = soloSnap.val();
 
-              soloRef.child(solo.id).transaction(function(currentData) {
-                if (currentData == null) {
-                  // This is just an inconsistent state. Keep going.
-                  return null;
-                }
+              if (solo.partnership == null) {
+                // found one without a partner, let's see if we can claim it as ours
 
-                if (currentData.partnership == null) {
-                  // let's make a baby!
-                  var partnership;
+                soloRef.child(solo.id).transaction(function(currentData) {
+                  if (currentData == null) {
+                    // This is just an inconsistent state. Keep going.
+                    return null;
+                  }
 
-                  if (user.id.localeCompare(solo.id) < 0) {
-                    partnership = user.id + solo.id;
+                  if (currentData.partnership == null) {
+                    // let's make a baby!
+                    var partnership;
+
+                    if (user.id.localeCompare(solo.id) < 0) {
+                      partnership = user.id + solo.id;
+                    }
+                    else {
+                      partnership = solo.id + user.id;
+                    }
+
+                    user.partnership = partnership;
+                    user.partnerName = currentData.firstName;
+                    user.questionsPad = "q-" + solo.id;
+                    user.responsesPad = "r-" + solo.id;
+
+                    currentData.partnership = partnership;
+                    currentData.partnerName = user.firstName;
+
+                    return currentData;
                   }
                   else {
-                    partnership = solo.id + user.id;
+                    // user already has a partnership, let's look for the next solo
                   }
 
-                  user.partnership = partnership;
-                  user.partnerName = currentData.firstName;
-                  user.questionsPad = "q-" + solo.id;
-                  user.responsesPad = "r-" + solo.id;
+                }, function(error, committed, snapshot) {
+                  if (error != null) {
+                    console.log('Transaction failed abnormally!', error);
+                  }
+                  else if (!committed) {
+                    console.log("This solo is no longer solo!");
 
-                  currentData.partnership = partnership;
-                  currentData.partnerName = user.firstName;
+                    // There were solos available, but we had a conflict trying to partner with one
+                    // Wait a bit and try again
+                    var MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO = 5;
+                    var attempt = attemptNum == null ? 0 : attemptNum;
 
-                  return currentData;
-                }
+                    if (attempt >= MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO) {
+                      console.log("Exceeded max # of attempts to find a partner on the solo list. Skipping the solo search");
 
-                // user already has a partnership, let's get out of here
-                // not returning anything so we can retry on the solo list
-              }, function(error, committed, snapshot) {
-                if (error != null) {
-                  console.log('Transaction failed abnormally!', error);
-                }
-                else if (!committed) {
-                  console.log("This solo is no longer solo!");
-
-                  // There were solos available, but we had a conflict trying to partner with one
-                  // Wait a bit and try again
-                  var MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO = 5;
-                  var attempt = attemptNum == null ? 0 : attemptNum;
-
-                  if (attempt >= MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO) {
-                    console.log("Exceeded max # of attempts to find a partner on the solo list. Skipping the solo search");
-
-                    joinSoloList(user);
+                      joinSoloList(user);
+                    }
+                    else {
+                      setTimeout(partnerWithFirstSolo(user, ++attempt), 500);
+                      return;
+                    }
                   }
                   else {
-                    setTimeout(partnerWithFirstSolo(user, ++attempt), 500);
-                    return;
+                    console.log('Successfully claimed this solo');
+
+                    loadFirepads(user, false);
+
+                    publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function(roomId) {
+                      console.log('Created our partnership chat room');
+                      partnershipsRef.child(user.partnership).update({"room": roomId});
+
+                      joinPartnership(user, user.partnership);
+                    });
                   }
-                }
-                else {
-                  console.log('Successfully claimed this solo');
+                }, true);
 
-                  loadFirepads(user, false);
-
-                  publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function(roomId) {
-                    console.log('Created our partnership chat room');
-                    partnershipsRef.child(user.partnership).update({"room": roomId});
-
-                    joinPartnership(user, user.partnership);
-                  });
-                }
-              }, true);
+                return true;
+              }
+              else {
+                // This solo isn't solo anymore, move on to the next one
+              }
             });
 
           });
