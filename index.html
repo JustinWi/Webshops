@@ -210,6 +210,7 @@
         publicChat.maxLengthMessage = 1024;
 
         var firstName = null;
+        var lastSoloPriority = 0;
 
         $(document).ready(function() {
           init();
@@ -325,16 +326,8 @@
               return;
             }
 
-            // console.log("Entering our partner chat room: " + part.room);
-            // publicChat._chat.enterRoom(part.room);
-
-            publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function(roomId) {
-              console.log('Created our partnership chat room');
-              partnershipsRef.child(user.partnership).update({"room": roomId});
-
-              joinPartnership(user, user.partnership);
-            });
-
+            console.log("Entering our partner chat room: " + part.room);
+            publicChat._chat.enterRoom(part.room);
           });
 
           // intro partners
@@ -342,7 +335,7 @@
         }
 
         function joinSoloList(user) {
-          soloRef.child(user.id).setWithPriority(user, 1);
+          soloRef.child(user.id).setWithPriority(user, new Date().getTime());
           console.log("Added myself to the solo list.");
 
           // since I'm the first to the meeting, use my id to key the firepads
@@ -381,8 +374,14 @@
               });
 
               user.partnerName = solo.partnerName;
+              user.partnership = solo.partnership;
 
-              joinPartnership(user, solo.partnership);
+              publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function(roomId) {
+                console.log('Created our partnership chat room');
+                partnershipsRef.child(solo.partnership).update({"room": roomId});
+
+                joinPartnership(user, solo.partnership);
+              });
             }
           });
         }
@@ -392,7 +391,7 @@
             console.log("This is attempt #" + (attemptNum + 1) + " to find a partner on the solo list.");
           }
 
-          var firstSolo = soloRef.startAt().limit(1);
+          var firstSolo = soloRef.startAt(lastSoloPriority + 1).limit(1);
 
           firstSolo.once('value', function(solosSnap) {
             // Are there any solos?
@@ -408,6 +407,8 @@
             firstSolo.once('child_added', function(soloSnap) {
               // iterate the solos
               var solo = soloSnap.val();
+
+              lastSoloPriority = soloSnap.getPriority();
 
               soloRef.child(solo.id).transaction(function(currentData) {
                 if (currentData == null) {
@@ -448,7 +449,7 @@
 
                   // There were solos available, but we had a conflict trying to partner with one
                   // Wait a bit and try again
-                  var MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO = 5;
+                  var MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO = 100;
                   var attempt = attemptNum == null ? 0 : attemptNum;
 
                   if (attempt >= MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO) {
@@ -464,7 +465,8 @@
                 else {
                   console.log('Successfully claimed this solo');
 
-                  setTimeout(confirmPartnershipAccepted(), 3000);
+                  // Wait for potential partner to confirm our hookup
+                  setTimeout(function(){confirmPartnershipAccepted(user)}, 3000);
                 }
               }, true);
             });
@@ -472,8 +474,8 @@
           });
         }
 
-        function confirmPartnershipAccepted() {
-          partnershipsRef.child(user.partnership).on('once', function(partSnap) {
+        function confirmPartnershipAccepted(user) {
+          partnershipsRef.child(user.partnership).once('value', function(partSnap) {
             var part = partSnap.val();
 
             if (part == null) {
@@ -481,13 +483,18 @@
 
               var flakySolo = user.partnership.replace(user.id, "");
 
+              user.partnership = null;
+              user.partnerName = null;
+              user.questionsPad = null;
+              user.responsesPad = null;
+
               console.log("Removing flaky partner from solo list: " + flakySolo);
               soloRef.child(flakySolo).remove(function(error) {
                 if (error) {
                   console.log('Error removing flaky solo: ' + error);
                 } else {
                   console.log('Flaky solo removed. Looking for another partner.');
-
+                  searchForSolos(user);
                 }
               });
 
@@ -495,10 +502,12 @@
             }
 
             // Partnership was consummated!
-            console.log("Entering our partner chat room: " + part.room);
-            publicChat._chat.enterRoom(part.room);
+            // console.log("Entering our partner chat room: " + part.room);
+            // publicChat._chat.enterRoom(part.room);
 
             loadFirepads(user, false);
+
+            joinPartnership(user, user.partnership);
           });
         }
 
