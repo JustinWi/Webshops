@@ -1,4 +1,4 @@
-var firebaseRoot = "https://intense-fire-4297.firebaseio.com";
+var firebaseRoot = "https://cdlwebshops.firebaseio.com";
 
 var publicChatRef   = new Firebase(firebaseRoot);
 var firepadRef      = new Firebase(firebaseRoot + "/firepads");
