@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>CHAT4U</title>
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="emoji/style.css" rel="stylesheet" />
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+
+    <script src="bootstrap.min.js"></script>
+    <script src="bootbox.min.js"></script>
+</head>
+
+<body style="font-family:Verdana">
+    <div class="container" id="firechat-wrapper">
+        <div class="row" style="padding-top:40px;">
+            <br /><br />
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-info" type="button" id='btnSend' style="float: right">ASK</button>
+                        <div style="overflow: hidden; padding-right: .5em;">
+                            <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+                        </div>
+
+                        <div class="input-group"  style="display:none;">
+                                <h3>Value:</h3>
+                                <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      var firebaseRoot = "https://cdlwebshops.firebaseio.com";
+      var firebaseRef = new Firebase(firebaseRoot);
+      var questionsRef = new Firebase(firebaseRoot + "/questions");
+
+      var fbid = '';
+      var divdir = '';
+      var questionField;
+      var questionList;
+      var lastfid = '1';
+      var lastdir = 'L';
+      var newdir = 'L';
+      var authUserName = '';
+
+        $(document).ready( function() {
+          // REGISTER DOM ELEMENTS
+          questionField = $('#question-txt');
+          questionList = $('#example-questions');
+
+          //$("#firechat-wrapper").hide();
+
+          // LISTEN FOR KEYPRESS EVENT
+          questionField.keypress(function (e) {
+             if (e.keyCode == 13) {
+                  pushData();
+                  return false;
+              }
+          });
+
+          // prefer pop-ups, so we don't navigate away from the page
+          var simpleLogin = new FirebaseSimpleLogin(firebaseRef, function(err, user) {
+            if (user) {
+              $("#firechat-wrapper").show();
+              authUserName = "Justin";
+              fbid = user.id;
+
+              // Add a callback that is triggered for each chat question.
+              questionsRef.orderByChild('votes').on('value', function (allQuestionsSnapshot) {
+                  questionList.empty();
+
+                  allQuestionsSnapshot.forEach(function(snapshot) {
+
+                    //GET DATA
+                    var questionId = snapshot.key();
+                    var data = snapshot.val();
+                    var fbid_d = data.fbid;
+                    var username_d = data.name;
+                    var question_d = data.text;
+                    var dir_d = data.dir;
+                    var date_d = data.currentdate;
+                    var bgcolor_d = data.bgcolor;
+                    var votes_d = data.votes;
+
+                    divdir = "";
+
+                    //CREATE ELEMENTS question & SANITIZE TEXT
+                    var questionElement = $("<li class='media' f='" + fbid_d + "'>");
+                    var divmediabody = $("<div class='media-body'>");
+                    var divmedia = $("<div class='media'>");
+
+                    var a;
+                    if (fbid_d == fbid) {
+                      // This user submitted the question
+                      a = $("<a id='q-" + questionId + "' class='deleteButton' onClick='deleteQuestion(&quot;" + questionId + "&quot;);'>Delete</a>");
+                    }
+                    else {
+                      var voteText = data.voters && data.voters.hasOwnProperty(fbid) ? "Unvote" : "Vote";
+                      a = $("<a id='q-" + questionId + "' onClick='toggleVote(&quot;" + questionId + "&quot;);'>" + voteText + "</a>");
+                    }
+
+                    var voteCount = data.votes ? data.votes : 1;
+                    var votesElement = " <span style='float:right'>Votes: " + voteCount + "</span>";
+                    var userNameElement = " <span>From " + username_d + "</span>";
+                    var dateElement = " <span style='float:right'>" + date_d + "</span>";
+
+                    var divmediabody2 = $("<div class='media-body divTxtL' style='color:#FDFDFD; padding:5px'>");
+                    divmediabody2.css('background', "#83CDE6");
+                    questionElement.append(divmediabody);
+                    divmediabody.append(divmedia);
+                    divmedia.append(a);
+                    divmedia.append(votesElement);
+                    divmedia.append(divmediabody2);
+
+                    var usernamediv = $("<small class='text-muted'>");
+                    divmediabody2.html(question_d);
+
+                    divmediabody2.append(usernamediv);
+                    usernamediv.html("<br />" + userNameElement + dateElement);
+
+                    //ADD question
+                    questionList.prepend(questionElement);
+
+                  });
+              });
+
+            } else {
+              simpleLogin.login('anonymous', {
+                rememberMe: true
+              });
+            }
+          });
+
+          $("#btnSend").click(function () {
+              pushData();
+          });
+        });
+
+        function deleteQuestion(questionId) {
+          bootbox.confirm("Are you sure?", function(confirmed) {
+            if (confirmed) {
+              questionsRef.child(questionId).remove();
+            }
+          });
+        }
+
+        function toggleVote(questionId) {
+          questionsRef.child(questionId).transaction(function(currentData) {
+            var question = $('#q-' + questionId);
+
+            if (currentData.votes == null) {
+              currentData.votes = 1;
+            }
+
+            if (currentData.voters && currentData.voters.hasOwnProperty(fbid)) {
+              delete currentData.voters[fbid];
+
+              currentData.votes--;
+            }
+            else if (currentData.voters == null){
+              var newVoter = {};
+              newVoter[fbid] = true;
+
+              currentData.voters = newVoter;
+
+              currentData.votes++;
+            }
+            else {
+              currentData.voters[fbid] = true;
+              currentData.votes++;
+            }
+
+            return currentData;
+
+          }, function(error, committed, snapshot) {
+            if (error != null) {
+              console.log('Transaction failed abnormally!', error);
+            }
+            else if (!committed) {
+              console.log("Transaction was aborted by us.");
+            }
+            else {
+              console.log('Successfully voted');
+            }
+          }, true);
+        }
+
+        function pushData() {
+
+            //FIELD VALUES
+            var username = authUserName;
+            var question = $("#question-txt").val();
+            //Clientside Datetime
+            var cdate = new Date();
+
+            //***********************************************************
+            //Set current text question direction to push it to firebase.
+            //***********************************************************
+
+            var newQ = questionsRef.push({ name: username, text: question, fbid: fbid, currentdate: cdate.toLocaleString(), votes: 1 });
+
+            $("#question-txt").val('');
+
+        }
+
+
+    </script>
+</body>
+</html>
