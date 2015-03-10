@@ -14,7 +14,7 @@ var feedbackRef     = new Firebase(firebaseRoot + "/feedback");
 var loggedInUserId;
 var questionPad, responsePad;
 
-const PUBLIC_CHAT_ROOM_ID = '-Jjq8UELEwXO3DCHU170';
+const PUBLIC_CHAT_ROOM_ID = '-JjXjD6_LIzT4f5DS9jP';
 var publicChat;
 
 var firstName = null;
