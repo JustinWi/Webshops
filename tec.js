@@ -18,17 +18,21 @@ const PUBLIC_CHAT_ROOM_ID = '-JjXjD6_LIzT4f5DS9jP';
 var publicChat;
 
 var firstName = null;
+var studentNum = null;
+var studentCampus = null;
 var lastSoloPriority = 0;
 var lastQuestionAnswered;
 
 function init() {
   firstName = getParameterByName('firstName');
+  studentNum = getParameterByName('studentNum');
+  studentCampus = getParameterByName('studentCampus');
 
   $('.carousel').carousel({
     interval: 5000
   });
 
-  if (firstName == null) {
+  if (firstName == null || studentNum == null || studentCampus == null) {
     initModal();
     return;
   }
@@ -71,10 +75,26 @@ function init() {
   keepTabsOnTabs();
   setupInterviewScriptGenerator();
   setupFeedbackForm();
+  setupQuizzes();
+
+  setupiFrames();
 
   if (isSimpleMode()) {
     setupSimpleTabButtons();
   }
+}
+
+function setupiFrames() {
+  $("iframe[data-src*='.']").each(function () {
+    $(this).attr('src', $(this).attr('data-src'));
+  });
+}
+
+function setupQuizzes() {
+  // personalize each of the google form quizzes to include the student's number
+  $("iframe[data-src*='[studentNum]']").each(function () {
+    $(this).attr('data-src', $(this).attr('data-src').replace('[studentNum]', studentNum).replace('[studentCampus]', studentCampus));
+  });
 }
 
 function setupFeedbackForm() {
@@ -145,26 +165,36 @@ function isSimpleMode() {
   return document.URL.indexOf("simple.html") != -1;
 }
 
+function getExerciseName(obj) {
+  return $(obj).parents(".tabContent").attr("id").replace('TabContent', '');
+}
+
 function setupSimpleTabButtons() {
   $(".tabButtonGroup").show();
 
   $(".activeTabButton").click(function(obj) {
-    var exerciseName = $(this).parents(".tabContent").attr("id").replace('TabContent', '');
+    var exerciseName = getExerciseName(this);
 
     exercisesRef.child(exerciseName).update({show: true});
     exercisesRef.child("active").update({exercise: exerciseName});
   });
 
   $(".showTabButton").click(function(obj) {
-    var exerciseName = $(this).parents(".tabContent").attr("id").replace('TabContent', '');
+    var exerciseName = getExerciseName(this);
 
     exercisesRef.child(exerciseName).update({show: true});
   });
 
   $(".hideTabButton").click(function(obj) {
-    var exerciseName = $(this).parents(".tabContent").attr("id").replace('TabContent', '');
+    var exerciseName = getExerciseName(this);
 
     exercisesRef.child(exerciseName).update({show: false});
+  });
+
+  $(".soloTabButton").click(function(obj) {
+    var exerciseName = getExerciseName(this);
+
+    spotlightTab(exerciseName + "Tab");
   });
 }
 
@@ -172,6 +202,10 @@ function setupSimpleTabButtons() {
 function setupExercisesBeforeSession() {
   const DEFAULT_ACTIVE_TAB = "meetYourPartnerTab";
 
+  spotlightTab(DEFAULT_ACTIVE_TAB);
+}
+
+function spotlightTab(tabName) {
   var inactive = {
     show: false
   }
@@ -186,12 +220,13 @@ function setupExercisesBeforeSession() {
   });
 
   // Turn default tab on
-  exercisesRef.child(DEFAULT_ACTIVE_TAB.replace("Tab", '')).set(active);
-  exercisesRef.child("active").set({exercise: DEFAULT_ACTIVE_TAB.replace("Tab", '')});
+  exercisesRef.child(tabName.replace("Tab", '')).set(active);
+  exercisesRef.child("active").set({exercise: tabName.replace("Tab", '')});
 }
 
 function keepTabsOnTabs() {
   exercisesRef.on('value', function(exercisesSnap) {
+    var atLeastOneTabShown = false;
     var exercises = exercisesSnap.val();
 
     for (property in exercises) {
@@ -201,6 +236,8 @@ function keepTabsOnTabs() {
 
       if (exercise.length > 0) {
         if (exercises[property] && exercises[property].show) {
+          atLeastOneTabShown = true;
+
           if (isSimpleMode()) {
             $('#' + property + "TabContent").find(".showTabButton").addClass("active");
           }
@@ -222,6 +259,10 @@ function keepTabsOnTabs() {
     if (exercises && exercises.active) {
       setActiveExercise(exercises.active.exercise);
     }
+
+    if (!isSimpleMode()) {
+      atLeastOneTabShown ? $('.exercisesPanel').show() : $('.exercisesPanel').hide();
+    }
   });
 
   // If we don't do this, the firepads show up blank, until they are clicked w/n
@@ -239,8 +280,11 @@ function setActiveExercise(exercise) {
   var toBeActive = $("#" + exercise + "Tab");
 
   if (toBeActive.length > 0) {
-    //toBeActive.css("background-color", "#E0EBFF");
     toBeActive.addClass('currentExercise');
+
+    if (!isSimpleMode()) {
+      toBeActive.tab('show');
+    }
   }
 
   if (isSimpleMode()) {
@@ -323,16 +367,25 @@ function initModal() {
                   },
                   stringLength: {
                       min: 6,
-                      max: 10,
-                      message: 'We need a number between 6 and 10 digits'
+                      max: 12,
+                      message: 'We need a number between 6 and 12 digits'
                   }
               }
+          },
+          studentCampus: {
+            validators: {
+                notEmpty: {
+                    message: 'Please select your campus.'
+                }
+            }
           }
       }
   });
 
   $( "#welcomeForm" ).submit(function(event) {
     firstName = $("#attendeeName").val();
+    studentNum = $("#studentNum").val();
+    studentCampus = $("#studentCampus").val();
   });
 
   $('#welcomeModal').modal({
@@ -419,7 +472,7 @@ function logInToChat(chatRef, chatUI, roomId, getPartner) {
               voteLink = "<a id='q-" + questionId + "' class='deleteButton' onClick='deleteQuestion(&quot;" + questionId + "&quot;);'>Delete</a>";
             }
             else {
-              var voteText = data.voters && data.voters.hasOwnProperty(fbid) ? "Unvote" : "Vote";
+              var voteText = data.voters && data.voters.hasOwnProperty(fbid) ? "Down Vote" : "Up Vote";
               voteLink = "<a id='q-" + questionId + "' onClick='toggleVote(&quot;" + questionId + "&quot;);'>" + voteText + "</a>";
             }
 
