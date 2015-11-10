@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title>Webshops: Better Online Learning | Customer Development Labs</title>
+        <title>Customer Interviews...the Right Way! | Customer Development Labs</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width">
 
@@ -31,16 +31,16 @@
         <script src="firechat/firechat-default.js"></script>
 
         <!-- BootstrapValidator -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
 
         <!-- Bootbox for Alerts -->
         <script src="bootbox.min.js"></script>
 
         <!-- This app  -->
         <link rel="stylesheet" href="css/style.css">
-        <script src="tec.js"></script>
+        <script src="webshops.js"></script>
 
         <style type="text/css">
 
@@ -53,59 +53,17 @@
         <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form id="welcomeForm">
-                <div class="modal-header alert-success">
-                  <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>M&amp;A, Pitching &amp; Fundraising</b>!</center></h2>
+              <form class="form-horizontal" id="welcomeForm">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="myModalLabel">Welcome to <b>Interviewing Customers...the Right Way</b>!</h2>
                 </div>
                 <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
-                  <div class="form-group">
-                    <label class="control-label">First Name</label>
-                    <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label">Student Number</label>
-                    <input type="name" class="form-control" id="studentNum" name="studentNum" placeholder="What's your student number?">
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label">Campus</label>
-                    <select class="form-control" id="studentCampus" name="studentCampus" title="Select your campus...">
-                      <option value=""></option>
-                      <option value="Aguascalientes">Aguascalientes</option>
-                      <option value="Central de Veracruz">Central de Veracruz</option>
-                      <option value="Chiapas">Chiapas</option>
-                      <option value="Chihuahua">Chihuahua</option>
-                      <option value="Ciudad de Mexico">Ciudad de México</option>
-                      <option value="Ciudad Juarez">Ciudad Juárez</option>
-                      <option value="Ciudad Obregon">Ciudad Obregón</option>
-                      <option value="Cuernavaca">Cuernavaca</option>
-                      <option value="Estado de Mexico">Estado de México</option>
-                      <option value="Guadalajara">Guadalajara</option>
-                      <option value="Hidalgo">Hidalgo</option>
-                      <option value="Irapuato">Irapuato</option>
-                      <option value="Laguna">Laguna</option>
-                      <option value="Leon">León</option>
-                      <option value="Monterrey">Monterrey</option>
-                      <option value="Morelia">Morelia</option>
-                      <option value="Puebla">Puebla</option>
-                      <option value="Queretaro">Querétaro</option>
-                      <option value="Saltillo">Saltillo</option>
-                      <option value="San Luis Potosi">San Luis Potosí</option>
-                      <option value="Santa Fe">Santa Fe</option>
-                      <option value="Sinaloa">Sinaloa</option>
-                      <option value="Sonora Norte">Sonora Norte</option>
-                      <option value="Tampico">Tampico</option>
-                      <option value="Toluca">Toluca</option>
-                      <option value="Zacatecas">Zacatecas</option>
-                      <option value="Prepa Tec">Cumbres (Preparatoria)</option>
-                      <option value="Prepa Tec">Eugenio Garza Lagüera (Preparatoria)</option>
-                      <option value="Prepa Tec">Eugenio Garza Sada (Preparatoria)</option>
-                      <option value="Prepa Tec">Santa Catarina (Preparatoria)</option>
-                      <option value="Prepa Tec">Valle Alto (Preparatoria)</option>
-                    </select>
-                  </div>
+                    <div class="form-group">
+                      <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+                    </div>
                 </div>
-                <div class="modal-footer alert-success">
-                  <button type="submit" class="btn btn-success">Let's go!</button>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Let's go!</button>
                 </div>
               </form>
             </div>
@@ -126,68 +84,71 @@
 
         <header class="fixed-header-main">
           <div style="float:left;">
-            <center><span style="font-size:2em"><b>M&amp;A, Pitching &amp; Fundraising</b></span> with <a href="http://www.startupexperience.com/" target="_blank">Henrik Scheel</a> &amp; <a href="http://customerdevlabs.com" target="_blank">Justin Wilcox</a></center>
+            <span style="font-size:2em"><b>Interviewing Customers...the Right Way</b></span> with <a href="http://customerdevlabs.com" target="_blank">Justin Wilcox</a>
           </div>
-          <!-- <a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px"/></a> -->
+          <a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px"/></a>
         </header>
         <div class="fixed-container-inner">
           <div class="fluid-container">
-            <div class="fluid-box full-height left-column">
-              <div class="top-row">
-                <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
-                  <div class="panel-heading">
-                    <h3 class="panel-title"><i><b>Questions:</b></i> Ask and up vote.</h3>
-                  </div>
-                  <div class="panel-body" style="position: absolute; top: 38px; left: 0px; right: 0px; bottom: 50px; overflow-y: scroll;">
-                    <ul class="media-list example-chat-questions" id="example-questions"></ul>
-                  </div>
-                  <div class="panel-footer" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
-                    <div style="overflow: hidden; padding-right: .5em;">
-                      <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
-                    </div>
-                    <div class="input-group"  style="display:none;">
-                      <h3>Value:</h3>
-                      <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
-                    </div>
-                  </div>
+            <div class="fluid-box half-height left-column top-row">
+                <iframe width="100%" height="100%" src="//www.youtube.com/embed/VLNAJSUexf0?rel=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="fluid-box half-height right-column top-row">
+              <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i><b>Questions:</b></i> Ask and upvote.</h3>
                 </div>
-              </div>
-
-              <div class="bottom-row">
-                <div class="panel panel-info chatPanel" style="height: 100%; position: relative">
-                  <div class="panel-heading">
-                    <h3 class="panel-title"><i><b>Chat:</b></i> <span id="partnerName" style="">Looking for a partner for you...</span><button id="newPartner" type="button" class="btn btn-sm btn-primary" style="float: right;margin-top: -5px;margin-right: -10px;">Get New Partner</button></h3>
+                <div class="panel-body" style="position: absolute; top: 38px; left: 0px; right: 0px; bottom: 50px; overflow-y: scroll;">
+                  <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                </div>
+                <div class="panel-footer" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
+                  <div style="overflow: hidden; padding-right: .5em;">
+                    <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
                   </div>
-                  <div class="panel-body" style="position: absolute; top: 38px; right: 0px; bottom: 0px; left: 0px;">
-                    <div style="position: relative; height: 100%; width: 100%; padding:0px">
-                      <div id="public-firechat-wrapper" class="firechatUI"></div>
-                    </div>
+                  <div class="input-group"  style="display:none;">
+                    <h3>Value:</h3>
+                    <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
                   </div>
                 </div>
               </div>
             </div>
+        	  <div class="fluid-box half-height left-column bottom-row">
+              <div class="panel panel-info chatPanel" style="height: 100%; position: relative">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i><b>Chat:</b></i> <span id="partnerName" style="">Looking for a partner for you...</span><button id="newPartner" type="button" class="btn btn-sm btn-primary" style="float: right;margin-top: -5px;margin-right: -10px;">Get New Partner</button></h3>
+                </div>
+                <div class="panel-body" style="position: absolute; top: 38px; right: 0px; bottom: 0px; left: 0px;">
+                  <div style="position: relative; height: 100%; width: 100%; padding:0px">
+                    <div id="public-firechat-wrapper" class="firechatUI"></div>
+                  </div>
+                </div>
+              </div>
 
-            <div class="fluid-box full-height right-column">
+              <!-- <div style="position: relative; height: 100%; width: 100%; padding:0px">
+                <div style="position: absolute; height: 50px; left: 0px; right: 0px">
+                  <div class="alert alert-info" role="alert"></div>
+                </div>
+                <div style="position: absolute; top: 50px; bottom: 0px; left: 0px; right: 0px;">
+
+                  <div id="public-firechat-wrapper" class="firechatUI"></div>
+
+                </div>
+              </div> -->
+            </div>
+            <div class="fluid-box half-height right-column bottom-row">
               <div class="panel panel-info exercisesPanel" style="height: 100%">
                 <div class="panel-body" style="position: relative; height: 100%">
-                  <div class="exercisesPanel">
+                  <div class="bs-example">
                       <ul class="nav nav-tabs exerciseTabs">
                           <!-- <li><a data-toggle="tab" id="whoIsHereTab" href="#whoIsHereTabContent">Who's Here?</a></li>
                           <li><a data-toggle="tab" id="notesTab" href="#notesTabContent">My Notes</a></li> -->
                           <li><a data-toggle="tab" id="meetYourPartnerTab" href="#meetYourPartnerTabContent">Meet your Partner</a></li>
-                          <li><a data-toggle="tab" id="quiz1QuestionsTab" href="#quiz1QuestionsTabContent">Seed Funding</a></li>
-                          <li><a data-toggle="tab" id="quiz1AnswersTab" href="#quiz1AnswersTabContent">Leaderboard</a></li>
-                          <li><a data-toggle="tab" id="liveInterviewTab" href="#liveInterviewTabContent">Pitch Practice</a></li>
-                          <li><a data-toggle="tab" id="quiz2QuestionsTab" href="#quiz2QuestionsTabContent">Series A</a></li>
-                          <li><a data-toggle="tab" id="quiz2AnswersTab" href="#quiz2AnswersTabContent">Series A: Answers</a></li>
-                          <li><a data-toggle="tab" id="feedbackFormTab" href="#feedbackFormTabContent">Feedback</a></li>
-                          <li><a data-toggle="tab" id="quiz3QuestionsTab" href="#quiz3QuestionsTabContent">Series B</a></li>
-                          <li><a data-toggle="tab" id="quiz3AnswersTab" href="#quiz3AnswersTabContent">Series B: Answers</a></li>
-                          <!-- <li><a data-toggle="tab" id="practiceInterviewTab" href="#practiceInterviewTabContent">You Try It</a></li>
+                          <li><a data-toggle="tab" id="liveInterviewTab" href="#liveInterviewTabContent">Live Interview</a></li>
+                          <li><a data-toggle="tab" id="practiceInterviewTab" href="#practiceInterviewTabContent">You Try It</a></li>
                           <li><a data-toggle="tab" id="interviewScriptTab" href="#interviewScriptTabContent">Your Interview Script</a></li>
                           <li><a data-toggle="tab" id="interviewScriptGeneratorTab" href="#interviewScriptGeneratorTabContent">Interview Script Generator</a></li>
                           <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
-                          <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li> -->
+                          <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
                       </ul>
                       <div class="tab-content">
                         <!-- <div id="whoIsHereTabContent" class="tab-pane fade tabContent">
@@ -231,10 +192,8 @@
                             </div>
                           </div>
                         </div> -->
-
                         <div id="meetYourPartnerTabContent" class="tab-pane fade tabContent">
                           <div class="btn-group tabButtonGroup" role="group">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
                             <button type="button" class="btn btn-default activeTabButton">Active</button>
                             <button type="button" class="btn btn-default showTabButton">Show</button>
                             <button type="button" class="btn btn-default hideTabButton">Hide</button>
@@ -252,7 +211,7 @@
                                   <td>
                                     <div class="form-group">
                                       Where do you live?
-                                      <input type="text" class="form-control meetYourPartnerMe" id="location" placeholder="City, State">
+                                      <input type="text" class="form-control meetYourPartnerMe" id="location" placeholder="City, Country">
                                     </div>
                                   </td>
                                   <td>
@@ -263,12 +222,12 @@
                                 <tr>
                                   <td>
                                     <div class="form-group">
-                                      What year are you?
+                                      What's your company name?
                                       <input type="text" placeholder="" class="form-control meetYourPartnerMe" id="companyName">
                                     </div>
                                   </td>
                                   <td>
-                                    <div><span class="partnerName"></span>'s year:</div>
+                                    <div><span class="partnerName"></span>'s company is:</div>
                                     <div id="companyNamePartner" class="bold partnerData"></div>
                                   </td>
                                 </tr>
@@ -276,12 +235,12 @@
                                 <tr>
                                   <td>
                                     <div class="form-group">
-                                      Do you have a Twitter, Instagram or Facebook page?
-                                      <input type="text" placeholder="http://twitter.com/justin_wilcox" class="form-control meetYourPartnerMe" id="website">
+                                      What's your company's website?
+                                      <input type="text" placeholder="http://CustomerDevLabs.com" class="form-control meetYourPartnerMe" id="website">
                                     </div>
                                   </td>
                                   <td>
-                                    <div>Check out <span class="partnerName"></span>'s profile at:</div>
+                                    <div><span class="partnerName"></span>'s website is at:</div>
                                     <div style="padding-top: 7px"><a id="websitePartner" class="bold partnerData" href="" target="_blank"></a></div>
                                   </td>
                                 </tr>
@@ -289,12 +248,12 @@
                                 <tr>
                                   <td>
                                     <div class="form-group">
-                                      What's your major?
-                                      <input type="text" placeholder="Business Administration" class="form-control meetYourPartnerMe" id="customers">
+                                      Who are your target customers?
+                                      <input type="text" placeholder="Single moms, HR Managers, etc." class="form-control meetYourPartnerMe" id="customers">
                                     </div>
                                   </td>
                                   <td>
-                                    <div><span class="partnerName"></span>'s major is:</div>
+                                    <div><span class="partnerName"></span> is serving:</div>
                                     <div id="customersPartner" class="bold partnerData"></div>
                                   </td>
                                 </tr>
@@ -302,13 +261,39 @@
                                 <tr>
                                   <td>
                                     <div class="form-group">
-                                      What do you do for fun?
-                                      <input type="text" placeholder="Juggle puppies" class="form-control meetYourPartnerMe" id="defineSuccess">
+                                      What problem do you want to solve for them?
+                                      <input type="text" placeholder="Too hard to go grocery shopping w/ a 3 year old, etc." class="form-control meetYourPartnerMe" id="problem">
                                     </div>
                                   </td>
                                   <td>
-                                    <div>For fun <span class="partnerName"></span>:</div>
+                                    <div><span class="partnerName"></span> is helping them:</div>
+                                    <div id="problemPartner" class="bold partnerData"></div>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      What do you hope to get out of this workshop?
+                                      <input type="text" placeholder="How will you know it's been worth your time?" class="form-control meetYourPartnerMe" id="defineSuccess">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div><span class="partnerName"></span> is in this workshop to:</div>
                                     <div id="defineSuccessPartner" class="bold partnerData"></div>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      What's your LinkedIn or Twitter profile?</label>
+                                      <input type="text" placeholder="http://twitter.com/customerdevlabs" class="form-control meetYourPartnerMe" id="profileURL">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div>More about <span class="partnerName"></span>:</div>
+                                    <div style="padding-top: 7px"><a id="profileURLPartner" class="bold partnerData" href="" target="_blank"></a></div>
                                   </td>
                                 </tr>
 
@@ -320,38 +305,8 @@
                             </form>
                           </table>
                         </div>
-
-                        <div id="quiz1QuestionsTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
-                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                            <button type="button" class="btn btn-default activeTabButton">Active</button>
-                            <button type="button" class="btn btn-default showTabButton">Show</button>
-                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                          </div>
-                          <div class="fluid-container">
-                            <div class="fluid-box full-height full-width">
-                              <iframe src="" data-src="https://docs.google.com/forms/d/1KRTNrnorl0XfPN016HB8YU1zXb_MsdJQ9CBF0WT4XDI/viewform?entry.1033504782=[studentNum]&entry.1746922172=[studentCampus]&embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="quiz1AnswersTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
-                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                            <button type="button" class="btn btn-default activeTabButton">Active</button>
-                            <button type="button" class="btn btn-default showTabButton">Show</button>
-                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                          </div>
-                          <div class="fluid-container">
-                            <div class="fluid-box full-height full-width">
-                              <iframe src="" data-src="https://docs.google.com/spreadsheets/d/1VnSGLPVjxQ-3zUII-0IP-Dl00MRnHFh3BUdPc9jcZSM/view?headers=false" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                            </div>
-                          </div>
-                        </div>
-
                         <div id="liveInterviewTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
                           <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
                             <button type="button" class="btn btn-default activeTabButton">Active</button>
                             <button type="button" class="btn btn-default showTabButton">Show</button>
                             <button type="button" class="btn btn-default hideTabButton">Hide</button>
@@ -360,7 +315,7 @@
                             <div class="fluid-box full-height half-column">
                               <div class="panel panel-success" style="position: relative; height: 100%; width: 100%; padding:0px; margin: 0px">
                                 <div class="panel-heading">
-                                  Left Side
+                                  <h3 class="panel-title">Interview Questions:</h3>
                                 </div>
                                 <div id="questionsContainer" class="panel-body firePadContainer">
                                   <div id="questionsPad" class="fpad"></div>
@@ -370,9 +325,7 @@
                             <div class="fluid-box full-height half-column">
                               <div class="panel panel-warning" style="position: relative; height: 100%; width: 100%; margin: 0px">
                                 <div class="panel-heading">
-                                  <h3 class="panel-title">
-                                    Right Side
-                                  </h3>
+                                  <h3 class="panel-title">Customer Responses:</h3>
                                 </div>
                                 <div id="responsesContainer" class="panel-body firePadContainer">
                                   <div id="responsesPad" class="fpad"></div>
@@ -381,80 +334,8 @@
                             </div>
                           </div>
                         </div>
-
-                        <div id="quiz2QuestionsTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
-                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                            <button type="button" class="btn btn-default activeTabButton">Active</button>
-                            <button type="button" class="btn btn-default showTabButton">Show</button>
-                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                          </div>
-                          <div class="fluid-container">
-                            <div class="fluid-box full-height full-width">
-                              <iframe src="" data-src="https://docs.google.com/forms/d/1v7gHuylzQpOBtpAFykRpf-icqceA_E_OLKhPUTrmZsQ/viewform?entry.1033504782=[studentNum]&entry.1701907569=[studentCampus]&amp;embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="quiz2AnswersTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
-                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                            <button type="button" class="btn btn-default activeTabButton">Active</button>
-                            <button type="button" class="btn btn-default showTabButton">Show</button>
-                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                          </div>
-                          <div class="fluid-container">
-                            <div class="fluid-box full-height full-width">
-                              <iframe src="" data-src="https://docs.google.com/spreadsheets/d/1R_Rm8g1RevSJEUfhBr_YhvK_6bjdRWEOQV8-lrkR7qs/view" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="feedbackFormTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
-                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                            <button type="button" class="btn btn-default activeTabButton">Active</button>
-                            <button type="button" class="btn btn-default showTabButton">Show</button>
-                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                          </div>
-                          <div class="fluid-container">
-                            <div class="fluid-box full-height full-width">
-                              <iframe src="" data-src="https://docs.google.com/forms/d/1T8KM69d1dkkybd-a7U-qvX0Bs3h2v5MtRMASoIwEQxw/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="quiz3QuestionsTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
-                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                            <button type="button" class="btn btn-default activeTabButton">Active</button>
-                            <button type="button" class="btn btn-default showTabButton">Show</button>
-                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                          </div>
-                          <div class="fluid-container">
-                            <div class="fluid-box full-height full-width">
-                              <iframe src="" data-src="https://docs.google.com/forms/d/1e1v-y7E6vLcAoOMmWbdElrZ8ErrR1DZBxib5jxJufIc/viewform?entry.1033504782=[studentNum]&entry.1701907569=[studentCampus]&embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="quiz3AnswersTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
-                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                            <button type="button" class="btn btn-default activeTabButton">Active</button>
-                            <button type="button" class="btn btn-default showTabButton">Show</button>
-                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                          </div>
-                          <div class="fluid-container">
-                            <div class="fluid-box full-height full-width">
-                              <iframe src="" data-src="https://docs.google.com/spreadsheets/d/1SCDBeBrSoXy51ZrMitOiKBoGrD5fanMg3GcAhhORyXY/view" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                            </div>
-                          </div>
-                        </div>
-
                         <div id="practiceInterviewTabContent" class="tab-pane fade tabContent">
                           <div class="btn-group tabButtonGroup" role="group">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
                             <button type="button" class="btn btn-default activeTabButton">Active</button>
                             <button type="button" class="btn btn-default showTabButton">Show</button>
                             <button type="button" class="btn btn-default hideTabButton">Hide</button>
@@ -540,7 +421,6 @@
 
                         <div id="interviewScriptGeneratorTabContent" class="tab-pane fade tabContent">
                           <div class="btn-group tabButtonGroup" role="group">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
                             <button type="button" class="btn btn-default activeTabButton">Active</button>
                             <button type="button" class="btn btn-default showTabButton">Show</button>
                             <button type="button" class="btn btn-default hideTabButton">Hide</button>
@@ -551,7 +431,6 @@
 
                         <div id="interviewScriptTabContent" class="tab-pane fade tabContent">
                           <div class="btn-group tabButtonGroup" role="group">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
                             <button type="button" class="btn btn-default activeTabButton">Active</button>
                             <button type="button" class="btn btn-default showTabButton">Show</button>
                             <button type="button" class="btn btn-default hideTabButton">Hide</button>
@@ -749,7 +628,6 @@
 
                         <div id="bonusTabContent" class="tab-pane fade tabContent">
                           <div class="btn-group tabButtonGroup" role="group">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
                             <button type="button" class="btn btn-default activeTabButton">Active</button>
                             <button type="button" class="btn btn-default showTabButton">Show</button>
                             <button type="button" class="btn btn-default hideTabButton">Hide</button>
@@ -830,7 +708,6 @@
 
                         <div id="feedbackTabContent" class="tab-pane fade tabContent">
                           <div class="btn-group tabButtonGroup" role="group">
-                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
                             <button type="button" class="btn btn-default activeTabButton">Active</button>
                             <button type="button" class="btn btn-default showTabButton">Show</button>
                             <button type="button" class="btn btn-default hideTabButton">Hide</button>
@@ -896,12 +773,11 @@
                 </div>
               </div>
             </div>
-
           </div>
 
           </div>
             <footer class="fixed-footer-main" style="padding: 5px">
-                &copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015 - Powered by <a href="http://firebase.com" target="_blank">Firebase</a>
+                &copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015
             </footer>
 
     </body>
