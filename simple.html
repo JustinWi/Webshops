@@ -138,6 +138,8 @@
                           <li><a data-toggle="tab" id="interviewScriptTab" href="#interviewScriptTabContent">Script</a></li>
                           <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
                           <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
+                          <li><a data-toggle="tab" id="meetYourPartnerTab" href="#meetYourPartnerTabContent">Meet your Partner</a></li>
+                          <li><a data-toggle="tab" id="liveInterviewTab" href="#liveInterviewTabContent">Live Interview</a></li>
 
                           <!-- <li><a data-toggle="tab" id="meetYourPartnerTab" href="#meetYourPartnerTabContent">Meet your Partner</a></li>
                           <li><a data-toggle="tab" id="quiz1QuestionsTab" href="#quiz1QuestionsTabContent">Seed Funding</a></li>
@@ -757,6 +759,37 @@
                             </div>
                           </div>
                         </div>
+
+                        <div id="liveInterviewTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height half-column">
+                              <div class="panel panel-success" style="position: relative; height: 100%; width: 100%; padding:0px; margin: 0px">
+                                <div class="panel-heading">
+                                  <h3 class="panel-title">Interview Questions:</h3>
+                                </div>
+                                <div id="questionsContainer" class="panel-body firePadContainer">
+                                  <div id="questionsPad" class="fpad"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="fluid-box full-height half-column">
+                              <div class="panel panel-warning" style="position: relative; height: 100%; width: 100%; margin: 0px">
+                                <div class="panel-heading">
+                                  <h3 class="panel-title">Customer Responses:</h3>
+                                </div>
+                                <div id="responsesContainer" class="panel-body firePadContainer">
+                                  <div id="responsesPad" class="fpad"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
 
                         <div id="feedbackTabContent" class="tab-pane fade tabContent">
                           <div class="btn-group tabButtonGroup" role="group">
