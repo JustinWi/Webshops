@@ -1,0 +1,236 @@
+﻿textarea, .questions-wysiwyg {
+	height: 30px;
+	border: 1px solid #d0d0d0;
+	padding: 5px;
+	font-size: 13px;
+	font-family: Helvetica, arial, sans-serif;
+	font-weight: normal;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+    background-color:#fff;
+}
+
+.fpad {
+	height: 100%;
+	margin-top: 10px;
+}
+
+.interviewRow {
+	background-color: #eee;
+	/*padding: 20px;*/
+	padding-top: 0px;
+}
+
+#firepad-container {
+	/*width: 300px;*/
+	height: 250px;
+}
+
+.firechatUI {
+	height: 100%;
+	/*max-width: 325px;*/
+	padding: 10px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	margin: 0px auto;
+	text-align: center;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 5px 25px #666;
+	-moz-box-shadow: 0 5px 25px #666;
+	box-shadow: 0 5px 25px #666;
+}
+
+/*.my-fluid-container {
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}*/
+
+.tabButtonGroup {
+	display: none;
+}
+
+body {
+		padding-top: 0px;
+		padding-bottom: 0px;
+		font-family: helvetica; arial;
+		width: 100%;
+		height: 100%;
+}
+
+body, div {
+	margin: 0px;
+}
+
+header {
+	display: block;
+	padding: 10px;
+	background: white;
+}
+
+footer {
+	display: block;
+}
+
+h1 {
+	margin: 0px;
+}
+
+body * {
+	box-sizing: border-box; /* makes sizing by percentage in combination with padding possible */
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+/* layout styles */
+
+.fluid-container {
+	display: inline-block;
+	position: absolute;
+	top: 0px; /* same as inner header height */
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.fluid-box {
+	display: inline-block;
+	float: left;
+	min-height: 200px;
+	padding: 5px;
+}
+
+.half-height {
+	height: 50%;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.top-row {
+	height: 40%
+}
+
+.bottom-row {
+	height: 60%;
+}
+
+.left-column {
+		width: 40%;
+}
+
+.right-column {
+		width: 60%;
+}
+
+.half-column {
+	width: 50%;
+}
+
+.fluid-box-text {
+	text-align: center;
+	line-height: 33.33%;
+}
+
+.fixed-container-outer {
+	position: absolute;
+	top: 80px; /* same as main header height */
+	right: 0px;
+	bottom: 80px;
+	left: 0px;
+}
+
+.fixed-container-inner {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	bottom: 30px;
+	left: 0px;
+}
+
+.fixed-header-main {
+	height: 50px;
+}
+
+.fixed-footer-main {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	height: 30px;
+}
+
+.exercisesPanel .tab-pane{
+	position: absolute;
+	top: 56px;
+	bottom: 15px;
+	right: 15px;
+	left: 15px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	border: 1px solid #CCC;
+	border-top: none;
+}
+
+.example-chat-questions a {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.currentExercise {
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #9acfea;
+}
+
+.tabContent th, td {
+	width: 50%;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.partnerData {
+	margin-top: 7px;
+}
+
+.powered-by-firepad {
+	display: none;
+}
+
+.CodeMirror-scroll {
+	-webkit-box-shadow: inset 2px 2px 2px 0px #dddddd; */
+  -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  box-shadow: inset 0px 2px 0px 0px #dddddd;
+  padding-top: 2px;
+}
+
+.firePadContainer {
+	position: absolute;
+	top: 18px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	padding: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#bonusTabContent ul {
+	margin-top:10px;
+}

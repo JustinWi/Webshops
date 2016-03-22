@@ -130,11 +130,11 @@ body * {
 }
 
 .left-column {
-		width: 40%;
+		width: 60%;
 }
 
 .right-column {
-		width: 60%;
+		width: 40%;
 }
 
 .half-column {
