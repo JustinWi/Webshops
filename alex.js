@@ -408,6 +408,18 @@ function initPad(url, div, msg) {
   return firepad;
 }
 
+function enterRoomAfterUserSessionCreated(chatUI, roomId) {
+  const RETRY_IN = 500;
+
+  if (chatUI._chat._sessionId == null) {
+    setTimeout(enterRoomAfterUserSessionCreated, RETRY_IN, chatUI, roomId);
+    return;
+  }
+
+  console.log("About to enter room. Room: " + roomId);
+  chatUI._chat.enterRoom(roomId);
+}
+
 function logInToChat(chatRef, chatUI, roomId, getPartner) {
   var simpleLogin = new FirebaseSimpleLogin(chatRef, function(err, user) {
     if (user) {
@@ -417,9 +429,7 @@ function logInToChat(chatRef, chatUI, roomId, getPartner) {
       chatUI.setUser(user.id, firstName);
 
       if (roomId != null) {
-        setTimeout(function() {
-          chatUI._chat.enterRoom(roomId);
-        }, 500);
+        enterRoomAfterUserSessionCreated(chatUI, roomId);
       }
 
       if (getPartner) {
