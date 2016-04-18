@@ -61,6 +61,6 @@ function addChatMessage(msg, inPublicChat) {
 
 function openTesterTabs(numTesters) {
   for (var ndx = 0; ndx < numTesters; ndx++) {
-    window.open('file:///E:/src/customerDevLabs/webshops/debug.html?firstName=' + firstName + (ndx + 1), '_blank');
+    window.open("http://" + window.location.hostname + window.location.pathname + "?firstName=" + firstName + (ndx + 1), '_blank');
   }
 }
