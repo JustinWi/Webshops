@@ -38,7 +38,7 @@ function init() {
   }
 
   publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"), {
-    numMaxMessages: 101
+    numMaxMessages: 5000
   });
 
   publicChat.maxLengthMessage = 1024;
