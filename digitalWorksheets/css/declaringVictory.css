@@ -18,7 +18,7 @@
 /* .declaring-victory */ .worksheet {
   position: absolute;
   width: 100%;
-  top: 100px;
+  top: 50px;
 }
 
 .instruction-panel {
@@ -226,7 +226,7 @@ textarea {
 }
 
 /* .declaring-victory */ .left {
-  top: 25%;
+  top: 10%;
   width: 30%;
   left: 5%;
 }
