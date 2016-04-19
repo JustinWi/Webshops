@@ -196,6 +196,7 @@ body * {
 	overflow-x: hidden;
 	border: 1px solid #CCC;
 	border-top: none;
+  background-color: white;
 }
 
 .talkingPanel .tab-pane{
