@@ -83,6 +83,17 @@ function init() {
 
   setupiFrames();
 
+  if (isWebViewerMode()) {
+    // load video stream
+    var youTubeIFrame = $('.youtube-iframe');
+    youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src"));
+  }
+  else {
+    // get ride of video holder
+    $('.left-column .top-row').hide();
+    $('.left-column .bottom-row').addClass("full-height").removeClass("bottom-row");
+  }
+
   if (isSimpleMode()) {
     setupSimpleTabButtons();
   }
@@ -186,6 +197,10 @@ function initEnrollForm() {
 
 function isSimpleMode() {
   return document.URL.indexOf("simple.html") != -1;
+}
+
+function isWebViewerMode() {
+  return !isSimpleMode() && document.URL.indexOf("vip.html") == -1;
 }
 
 function getExerciseName(obj) {
