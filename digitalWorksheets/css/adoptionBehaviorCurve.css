@@ -1,0 +1,94 @@
+.wood-background {
+  background-image: url('../img/wood.jpg');
+}
+
+.behavior-curve {
+  position: absolute;
+  width: inherit;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.behavior-curve .blank {
+  position: absolute;
+  font-family: 'Shadows Into Light Two', cursive;
+  font-size: 14pt;
+  font-weight: bold;
+  color: #B30000;
+  outline: 0px solid transparent;
+  text-align: center;
+  display: inline-block;
+  /*border: 1px solid;*/
+}
+
+.behavior-curve .worksheet-background-img {
+  width: 90%;
+  top: 0px;
+  left: 5%;
+
+  position: relative;
+}
+
+.behavior-curve .yes-field {
+  color: #36B363;
+}
+
+.segment-field {
+  bottom: 84.5%;
+  left: 19%;
+  width: 41%;
+}
+
+.problem-field {
+  bottom: 54%;
+  left: 26%;
+  width: 66.5%;
+}
+
+.grid-field {
+  width: 16%;
+}
+
+.laggard {
+  left: 76%;
+}
+
+.late {
+  left: 59.5%;
+}
+
+.early {
+  left: 43%;
+}
+
+.adopters {
+  left: 26%
+}
+
+.have-problem {
+  bottom: 49%;
+}
+
+.know-problem {
+  bottom: 44.5%;
+}
+
+.paying-problem {
+  bottom: 40%;
+}
+
+.behavior-curve .behaviors-field {
+  text-align: left;
+}
+
+.internal {
+  left: 9.5%;
+  top: 69.5%;
+  width: 40%;
+}
+
+.external {
+  left: 51%;
+  top: 72.5%;
+  width: 41.5%;
+}

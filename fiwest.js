@@ -1,5 +1,6 @@
 var firebaseRoot = "https://cdlwebshops.firebaseio.com";
 
+var rootRef         = new Firebase(firebaseRoot);
 var publicChatRef   = new Firebase(firebaseRoot);
 var firepadRef      = new Firebase(firebaseRoot + "/firepads");
 var attendeesRef    = new Firebase(firebaseRoot + "/attendees");
@@ -10,6 +11,7 @@ var meetPartnerRef  = new Firebase(firebaseRoot + "/meetYourPartner");
 var exercisesRef    = new Firebase(firebaseRoot + "/exercises");
 var enrolledRef     = new Firebase(firebaseRoot + "/enrolled");
 var feedbackRef     = new Firebase(firebaseRoot + "/feedback");
+var notesRef        = new Firebase(firebaseRoot + "/notes");
 
 var loggedInUserId;
 var questionPad, responsePad;
@@ -25,26 +27,28 @@ var lastQuestionAnswered;
 
 function init() {
   firstName = getParameterByName('firstName');
-  studentNum = getParameterByName('studentNum');
-  studentCampus = getParameterByName('studentCampus');
 
   $('.carousel').carousel({
     interval: 5000
   });
 
-  if (firstName == null || studentNum == null || studentCampus == null) {
+  if (firstName == null) {
     initModal();
     return;
   }
 
-  publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"));
-  publicChat.maxLengthMessage = 1024;
+  // publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"), {
+  //   numMaxMessages: 101
+  // });
 
-  publicChat.on('room-enter', function() {
-    stylizeChatRooms();
-  });
+  // publicChat.maxLengthMessage = 1024;
+  // publicChat.numMaxMessages = 500;
+  //
+  // publicChat.on('room-enter', function() {
+  //   stylizeChatRooms();
+  // });
 
-  logInToChat(publicChatRef, publicChat, PUBLIC_CHAT_ROOM_ID, true);
+  logInToChat(publicChatRef, publicChat, PUBLIC_CHAT_ROOM_ID, false);
 
   // REGISTER DOM ELEMENTS
   questionField = $('#question-txt');
@@ -71,17 +75,36 @@ function init() {
     updateMyInfo($(this));
   });
 
-  initEnrollForm();
   keepTabsOnTabs();
-  setupInterviewScriptGenerator();
+  initEnrollForm();
   setupFeedbackForm();
-  setupQuizzes();
+  //setupInterviewScriptGenerator();
+  //setupQuizzes();
 
   setupiFrames();
 
   if (isSimpleMode()) {
     setupSimpleTabButtons();
   }
+}
+
+function setupTextEditors() {
+
+  tinymce.init({
+    selector:'.text-editor',
+    menubar: false,
+    plugins: 'autoresize autosave',
+    autosave_interval: "2s",
+    setup : function(ed) {
+        ed.on('init', function()
+        {
+            this.getDoc().body.style.fontSize = '16px';
+            this.getDoc().body.style.fontName = 'Lato';
+            // ed.target.editorCommands.execCommand("fontSize", false, "2");
+            // ed.target.editorCommands.execCommand("fontName", false, "Lato");
+        });
+      }
+    });
 }
 
 function setupiFrames() {
@@ -300,7 +323,7 @@ function updateMeetYourPartner(field, value) {
 }
 
 function getMeetYourPartnerUpdates(user) {
-  meetPartnerRef.child(user.id).once('value', function(snap) {
+  meetPartnerRef.child(user.uid).once('value', function(snap) {
     console.log('updating my own partner details');
 
     if (snap == null) {
@@ -384,8 +407,6 @@ function initModal() {
 
   $( "#welcomeForm" ).submit(function(event) {
     firstName = $("#attendeeName").val();
-    studentNum = $("#studentNum").val();
-    studentCampus = $("#studentCampus").val();
   });
 
   $('#welcomeModal').modal({
@@ -422,25 +443,31 @@ function enterRoomAfterUserSessionCreated(chatUI, roomId) {
   chatUI._chat.enterRoom(roomId);
 }
 
+function logInToChat(ref, chatUI, roomId, getPartner) {
+  ref.authAnonymously(function(error, authData) {
+    if (error) {
+      console.log("Login Failed!", error);
+      return;
+    }
 
-function logInToChat(chatRef, chatUI, roomId, getPartner) {
-  var simpleLogin = new FirebaseSimpleLogin(chatRef, function(err, user) {
-    if (user) {
-      loggedInUserId = user.id;
+    console.log("Authenticated successfully with payload: ", authData);
 
-      user.firstName = firstName;
-      chatUI.setUser(user.id, firstName);
+    var user = authData;
+    loggedInUserId = user.uid;
 
-      if (roomId != null) {
-        enterRoomAfterUserSessionCreated(chatUI, roomId);
-      }
+    user.firstName = firstName;
+    //chatUI.setUser(user.uid, firstName);
+
+    //enterRoomAfterUserSessionCreated(chatUI, roomId);
+
+    setupTextEditors();
 
       if (getPartner) {
         searchForPartner(user);
       }
 
       authUserName = firstName;
-      fbid = user.id;
+      fbid = user.uid;
 
       // simple should see all of the questions, everyone else should only see the unhidden ones
       var startAtNum = isSimpleMode() ? -1000000 : 1;
@@ -508,7 +535,7 @@ function logInToChat(chatRef, chatUI, roomId, getPartner) {
             //ADD question
             if (data.isActive) {
               activeQuestion = questionElement;
-              divmediabody2.addClass('bg-danger');
+              divmediabody2.addClass('bg-warning');
             }
             else {
               if (userAskedQuestion) {
@@ -518,10 +545,10 @@ function logInToChat(chatRef, chatUI, roomId, getPartner) {
               }
               else if (data.votes > 0) {
                 // divmediabody2.css('background', "#73B3D7");
-                divmediabody2.addClass('bg-info');
+                divmediabody2.addClass('bg-primary');
               }
               else {
-                divmediabody2.addClass('bg-warning');
+                divmediabody2.addClass('this-class-does-not-exist');
               }
 
               questionList.prepend(questionElement);
@@ -530,14 +557,126 @@ function logInToChat(chatRef, chatUI, roomId, getPartner) {
 
           questionList.prepend(activeQuestion);
       });
-
-    } else {
-      simpleLogin.login('anonymous', {
-        rememberMe: true
-      });
-    }
   });
 }
+
+//   var simpleLogin = new FirebaseSimpleLogin(chatRef, function(err, user) {
+//     if (user) {
+//       loggedInUserId = user.uid;
+//
+//       user.firstName = firstName;
+//       chatUI.setUser(user.uid, firstName);
+//
+//       if (roomId != null) {
+//         setTimeout(function() {
+//           console.log("About to enter room. User: " + JSON.stringify(user) + ". Room: " + roomId);
+//           chatUI._chat.enterRoom(roomId);
+//         }, 500);
+//       }
+//
+//       if (getPartner) {
+//         searchForPartner(user);
+//       }
+//
+//       authUserName = firstName;
+//       fbid = user.uid;
+//
+//       // simple should see all of the questions, everyone else should only see the unhidden ones
+//       var startAtNum = isSimpleMode() ? -1000000 : 1;
+//
+//       // Add a callback that is triggered for each chat question.
+//       questionsRef.orderByChild('votes').startAt(startAtNum).on('value', function (allQuestionsSnapshot) {
+//           questionList.empty();
+//
+//           var activeQuestion;
+//
+//           allQuestionsSnapshot.forEach(function(snapshot) {
+//
+//             //GET DATA
+//             var questionId = snapshot.key();
+//             var data = snapshot.val();
+//             var fbid_d = data.fbid;
+//             var username_d = data.name;
+//             var question_d = data.text;
+//             var date_d = data.currentdate;
+//             var votes_d = data.votes;
+//
+//             divdir = "";
+//
+//             //CREATE ELEMENTS question & SANITIZE TEXT
+//             var questionElement = $("<li class='media' f='" + fbid_d + "'>");
+//             var divmediabody = $("<div class='media-body'>");
+//             var divmedia = $("<div class='media'>");
+//
+//             var voteLink;
+//             var userAskedQuestion = fbid_d == fbid;
+//
+//             if (isSimpleMode()) {
+//               var answerText = data.isActive ? "Unanswer" : "Answer";
+//               var hideText = data.votes <= 0 ? "Show" : "Hide";
+//
+//               voteLink = "<a id='q-" + questionId + "' class='answerQuestionButton' onClick='answerQuestion(&quot;" + questionId + "&quot;);'>" + answerText + "</a> <a id='q-" + questionId + "-hide' class='hideQuestionButton' onClick='hideQuestion(&quot;" + questionId + "&quot;);'>" + hideText + "</a>";
+//             }
+//             else if (userAskedQuestion) {
+//               // This user submitted the question
+//               voteLink = "<a id='q-" + questionId + "' class='deleteButton' onClick='deleteQuestion(&quot;" + questionId + "&quot;);'>Delete</a>";
+//             }
+//             else {
+//               var voteText = data.voters && data.voters.hasOwnProperty(fbid) ? "Down Vote" : "Up Vote";
+//               voteLink = "<a id='q-" + questionId + "' onClick='toggleVote(&quot;" + questionId + "&quot;);'>" + voteText + "</a>";
+//             }
+//
+//             var voteCount = data.votes ? data.votes : 1;
+//             var votesElement = "<span style='float:right; font-weight:bold'>" + voteLink + ": "+ voteCount + "</span>";
+//             var userNameElement = " <span>" + (userAskedQuestion ? "You" : username_d) + "</span>";
+//             var dateElement = " <span style='float:right'>" + date_d + "</span>";
+//
+//             var divmediabody2 = $("<div class='media-body divTxtL alert' style='padding:5px'>");
+//             questionElement.append(divmediabody);
+//             divmediabody.append(divmedia);
+//             //divmedia.append(a);
+//             //divmedia.append(votesElement);
+//             divmedia.append(divmediabody2);
+//
+//             var usernamediv = $("<small class='text-muted'>");
+//             divmediabody2.html(question_d);
+//
+//             divmediabody2.append(usernamediv);
+//             usernamediv.html("<br />" + userNameElement + "</small>" + votesElement);
+//
+//             //ADD question
+//             if (data.isActive) {
+//               activeQuestion = questionElement;
+//               divmediabody2.addClass('bg-danger');
+//             }
+//             else {
+//               if (userAskedQuestion) {
+//                 divmediabody2.addClass('bg-success');
+//                 // divmediabody2.css('background', "#476982");
+//                 // usernamediv.css('color', "#CCC")
+//               }
+//               else if (data.votes > 0) {
+//                 // divmediabody2.css('background', "#73B3D7");
+//                 divmediabody2.addClass('bg-info');
+//               }
+//               else {
+//                 divmediabody2.addClass('bg-warning');
+//               }
+//
+//               questionList.prepend(questionElement);
+//             }
+//           });
+//
+//           questionList.prepend(activeQuestion);
+//       });
+//
+//     } else {
+//       simpleLogin.login('anonymous', {
+//         rememberMe: true
+//       });
+//     }
+//   });
+// }
 
 function loadFirepads(user, addDefaultText) {
   // questionPad = initPad(user.questionsPad, 'questionsPad', addDefaultText ? "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you and your partner have read it." : "");
@@ -571,9 +710,9 @@ function unloadFirepads() {
 
 function joinPartnership(user, partnership) {
   user.partnership = partnership;
-  user.lastPartner = partnership.replace(user.id, "");
+  user.lastPartner = partnership.replace(useruser.uid, "");
 
-  attendeesRef.child(user.id).update(user);
+  attendeesRef.child(user.uid).update(user);
 
   leavePrivateChatRooms();
 
@@ -593,7 +732,7 @@ function joinPartnership(user, partnership) {
       publicChat._chat.enterRoom(part.room);
 
       user.partnerChatRoom = part.room;
-      attendeesRef.child(user.id).update(user);
+      attendeesRef.child(user.uid).update(user);
     }
   });
 
@@ -613,25 +752,25 @@ function lookingForPartnerUI() {
 }
 
 function joinSoloList(user) {
-  soloRef.child(user.id).setWithPriority(user, new Date().getTime());
+  soloRef.child(user.uid).setWithPriority(user, new Date().getTime());
   console.log("Added myself to the solo list.");
 
   lookingForPartnerUI();
 
   // since I'm the first to the meeting, use my id to key the firepads
   // my partner will hook into these pads
-  user.questionsPad = "q-" + user.id;
-  user.responsesPad = "r-" + user.id;
+  user.questionsPad = "q-" + user.uid;
+  user.responsesPad = "r-" + user.uid;
 
   // store my pad addresses
-  attendeesRef.child(user.id).update(user);
+  attendeesRef.child(user.uid).update(user);
 
-  loadFirepads(user, true);
+  //loadFirepads(user, true);
 
   soloRef.on('child_changed', function(soloSnap) {
     var solo = soloSnap.val();
 
-    if (solo.id != user.id) {
+    if (solo.id != user.uid) {
       console.log("Someone else's solo changed");
       return;
     }
@@ -644,7 +783,7 @@ function joinSoloList(user) {
     else {
       console.log("and we have a new partnership!");
 
-      soloRef.child(user.id).remove(function(error) {
+      soloRef.child(user.uid).remove(function(error) {
         if (error) {
           console.log("Error removing myself from the solo list", error);
         }
@@ -725,11 +864,11 @@ function partnerWithFirstSolo(user, attemptNum) {
           // let's make a baby!
           var partnership;
 
-          if (user.id.localeCompare(solo.id) < 0) {
-            partnership = user.id + solo.id;
+          if (user.uid.localeCompare(solo.id) < 0) {
+            partnership = user.uid + solo.id;
           }
           else {
-            partnership = solo.id + user.id;
+            partnership = solo.id + user.uid;
           }
 
           user.partnership = partnership;
@@ -773,7 +912,7 @@ function confirmPartnershipAccepted(user) {
     if (part == null) {
       console.log("Potential parternship didn't consummate the partnership.");
 
-      var flakySolo = user.partnership.replace(user.id, "");
+      var flakySolo = user.partnership.replace(user.uid, "");
 
       clearPartnerFromUser(user);
 
@@ -790,14 +929,14 @@ function confirmPartnershipAccepted(user) {
       return;
     }
 
-    loadFirepads(user, false);
+    //loadFirepads(user, false);
     joinPartnership(user, user.partnership);
   });
 }
 
 function searchForSolos(user) {
   // Make sure we're not on the solo list
-  soloRef.child(user.id).transaction(function(currentData) {
+  soloRef.child(user.uid).transaction(function(currentData) {
 
     // Always return null because we want off this list
     return null;
@@ -820,13 +959,13 @@ function searchForSolos(user) {
 }
 
 function checkAttendeeList(user) {
-  attendeesRef.child(user.id).once('value', function(attendeeSnap) {
+  attendeesRef.child(user.uid).once('value', function(attendeeSnap) {
     var attendee = attendeeSnap.val();
 
     if (attendee == null) {
       console.log("I am not on the attendee list. Let's add me!");
 
-      attendeesRef.child(user.id).set(user);
+      attendeesRef.child(user.uid).set(user);
     }
     else if (attendee.partnership != null) {
       console.log("I already have a partnership: " + attendee.partnership);
@@ -845,7 +984,7 @@ function checkAttendeeList(user) {
 }
 
 function searchForPartner(user) {
-  console.log("My user id is: " + user.id);
+  console.log("My user id is: " + user.uid);
 
   checkAttendeeList(user);
 }
@@ -931,7 +1070,7 @@ function forgetPartnership(searchForPartnerImmediately) {
     clearPartnerFromUser(user);
     unloadFirepads();
 
-    attendeesRef.child(user.id).update(user);
+    attendeesRef.child(user.uid).update(user);
 
     if (searchForPartnerImmediately) {
       // Need to search for new partner only after we clean up our partner data
