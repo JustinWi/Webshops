@@ -10,6 +10,7 @@ var questionsRef    = new Firebase(firebaseRoot + "/questions");
 var meetPartnerRef  = new Firebase(firebaseRoot + "/meetYourPartner");
 var exercisesRef    = new Firebase(firebaseRoot + "/exercises");
 var enrolledRef     = new Firebase(firebaseRoot + "/enrolled");
+var emailsRef 	    = new Firebase(firebaseRoot + "/emails");
 var feedbackRef     = new Firebase(firebaseRoot + "/feedback");
 var notesRef        = new Firebase(firebaseRoot + "/notes");
 
@@ -20,23 +21,32 @@ const PUBLIC_CHAT_ROOM_ID = '-JjXjD6_LIzT4f5DS9jP';
 var publicChat;
 
 var firstName = null;
-var studentNum = null;
-var studentCampus = null;
+var emailAddress = null;
+
 var lastSoloPriority = 0;
 var lastQuestionAnswered;
 
+function getEnrollees() {
+  enrolledRef.once('value', function(enrolledSnap) {
+    enrolledSnap.forEach(function(snapshot) {
+      console.log(snapshot.val().email);
+    });
+  });
+}
+
 function init() {
   firstName = getParameterByName('firstName');
+  emailAddress = getParameterByName('attendeeEmail');
 
   $('.carousel').carousel({
     interval: 5000
   });
 
-  if (firstName == null) {
+  if (firstName == null || attendeeEmail == null) {
     initModal();
     return;
   }
-
+  
   // publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"), {
   //   numMaxMessages: 101
   // });
@@ -397,25 +407,16 @@ function initModal() {
                   }
               }
           },
-          studentNum: {
-              message: "That's not your student number",
+          attendeeEmail: {
+              message: "Hmm, something doesn't look right.",
               validators: {
-                  notEmpty: {
-                      message: 'We need your student number'
-                  },
-                  stringLength: {
-                      min: 6,
-                      max: 12,
-                      message: 'We need a number between 6 and 12 digits'
+				notEmpty: {
+					message: 'Please enter your email address'
+					},
+                  emailAddress: {
+                      message: 'The value is not a valid email address'
                   }
               }
-          },
-          studentCampus: {
-            validators: {
-                notEmpty: {
-                    message: 'Please select your campus.'
-                }
-            }
           }
       }
   });
@@ -475,6 +476,10 @@ function logInToChat(ref, chatUI, roomId, getPartner) {
 
     //enterRoomAfterUserSessionCreated(chatUI, roomId);
 
+	emailsRef.child(loggedInUserId).set({email: emailAddress});
+	$('#enrollEmail').val(emailAddress);
+	
+	
     setupTextEditors();
 
       if (getPartner) {
