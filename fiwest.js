@@ -42,7 +42,7 @@ function init() {
     interval: 5000
   });
 
-  if (firstName == null || attendeeEmail == null) {
+  if (firstName == null /*|| attendeeEmail == null*/) {
     initModal();
     return;
   }
