@@ -14,8 +14,10 @@ var enrolledRef = new Firebase(firebaseRoot + "/enrolled");
 var emailsRef = new Firebase(firebaseRoot + "/emails");
 var feedbackRef = new Firebase(firebaseRoot + "/feedback");
 var notesRef = new Firebase(firebaseRoot + "/notes");
-var declaringVictoryRef = new Firebase(firebaseRoot + "/exercises/declaringVictory/values");
-var PMFAssessmentRef = new Firebase(firebaseRoot + "/exercises/pmfAssessment/values");
+var exerciseValuesRef = new Firebase(firebaseRoot + "/exerciseValues");
+
+var declaringVictoryRef = exerciseValuesRef.child("declaringVictory");
+var pmfAssessmentRef = exerciseValuesRef.child("pmfAssessment");
 
 var loggedInUserId;
 var questionPad, responsePad;
@@ -76,26 +78,67 @@ var app = angular.module('app', [
 app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$firebaseObject', 'uiGridConstants', function ($scope, $firebaseArray, $firebaseAuth, $firebaseObject, uiGridConstants) {
   var vm = this;
 
-  if (isSimpleMode()) {
-    var VictoryDeclarationFactory = $firebaseObject.$extend({
-      // each time an update arrives from the server, apply the change locally
-      $$defaults: {
-        date: 'Write here',
-        step1: 'Write here',
-        step2: 'Write here',
-        number: '&num;',
-        things: 'things here',
-        emotion: 'Write here',
-        signature: 'Sign here',
-        optIn: 'Want Feedback?'
-      }
-    });
+  var VictoryDeclarationFactory = $firebaseObject.$extend({
+    // each time an update arrives from the server, apply the change locally
+    $$defaults: {
+      date: 'Write here',
+      step1: 'Write here',
+      step2: 'Write here',
+      number: '&num;',
+      things: 'things here',
+      emotion: 'Write here',
+      signature: 'Sign here',
+      optIn: 'Want Feedback?'
+    }
+  });
 
-    //var dataRef = new Firebase('https://itjustwerks.firebaseio.com/data/properties'); // jshint ignore:line
+  vm.gridOptions = {
+    columnDefs: [
+      {
+        displayName: 'Help?',
+        field: 'optIn',
+      },
+      {
+        displayName: 'Number',
+        field: 'number'
+      },
+      {
+        displayName: 'Things',
+        field: 'things'
+      },
+      {
+        displayName: 'Emotion',
+        field: 'emotion',
+      },
+      {
+        displayName: 'Product',
+        field: 'step1',
+      },
+      {
+        displayName: 'Customer',
+        field: 'step2',
+      },
+      {
+        name: 'select',
+        displayName: 'Select',
+        cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="grid.appScope.vm.giveFeedback(row.entity)" >Select</button> ',
+        width: 60,
+        enableSorting: false
+      }
+    ],
+    // enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+    flatEntityAccess: true,
+    enableGridMenu: true,
+    enableFiltering: true,
+    onRegisterApi: function (gridApi) {
+      vm.gridApi = gridApi;
+    }
+  };
+
+  if (isSimpleMode()) {
     vm.properties = $firebaseArray(declaringVictoryRef);
     vm.properties.$loaded().then(function () {
       vm.gridOptions.data = vm.properties;
-      // vm.gridHeight = vm.getTableHeight();
     });
 
     vm.giveFeedback = function (exercise) {
@@ -107,52 +150,6 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 
       vm.feedbackObj = VictoryDeclarationFactory(victoryRef);
       vm.feedbackObj.$bindTo($scope, "declaringVictoryFeedback");
-
-      //console.log(exercise);
-      // $state.transitionTo('club', { clubId: club.id });
-    };
-
-    vm.gridOptions = {
-      columnDefs: [
-        {
-          displayName: 'Help?',
-          field: 'optIn',
-        },
-        {
-          displayName: 'Number',
-          field: 'number'
-        },
-        {
-          displayName: 'Things',
-          field: 'things'
-        },
-        {
-          displayName: 'Emotion',
-          field: 'emotion',
-        },
-        {
-          displayName: 'Product',
-          field: 'step1',
-        },
-        {
-          displayName: 'Customer',
-          field: 'step2',
-        },
-        {
-          name: 'select',
-          displayName: 'Select',
-          cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="grid.appScope.vm.giveFeedback(row.entity)" >Select</button> ',
-          width: 60,
-          enableSorting: false
-        }
-      ],
-      // enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
-      flatEntityAccess: true,
-      enableGridMenu: true,
-      enableFiltering: true,
-      onRegisterApi: function (gridApi) {
-        vm.gridApi = gridApi;
-      }
     };
   }
 
@@ -289,7 +286,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 }]);
 
 function connectExercisesToFirebase(userId) {
-  myPMFAssessmentRef = PMFAssessmentRef.child(userId);
+  myPMFAssessmentRef = pmfAssessmentRef.child(userId);
 
   if (isSimpleMode()) {
     $('#refreshPMFChartsButton').show();
@@ -299,7 +296,7 @@ function connectExercisesToFirebase(userId) {
 }
 
 function refreshPMFCharts() {
-  PMFAssessmentRef.once("value", function (data) {
+  pmfAssessmentRef.once("value", function (data) {
     populateChart(data.val());
   });
 }
@@ -1479,7 +1476,7 @@ function toggleQuestionVisibility(questionId) {
       question.votes = question.votes * -1;
       question.isActive = 0;
     }
-    
+
     return question;
   });
 }
