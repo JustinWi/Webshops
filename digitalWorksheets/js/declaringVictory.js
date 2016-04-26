@@ -37,7 +37,7 @@ function setStep() {
   var title = panel.find('.panel-title');
   var content = panel.find('.content');
   var step = $('.step:eq(' + currentStep + ')');
-  var wrkshtImg = $('.worksheet img');
+  var wrkshtImg = $('#declaring-victory-worksheet');
   var newLayout = step.attr('layout');
   var fields = step.find('.fields').children();
 

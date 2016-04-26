@@ -111,6 +111,10 @@ textarea {
   text-align: center;
 }
 
+.feedback-blank {
+  display: inherit;
+}
+
 .steps {
   display: none;
 }
@@ -149,6 +153,12 @@ textarea {
   bottom: 18.5%;
   left: 50.5%;
   width: 15%;
+}
+
+.feedback-opt-in-field {
+  bottom: 18.5%;
+  left: 65%;
+  width: 20%;
 }
 
 .emotion-field {
