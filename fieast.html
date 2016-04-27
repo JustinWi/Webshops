@@ -1,12 +1,2125 @@
 <!doctype html>
-<html>
+<html ng-app="app">
 
 <head>
   <title>How to Find Product-Market Fit | Justin Wilcox</title>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width">
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-touch.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+    
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>-->
+
+  <!--<link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+  <script data-require="ui-bootstrap@*" data-semver="0.13.3" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap.min.js"></script>
+  <script data-require="firebase@*" data-semver="2.2.9" src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+  <script data-require="angularfire@*" data-semver="1.1.1" src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
+  <script src="http://ui-grid.info/release/ui-grid.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
+
+  <script src="http://ui-grid.info/release/ui-grid.js"></script>
+  <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">-->
+
+  <!--<script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>-->
+  <!--<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>-->
+
+  <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+  />
+  <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css" />
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/flatly/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <!-- CodeMirror -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" /> -->
+
+  <!-- Firepad -->
+  <!-- <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.min.js"></script> -->
+
+  <!-- Firechat -->
+  <!-- <link rel="stylesheet" href="firechat/firechat-default-custom.css" />
+  <script src="firechat/firechat-default.js"></script> -->
+
+  <!-- BootstrapValidator -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+  <!-- Bootbox for Alerts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+  <!-- Text editor -->
+  <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
+
+  <!-- Digital Worksheets -->
+  <link rel="stylesheet" href="digitalWorksheets/css/declaringVictory.css" />
+  <link rel="stylesheet" href="digitalWorksheets/css/assessment.css" />
+  <link rel="stylesheet" href="digitalWorksheets/css/adoptionBehaviorCurve.css" />
+
+  <!-- This app  -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Oswald|Shadows+Into+Light+Two' rel='stylesheet'
+    type='text/css' />
+
 </head>
-<body>  
-  <iframe width="100%" height="500" src="https://w2.countingdownto.com/1362222" frameborder="0">
+
+<body>
+
+  <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="welcomeForm">
+          <div class="modal-header bg-primary">
+            <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>How to Find Product-Market Fit</b>!</center></h2>
+          </div>
+          <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+              <!--<label class="control-label">Email</label>
+			<input type="email" class="form-control" name="attendeeEmail" id="attendeeEmail" placeholder="What email did you register with?">-->
+            </div>
+          </div>
+          <div class="modal-footer bg-primary">
+            <button type="submit" class="btn btn-success">Let's go!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <header class="fixed-header-main">
+    <div style="float:left;">
+      <center><span style="font-size:2em"><b>How to Find Product-Market Fit</b></span> with <a href="http://customerdevlabs.com"
+          target="_blank">Justin Wilcox</a></center>
+    </div>
+    <a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px" /></a>
+  </header>
+
+  <div class="fixed-container-inner">
+    <div class="fluid-container">
+      <div class="fluid-box full-height left-column">
+        <div class="top-row">
+
+          <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
+            <iframe class="youtube-iframe" data-youtube-src="https://www.youtube.com/embed/OYm9ik_Az8c?rel=0&amp;showinfo=0" width="100%"
+              height="100%" src="" frameborder="0" allowfullscreen></iframe>
+          </div>
+
+        </div>
+        <div class="bottom-row">
+
+          <div class="panel panel-warning" style="position: relative; height: 100%; width: 100%; padding:0px;">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i><b>Questions:</b></i> Ask and up vote.</h3>
+            </div>
+            <div class="panel-body" style="position: absolute; top: 41px; left: 0px; right: 0px; bottom: 50px; overflow-y: scroll;">
+              <ul class="media-list example-chat-questions" id="example-questions"></ul>
+            </div>
+            <div class="panel-footer" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
+              <div style="overflow: hidden; padding-right: .5em;">
+                <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+              </div>
+              <div class="input-group" style="display:none;">
+                <h3>Value:</h3>
+                <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat and questions in tabs -->
+          <!-- <div class="panel panel-info talkingPanel" style="height: 100%">
+            <div class="panel-body" style="position: relative; height: 100%">
+
+              <ul class="nav nav-tabs talkingTabs">
+                <li><a data-toggle="tab" id="chatTab" href="#chatTabContent">Chat</a></li>
+                <li><a data-toggle="tab" id="questionsTab" href="#questionsTabContent">Questions for Justin</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="questionsTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width">
+
+                      <div class="panel panel-info" style="">
+                        <div class="panel-heading">
+                          <h3 class="panel-title"><i><b>Questions:</b></i> Ask and up vote.</h3>
+                        </div>
+                        <div class="panel-body" style="overflow-y: auto; height: 100%;">
+                          <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                        </div>
+                        <div class="panel-footer" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
+                          <div style="overflow: hidden; padding-right: .5em;">
+                            <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+                          </div>
+                          <div class="input-group" style="display:none;">
+                            <h3>Value:</h3>
+                            <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+
+                <div id="chatTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width">
+
+                      <div style="position: relative; height: 100%; width: 100%; padding:0px">
+                        <div id="public-firechat-wrapper" class="firechatUI"></div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="fluid-box full-height right-column">
+        <div class="panel panel-info exercisesPanel" style="height: 100%" ng-controller="MainCtrl as vm">
+          <div class="panel-body" style="position: relative; height: 100%">
+            <div class="exercisesPanel">
+              <ul class="nav nav-tabs exerciseTabs">
+
+                <li><a data-toggle="tab" id="slidesTab" href="#slidesTabContent">Slides</a></li>
+                <li><a data-toggle="tab" id="notesTab" href="#notesTabContent">Notes</a></li>
+                <li><a data-toggle="tab" id="declaringVictoryTab" href="#declaringVictoryTabContent">Declaring Victory</a></li>
+                <li><a data-toggle="tab" id="declaringVictoryFeedbackTab" href="#declaringVictoryFeedbackTabContent">DV Feedback</a></li>
+
+                <li><a data-toggle="tab" id="pmfAssessmentTab" href="#pmfAssessmentTabContent">PMF Assessment</a></li>
+                <li><a data-toggle="tab" id="pmfResultsTab" href="#pmfResultsTabContent">PMF Results</a></li>
+
+                <li><a data-toggle="tab" id="earlyAdoptersTab" href="#earlyAdoptersTabContent">Your Early Adopters</a></li>
+                <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
+                <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
+
+              </ul>
+              <div class="tab-content">
+
+                <div id="notesTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                  <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width">
+                      <div class="text-editor">
+                        <h2 class="text-editor-header" style="color: #F39C12">Welcome to How to Find Product-Market Fit!</h2> You can take notes during the workshop here.
+                        </p>
+                        &nbsp;
+                        <h2>5 Phases of Product-Market Fit</h2>
+                        <ol>
+                          <li>F</li>
+                          <li>O</li>
+                          <li>C</li>
+                          <li>U</li>
+                          <li>S</li>
+                        </ol>
+                        </p>
+                        <h2>Takeaways</h2>
+                        </p>
+                        <h3><b>- Declaring Victory:</b> What's your Victory?</h3>
+                        </p>
+                        &nbsp;
+                        <h3><b>- Product-Market Fit Assessment:</b></h3>
+                        <ul>
+                          <li>Phase are you in: </li>
+                          <li>Riskiest Assumption: </li>
+                          <li>Next step: </li>
+                        </ul>
+                        </p>
+                        &nbsp;
+
+                        <h3><b>Where are your Early Adopters:</b></h3>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="slidesTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                  <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width">
+                      <iframe src="" data-src="http://www.slideshare.net/slideshow/embed_code/key/4mitCLAAe2egqV" width="100%" height="100%" frameborder="0"
+                        marginheight="0" marginwidth="0">Loading...</iframe>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="declaringVictoryFeedbackTabContent" class="tab-pane fade tabContent">
+                  <!--<div class="btn-group tabButtonGroup" role="group" style="display:none";>
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>-->
+
+                  <div class="worksheet-container">
+                    <div class="worksheet declaring-victory worksheet-feedback">
+                      <img src="digitalWorksheets/img/folded.png" class="worksheet-img fly-in" />
+
+                      <div contenteditable class="date-field blank feedback-blank" ng-model="declaringVictoryFeedback.date" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="step1-field blank feedback-blank" ng-model="declaringVictoryFeedback.step1" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="step2-field blank feedback-blank" ng-model="declaringVictoryFeedback.step2" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="number-field blank feedback-blank" ng-model="declaringVictoryFeedback.number" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="things-field blank feedback-blank" ng-model="declaringVictoryFeedback.things" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="emotion-field blank feedback-blank" ng-model="declaringVictoryFeedback.emotion" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="signature-field blank feedback-blank" ng-model="declaringVictoryFeedback.signature" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="feedback-opt-in-field blank feedback-blank" ng-model="declaringVictoryFeedback.optIn" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+
+                    </div>
+                  </div>
+
+                  <div ui-grid="vm.gridOptions" ui-grid-auto-resize ui-grid-save-state ui-grid-resize-columns ui-grid-move-columns class="grid property-grid"
+                    style="width:100%; height: 100%"></div>
+
+                </div>
+
+                <div id="declaringVictoryTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+
+                  <div class="worksheet-container">
+                    <div class="worksheet declaring-victory">
+                      <img src="digitalWorksheets/img/front.jpg" id="declaring-victory-worksheet" class="worksheet-img" />
+
+                      <div contenteditable class="date-field blank" ng-model="declaringVictory.date" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="step1-field blank" ng-model="declaringVictory.step1" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="step2-field blank" ng-model="declaringVictory.step2" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="number-field blank" ng-model="declaringVictory.number" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="things-field blank" ng-model="declaringVictory.things" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="emotion-field blank" ng-model="declaringVictory.emotion" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="signature-field blank" ng-model="declaringVictory.signature" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="feedback-opt-in-field blank" ng-model="declaringVictory.optIn" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+
+                      <div class="instruction-panel panel panel-primary">
+                        <div class="panel-heading">
+                          <span class="panel-title"></span>
+                        </div>
+                        <div class="instructions panel-body">
+                          <div class="well content">
+                          </div>
+                        </div>
+                        <div class="panel-footer">
+                          <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <a class="prev-button btn btn-default">Prev</a>
+                            <a class="next-button btn btn-primary">Next</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="steps">
+
+                    <div class="step" layout="centered-medium">
+                      <div class="title">Defining Product-Market Fit</div>
+                      <div class="content">
+                        Ready to define Product-Market Fit?
+                      </div>
+                    </div>
+
+                    <div class="step" layout="left" changeImage="digitalWorksheets/img/front.jpg">
+                      <div class="title">Declaring Victory Worksheet</div>
+                      <div class="content">
+                        This worksheet will walk you through defining Product-Market Fit.
+                      </div>
+                    </div>
+
+                    <div class="step" layout="left">
+                      <div class="title">Today's Date</div>
+                      <ul class="fields">
+                        <li class="date-field"></li>
+                      </ul>
+                      <div class="content">
+                        Start by writing in today's <b>date</b> in the field on the right.</p>
+                      </div>
+                    </div>
+
+                    <!-- <div class="step" layout="left">
+                      <div class="title">Declaring Victory</div>
+                      <div class="content">
+                        Before you go any further, <b>wait for me</b> to describe <b>why</b> this first exercise is critically important to achieving Product-Market Fit.
+                      </div>
+                    </div> -->
+
+                    <!-- <div class="step" layout="full-page">
+                                <div class="title">Product-Market Fit Isn't One Size Fits All</div>
+                                <div class="content">
+
+                                  <div class="jumbotron title-header" style="">
+                                    <h1 style="font-size: 4em; font-family: CaptureIt; font-weight: normal">Declaring Victory</h1>
+                                  </div>
+
+                                  <p>Your #1 priority as a founder, is to find Product-Market Fit.
+                                    <h3>To Find it, You Must Define it</h3> Founding teams struggle to find Product-Market Fit, in large part, because they don't define it. In this exercise, you'll solve that problem.</p>
+                                  <p>Marc Andreesen <a href="http://pmarchive.com/guide_to_startups_part4.html" target="_blank">coined</a> Product-Market Fit as:
+                                    <blockquote>
+                                      "Being in a good market with a product that can satisfy that market."
+                                    </blockquote>
+                                    That's a helpful start, but what constitutes a "good" market? And how do you measure if you've "satisfied" it?</p>
+                                  <p>It turns out while Andreesen defined the term, <strong>you</strong> get to decide what it means.
+                                    <h3>Product-Market Fit Isn't One Size Fits All</h3> You are the one starting the company, so you get to decide what a "good market" is.</p>
+                                  <p>For one founder, satisfying a good market may require a building $10 billion business. For another, it may mean creating a company she can run while while travelling six months a year. For another it may mean lifting tens-of-thousands of people
+                                    out of poverty.
+                                    <blockquote>
+                                      Your company is a vehicle to achieve <strong>your </strong>goals.
+                                    </blockquote>
+                                    <span style="line-height:29.7px;">To satisfy a good market simply means you've built a company that enables you to </span>achieve<span style="line-height:29.7px;"> what you set out to. Of course to achieve those goals, you have to know what they are.</span></p>
+                                  <p><span style="line-height:29.7px;">The process of defining your personal success criteria is called, Declaring Victory. </span></p>
+                                  <p>Once you Declare Victory...
+                                    <h3>1.<strong> </strong>Every Decision will be Easier to Make</h3> This can be a stressful time in your journey. Ahead of you lie hundreds of difficult decisions, none of which have obvious answers:
+                                    <ul>
+                                      <li>Which customers should you target first?</li>
+                                      <li>What features should your product have?</li>
+                                      <li>How much should you charge?</li>
+                                      <li>Should you raise money?</li>
+                                      <li>What skills should your co-founder(s) have?</li>
+                                      <li>And on, and on, and on...</li>
+                                    </ul>
+                                    The answers to <strong>all</strong> of these questions will be easier to come by, once you declare your victory.
+                                    <h3>2. It will give you the Confidence to Pivot</h3> It's in our nature to get emotionally attached to our ideas, our products and our customers. That attachment will serve you well, once you've found a sustainable business model. At the same time...
+                                    <blockquote>
+                                      Emotional attachment kills companies.
+                                    </blockquote>
+                                    It doesn't serve you well while you're <strong>searching </strong>for a sustainable business model.</p>
+                                  <p>During this search phase, you need to:
+                                    <ul>
+                                      <li>See the world as it actually is</li>
+                                      <li>Interpret data without bias and</li>
+                                      <li>Listen to your customers, without leading them.</li>
+                                    </ul>
+                                    This is impossibly difficult when you're emotionally attached to <strong>a product</strong>, but not when you're attached to <strong>your victory</strong>.
+                                    <h3>3. Unify your Founding Team</h3> The most powerful thing you can do when building your startup team, is align the founders' goals.</p>
+                                  <p>Misaligned goals will lead to disagreements during every critical phase of your business development:
+                                    <ul>
+                                      <li>What's your revenue model?</li>
+                                      <li>What qualities do you want in the people you hire?</li>
+                                      <li>Can people work remotely?</li>
+                                      <li>What happens when we run low on money?</li>
+                                      <li>And on, and on, and on...</li>
+                                    </ul>
+                                    If the co-founding team's goals are not aligned, all of these questions will lead to arguments, and ultimately break up your startup.</p>
+                                  <p>On the other hand, aligned goals will make seemingly difficult discussions easy, enable your leadership team to support one another during difficult times, and make it more likely you'll all achieve what you're looking for.
+                                    <h3>How do you Declare Victory?</h3>
+                                </div>
+                              </div> -->
+
+                    <div class="step" layout="left">
+                      <div class="title">What's your Product?</div>
+                      <div class="content">
+                        <p>Write in the product or service that you would like to build.</p>
+                        <!-- <p><b>Click for an Example</b></p>
+                        <p>
+                          <a href="https://focusframework.files.wordpress.com/2015/05/2015-12-03_1108_001.png" class="lightboxable">
+                            <img class="worksheet-shadow" src="https://focusframework.files.wordpress.com/2015/05/2015-12-03_1108_001.png" alt="2015-12-03_1108_001" width="100%">
+                          </a>
+                        </p>
+                        <p>As you move through FOCUS's exercises, I'll illustrate each step using my own experiments and experiences.</p> -->
+                      </div>
+                      <ul class="fields">
+                        <li class="step1-field"></li>
+                      </ul>
+                    </div>
+
+                    <div class="step" layout="left">
+                      <div class="title">Who's your Customer?</div>
+                      <div class="content">
+                        Write in the customers or people whom you would like to serve.</p>
+                      </div>
+                      <ul class="fields">
+                        <li class="step2-field"></li>
+                      </ul>
+                    </div>
+
+                    <div class="step" layout="top-right">
+                      <div class="title">Fold on the Dotted Line</div>
+                      <div class="content">
+                        Click next to <b>fold</b> the worksheet on the <b>dotted line</b> over and Declare your Victory!
+                      </div>
+                      <ul class="fields">
+                      </ul>
+                    </div>
+
+                    <div class="step" layout="top-left" changeImage="digitalWorksheets/img/folded.png">
+                      <div class="title">Your Promise</div>
+                      <div class="content">
+                        Now that your worksheet is folded, you've <strong>revealed a new contract</strong> with yourself:
+                        <ol>
+                          <li>Even if you never get to build your product and</li>
+                          <li>Even if you are not able to help the people you want to help...</li>
+                        </ol>
+                        <blockquote>You are still going to achieve victory.</blockquote>
+                      </div>
+                      <ul class="fields">
+                      </ul>
+                    </div>
+
+                    <!-- <div class="step" layout="full-page">
+                                <div class="title">What's your Victory?</div>
+                                <div class="content">
+                                  In Step 1, you stated that you want to build a specific product; however, chances are, that product that you're so attached to, is not what your customers want.
+                                  <blockquote>Yet you're still going to achieve victory.</blockquote>
+                                  In Step 2, you stated that this product will serve a specific type of customer; however the customers who truly want, and are in a position to pay for, your help are probably different than the ones you're imaging now.
+                                  <blockquote>Yet you're still going to be victorious.</blockquote>
+                                  In this exercise, you're making a promise to yourself that even if you have to pivot your product, and even if you have to shift your customer segment, you are committed to your <strong>personal </strong>fulfillment.</p>
+                                  What does Victory look like to you?
+                                  <ul>
+                                  	<li>Is it dollars in the bank?</li>
+                                  	<li>Number of people helped?</li>
+                                  	<li>Time with your family?</li>
+                                  	<li>Fewer hours at the office?</li>
+                                  	<li>People proven wrong?</li>
+                                  </ul>
+                                  Take a second (or hundreds of them), to get a sense for the personal change you'll achieve once you're a successful startup founder.
+                                  <blockquote>Please, be selfish.</blockquote>
+                                  Company vision statements like:
+                                  <ul>
+                                  	<li>“Creating a third place between work and home” – Starbucks</li>
+                                  	<li>“Accelerate the advent of sustainable transport” - Tesla</li>
+                                  </ul>
+                                  Have an incredibly important purpose...just not here. You'll create a company vision soon enough...just not now.</p><p>This isn't about the change you want to affect in the world, because the time may not be right for that change. You may have no control over if/when that change comes. To emotionally attach to it now is to blind yourself to change that <strong>can </strong>be affected.
+                                  <blockquote>Your victory, is about you.</blockquote>
+                                  <ul>
+                                  	<li>How do you want your life to be different?</li>
+                                  	<li>What achievements do you want to accomplish?</li>
+                                  	<li>How do you want to feel about yourself?</li>
+                                  </ul>
+                                  The sooner you embrace the idea that this journey is about making positive changes for yourself, the sooner you'll be able to create change for others.</p><p>Whatever you decide your victory is, make sure it's measurable by filling in the “number” blank. That'll make it infinitely easier to guide your entrepreneurial ship in that direction.</p><p>In my example, what I was looking for most was financial security.  So, no matter what I build or who I am able to help, this is my victory.</p><p>Here are some other examples:
+                                  <ul>
+                                  	<li>100 employees hired</li>
+                                  	<li>$5 billion IPO</li>
+                                  	<li>$0 student debt</li>
+                                  	<li>10,000 customers served</li>
+                                  	<li>1 acquisition by Google or Facebook</li>
+                                  	<li>&lt; 20 hours/week spent working</li>
+                                  	<li>8 hours of sleep/night</li>
+                                  	<li>12 hours/weekend spent with my kids</li>
+                                  	<li>5 teammates I love spending time with</li>
+                                  </ul>
+                                  <blockquote>It's OK to have more than one victory declaration</blockquote>
+                                  The more measurable, personal success criteria you have, the better! For example, if victory requires that you achieve three metrics:
+                                  <ol>
+                                  	<li>90% of mornings, I'm excited to go to work</li>
+                                  	<li>$500k/year salary for each co-founder</li>
+                                  	<li>5 teammates I love spending time with outside of work</li>
+                                  </ol>
+                                  That's fantastic. That'll make it easier for you to know if you're on the right track to achieving your victory - which will make it easier to achieve.</p><p>Just make sure every victory criteria is <strong>measurable</strong>, and <strong>isn't dependent</strong> on what you want to build, or who you want to build it for.
+                                </div>
+                              </div> -->
+
+                    <div class="step" layout="top-left">
+                      <div class="title">Enter your Victory</div>
+                      <div class="content">
+                        <p>Write in your <b>measurable</b> Victory metric.</p>
+                        <!-- While it may be a bit challenging to come up with, your Victory <b>must</b> be measurable. If it's not, you won't be able to tell if you're on track to get it.
+                        <a class="lightboxable" href="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/2015-12-03_1144_001.png"><img class="worksheet-shadow" src="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/2015-12-03_1144_001.png" alt="2015-12-03_1144_001" width="100%"></a> -->
+                      </div>
+                      <ul class="fields">
+                        <li class="number-field"></li>
+                        <li class="things-field"></li>
+                      </ul>
+                    </div>
+
+                    <div class="step" layout="top-left">
+                      <div class="title">Find your FOCUS</div>
+                      <div class="content">
+                        <b>Want Feedback?</b></p>
+                        Type "<b>Yes</b>" if you'd like me to review your Victory.</p>
+                        <!--<div contenteditable class="feedback-opt-in-field blank" style="display:inherit" ng-model="declaringVictory.optIn"
+                          ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>-->
+                        <i>Bonus:</i> you'll also be helping others learn.
+                      </div>
+                      <ul class="fields">
+                        <li class="feedback-opt-in-field"></li>
+                      </ul>
+                    </div>
+
+                    <div class="step" layout="top-left">
+                      <div class="title">What Emotions are you Seeking?</div>
+                      <div class="content">
+                        Now that you know what your true victory will be, write in how you imagine it will feel to achieve.</p>
+                        <!-- <p>What emotions come to mind when you imagine what will be different in your life when you declare victory?
+                          <blockquote>Why emotions?</blockquote>
+                          <p>Remember that misplaced emotional attachment kills companies. Instead of emotionally attaching to a specific product, you're going to focus your energy where it's most efficient: achieving the emotion that is driving your entrepreneurial
+                            journey.
+                          </p>
+                          <a class="lightboxable" href="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/2015-12-03_1143.png" width="100%">
+                            <img class="worksheet-shadow" src="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/2015-12-03_1143.png" width="100%">
+                          </a>
+                          <p>(<em>Wanna know a secret?</em> The reason your starting a company isn't to achieve your victory. You're starting a company to <strong>achieve the emotion</strong> you think the victory will give you.)</p> -->
+                      </div>
+                      <ul class="fields">
+                        <li class="emotion-field"></li>
+                      </ul>
+                    </div>
+
+                    <div class="step" layout="top-left">
+                      <div class="title">Make it Official</div>
+                      <div class="content">
+                        <p>Congratulations! You have your victory.</p>
+                        <!-- <p>Now you know exactly what Andreesen meant when he said, "Being in a good market with a product that can satisfy that market."</p>
+                        You will have found Product-Market Fit, when you satisfy a "good market" that enables you to achieve your victory!</p> -->
+                        <!-- <b>Sign your name</b> and <b>post this paper</b> in a very visible place (e.g. your desk, your night stand, your bathroom mirror, your car, etc.).</p>
+                        <p><i>(Posting it will be easier when you're using an actual FOCUS worksheet :)</p></i>
+                          <p>This paper will remind you of your true aim - even if you have to kill your idea, even if you have to pivot your customer segment, you will still be moving towards your victory by focusing on your personal outcomes.</p> -->
+                        <!-- <a class="lightboxable" href="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/2015-12-03_1144.png" width="100%">
+                            <img class="worksheet-shadow" src="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/2015-12-03_1144.png" width="100%">
+                          </a> -->
+                      </div>
+                      <ul class="fields">
+                        <li class="signature-field"></li>
+                      </ul>
+                    </div>
+
+                    <div class="step" layout="top-left">
+                      <div class="title">What are your Co-Founders' Victories?</div>
+                      <div class="content">
+                        Ask your co-founder(s) to complete the exercise too - either now, or when they join your team.</p>
+                        <!-- <p>It can be awkward to sit down with your co-founder(s) to understand why they want to start a company - what "victory" looks like for them. At the same time, it's the most important conversation you will have with them.
+                          <blockquote>Misaligned goals is the #1 reason founding teams break up.</blockquote>
+                          This exercise makes this crucial conversation with your co-founders easy. Simply have each co-founder fill out the worksheet individually (Steps 1 - 6) and then...
+                          <h2>Merge your Victories</h2>
+                          <a class="lightboxable" href="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/we_will_declare_victory.png" width="100%">
+                            <img class="worksheet-shadow" src="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/we_will_declare_victory.png" width="100%">
+                          </a>
+                          On the back side of the worksheet is a place for your team to merge your declarations into a single, unifying victory.</p>
+                        <p>By merging your goals into a team-wide victory declaration, you can ensure everyone is on the same page and have a common reference point you all turn to when making decisions.</p>
+                        <p>If you're not able to align your goals, better to discover that now than later. So often one founder wants to change the world, while another simply wants personal financial freedom - both are great, but not in the same founding
+                          team.
+                        </p>
+                        <p>The sooner you find out what you and your co-founder(s) want, the more quickly you can get it...either together, or apart. -->
+                      </div>
+                    </div>
+
+                    <!-- <div class="step" layout="top-left">
+                                <div class="title">Let's Recap</div>
+                                <div class="content">
+                                  I told you at the beginning of this exercise that to find Product-Market Fit, you needed to define it, and to define it, you'd need to declare your victory.</p><p>I said declaring your victory would:
+                                  <ol>
+                                  	<li>Make decisions easier</li>
+                                  	<li>Give you the confidence to pivot and</li>
+                                  	<li>Unify your founding team</li>
+                                  </ol>
+                                </div>
+                              </div>
+
+                              <div class="step" layout="top-left">
+                                <div class="title">Let's Recap</div>
+                                <div class="content">
+                                  <p>Declaring Victory - your personal victory - makes decisions easier by reminding you what's most important about this journey.</p><p>Declaring Victory gives you the confidence to pivot because focusing on your personal goal allows you to respond effectively to real-world data - even when that data is different than what you wanted it to be.</p><p>Finally, Declaring Victory facilitates the critical "Why are we all doing this?" conversation between you and your co-founders. The results of this conversation will strengthen your team to withstand the emotional roller coaster that is starting a company.</p>
+                                </div>
+                              </div> -->
+
+                    <div class="step" layout="top-left">
+                      <div class="title">Find your FOCUS</div>
+                      <div class="content">
+                        <p>Congratulations, you've taken the most important step of your startup journey, you've Declared Victory
+                          and in doing so, defined your Product-Market Fit.
+                          <blockquote>Write your Victory Declaration in your <b>Notes</b> tab!</blockquote>
+                          <!-- If you want help achieving your Victory, get <b>your copy</b> of FOCUS today! -->
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div id="earlyAdoptersTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                  <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width wood-background">
+
+                      <div>
+                        <div class="behavior-curve wood-background" style="">
+                          <img src="digitalWorksheets/img/adoptionBehaviorCurve.jpg" class="worksheet-background-img" />
+
+                          <div contenteditable class="segment-field blank">Your customer segment</div>
+                          <div contenteditable class="problem-field blank">Your customer's problem (in their words)</div>
+
+                          <div contenteditable class="laggard have-problem grid-field blank"></div>
+                          <div contenteditable class="laggard know-problem grid-field blank"></div>
+                          <div contenteditable class="laggard paying-problem grid-field blank"></div>
+                          <div contenteditable class="late have-problem grid-field blank yes-field"></div>
+                          <div contenteditable class="late know-problem grid-field blank"></div>
+                          <div contenteditable class="late paying-problem grid-field blank"></div>
+                          <div contenteditable class="early have-problem grid-field blank yes-field"></div>
+                          <div contenteditable class="early know-problem grid-field blank yes-field"></div>
+                          <div contenteditable class="early paying-problem grid-field blank"></div>
+                          <div contenteditable class="adopters have-problem grid-field blank yes-field"></div>
+                          <div contenteditable class="adopters know-problem grid-field blank yes-field"></div>
+                          <div contenteditable class="adopters paying-problem grid-field blank yes-field"></div>
+
+                          <div contenteditable class="blank internal behaviors-field">1.
+                            <br/>2.
+                            <br/>3.
+                            <br/>4.
+                            <br/>5.
+                            <br>
+                          </div>
+                          <div contenteditable class="blank external behaviors-field">1.
+                            <br/>2.
+                            <br/>3.
+                            <br/>4.
+                            <br/>5.
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="pmfAssessmentTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                  <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width">
+
+                      <div class="assessmentIntro">
+                        <h2>Product-Market Fit Assessment</h2> This exercise will tell you:
+                        <ol>
+                          <li style="margin-top: 10px">What phase of Product-Market Fit you're in</li>
+                          <li>Your startup's "Riskiest Assumption"</li>
+                          <li>Your next step to test that assumption</li>
+                        </ol>
+                        <h3>Just answer these questions...</h3>
+                      </div>
+
+                      <table id="treeTable">
+                      </table>
+
+                      <button class="btn btn-default" id="refreshPMFChartsButton" onclick="refreshPMFCharts();" style="display:none">Refresh</button>
+                      <div id="pmfPhaseChart"></div>
+                      <div id="pmfPathChart"></div>
+
+                      <table id="qTable">
+                        <!-- 1 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Have you launched your product?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>30</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>2</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 2 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Are customers paying for it?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>23</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>3</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 3 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Are enough customers paying for it that, if you keep doing what you're doing, you'll achieve Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>5</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>4</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Not sure<i>20</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 4 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Congrats!</span> You're on the path to Product-Market
+                                Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  Keep doing what you're doing!
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 5 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why aren't you on track to acheive Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">Not enough customers<i>6</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Customer Lifetime Value is too low<i>16</i></li>
+                                  </p>
+                                </ul>
+                                <div class="hint"><span class="hintLabel">Not sure?</span> Go with your gut. Eventually you'll test both.</div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 6 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why don't you have enough customers?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">Having trouble finding them<i>7</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Conversion rate it too low<i>10</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Customer segment is too small<i>14</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Customer aren't referring enough other customers (i.e. Viral Coefficient is too low)<i>15</i></li>
+                                  </p>
+                                </ul>
+                                <div class="hint"><span class="hintLabel">Not sure?</span> Starting at the top, pick the first answer you <b>think</b>                                  could be the reason.</div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 7 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Where are you looking for customers?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">Places I think my customers are.<i>8</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Places customers have told me they are.<i>9</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 8 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption is: </span>You know where
+                                your customers look for solutions to their problems.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Finding Early Adopters for
+                                    your product.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Your Next Step:</span> Interview customers to validate
+                                    where they look for solutions.</div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  Want Help?
+                                </a> This <a href="#recommendedExercise" data-toggle="collapse"
+                                  href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html"><img class="well exercisePic" src="https://focusframework.files.wordpress.com/2015/05/adoption-behavior-curve-portrait-01.jpg"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"><a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html">Adoption Behavior Curve</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> Understand who your Early Adopters
+                                    are, and where to find them, by contrasting their behavior with your Early Majority,
+                                    Late Majority, etc.</p> Use this information to make your interviews easier and faster
+                                    to get.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 1...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html"><b>Finding Early Adopters:</b> Exercise 4</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 9 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Your marketing
+                                channels can reach a sufficient number of customers for you to achieve Product-Market Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Offer Testing - You can
+                                    Reach your Early Adopters.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Test alternative channels to determine
+                                    potential customer segment size. </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  Want Help?
+                                </a> This <a href="#recommendedExercise" data-toggle="collapse"
+                                  href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/o/05-path-to-victory/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/07/2015-12-16-15_49_361-e1451991940839.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/o/05-path-to-victory/index.html">Path to Victory</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This spreadsheet will show you if your
+                                    segment is large enough for you to achieve Product-Market Fit based on real-world, bottoms-up,
+                                    data.
+
+                                    </p>You'll also be able to estimate the size of your marketing channels, conversion rates,
+                                    and price points to determine the best approach for you to achieve Product-Market Fit.
+                                  </div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 2...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/o/05-path-to-victory/index.html"><b>Offer Testing:</b> Exercise 6</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 10 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">What emotions are you evoking in your Call to Action?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">I'm not evoking emotions in my Call to Action<i>11</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Emotions I <b>think</b> my customers are experiencing<i>12</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Emotions my customers have told me they are experiencing<i>13</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 11 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> You understand
+                                what your customers are trying to accomplish in their roles.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Finding Early Adopters for
+                                    your product.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Interview your customers to understand
+                                    what problems they are actively trying to solve.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  Want Help?
+                                </a> This <a href="#recommendedExercise" data-toggle="collapse"
+                                  href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/f/02-idea-generation/index.html"><img class="exercisePic" src="http://focusframework.files.wordpress.com/2015/05/2015-05-22_2219.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName">
+                                      <a href="http://customerdevlabs.com/focus/exercises/f/02-idea-generation/index.html"><span style="text-decoration: line-through">Idea</span> Problem Generation</a>
+                                    </div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will help you brainstorm
+                                    specific groups of customers you can serve by focusing on their <b>problems</b>.
+
+                                    </p>Everything is easier when you center your attention on your customer's problems:
+                                    asking for interviews, marketing, sales, product development, etc. Take this step now,
+                                    and you'll move much faster through the rest of your journey.
+                                  </div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 1...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/f/02-idea-generation/index.html"><b>Finding Early Adopters:</b> Exercise 2</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 12 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> You understand
+                                your customer's emotional desires.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> .</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Interview your customers to understand
+                                    their emotional desires.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  Want Help?
+                                </a> This <a href="#recommendedExercise" data-toggle="collapse"
+                                  href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/05/adoption-behavior-curve-portrait-01.jpg"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"><a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html">Adoption Behavior Curve</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> Understand who your Early Adopters
+                                    are, and where to find them, by contrasting their behavior with your Early Majority,
+                                    Late Majority, etc.</p> Use this information to make your interviews easier and faster
+                                    to get.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 1...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html"><b>Finding Early Adopters:</b> Exercise 4</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 13 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Your marketing
+                                copy reasonates emotionally with your customers.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Offer Testing - You can
+                                    Reach your Early Adopters.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Test multiple versions of your marketing
+                                    copy/Call to Action.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  Want Help?
+                                </a> This <a href="#recommendedExercise" data-toggle="collapse"
+                                  href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/o/02-problem-synthesis/index.html"><img class="exercisePic" src="http://focusframework.files.wordpress.com/2015/06/problem-synthesis-2-copy.jpg"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/o/02-problem-synthesis/index.html">Problem Synthesis</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will help you identify
+                                    the emotions your customers' emotions.
+
+                                    </p>By identifying and addressing your customers' emotional needs, you'll significantly
+                                    increase your conversion rate.
+                                  </div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 2...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/o/02-problem-synthesis/index.html"><b>Offer Testing:</b> Exercise 2</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 14 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> There are large
+                                enough customer segments for you to achieve Product-Market Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Scaling to Product-Market
+                                    Fit.
+                                  </div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Identify, size and test related customer
+                                    segments.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  Want Help?
+                                </a> This <a href="#recommendedExercise" data-toggle="collapse"
+                                  href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                  FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/s/05-scaling-your-segments/index.html"><img class="exercisePic" src="http://focusframework.files.wordpress.com/2015/11/2015-11-05_1934.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/s/05-scaling-your-segments/index.html">Scaling your Segments</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will show you how to
+                                    transition from your Early Adopters to your Early Majority segment.
+
+                                    </p>By acquiring secondary and tertiary segments you'll be able to accelerate your path
+                                    to Product-Market Fit.
+
+                                  </div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 5...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/s/05-scaling-your-segments/index.html"><b>Scaling to Fit:</b> Exercise 5</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 15 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Your solution
+                                is solving your customer's problem well enough, and they are incentivized enough, to share
+                                your product with others.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Utility Testing - You can
+                                    Satisfy your Early Adopters.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Increase your Viral Coefficent (i.e.
+                                    K Factor).
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                Want Help?
+                                </a> This <a href="#recommendedExercise" data-toggle="collapse"
+                                  href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                                                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/u/07-increasing-your-viral-coefficient/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/09/increasing-k-01.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/u/07-increasing-your-viral-coefficient/index.html">Increasing your Viral Coefficient</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will help you brainstorm
+                                    and prioritize ways to increase the virality of your product.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 4...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/u/07-increasing-your-viral-coefficient/index.html"><b>Utility Testing:</b> Exercise 4</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 16 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why is your Customer Lifetime Value too low?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">Customer churn is too high (i.e. they cancel your service too soon)<i>17</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Price is too low<i>18</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Cost of customer acquisition is too high<i>19</i></li>
+                                  </p>
+                                </ul>
+                                <div class="hint"><span class="hintLabel">Not sure?</span> Starting at the top, pick the first answer you <b>think</b>                                  could be the reason.</div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 17 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Your solution
+                                is solving your customer's problem well enough that they'll continue paying for it.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Utility Testing - You can
+                                    Satisfy your Early Adopters.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Test ways to increase the value your
+                                    solution is providing to customers.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/u/06-increasing-customer-lifetime-value/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/09/increasing-ltv-01.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/u/06-increasing-customer-lifetime-value/index.html">Increasing Customer Lifetime Value</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will provide four different
+                                    techniques to increase your Customer Lifetime Value making it more likely you'll achieve
+                                    Product-Market Fit..</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 4...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/u/06-increasing-customer-lifetime-value/index.html"><b>Utility Testing:</b> Exercise 6</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 18 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Customers will
+                                pay enough to solve their problem for you to achieve Product-Market Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Currency Testing - Your
+                                    Early Adopters will Pay you.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Optimize your price via price testing.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/c/08-science-of-pricing/index.html"><img class="exercisePic" src="http://focusframework.files.wordpress.com/2015/08/2015-08-18_1724_001.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/c/08-science-of-pricing/index.html">Science of Pricing</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> Whether you're B2B or B2C, this exercise
+                                    will show how to optimize your price - without upsetting your customers!</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 3...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/c/08-science-of-pricing/index.html"><b>Currency Testing:</b> Exercise 8</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 19 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> You can lower
+                                your Cost of Customer acquisition such that you can achieve Product-Market Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Offer Testing: You can Reach
+                                    your Early Adopters.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Test alternative channels to determine
+                                    your optimal acquisition ROI.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/o/05-path-to-victory/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/07/2015-12-16-15_49_361-e1451991940839.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/o/05-path-to-victory/index.html">Path to Victory</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This spreadsheet will show you what
+                                    combination of marketing channels, price point, and conversion rates you'll need to acheive
+                                    in order to find Product-Market Fit.
+                                  </div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 2...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/o/05-path-to-victory/index.html"><b>Offer Testing:</b> Exercise 6</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 20 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Have you defined a metric that represents when you have acheived Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>21</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>22</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 21 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> You know what
+                                Product-Market Fit means for you and your team.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Finding Early Adopters for
+                                    your product.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Define Product-Market Fit for you
+                                    and your team.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/f/01-declaring-victory/index.html"><img class="exercisePic" src="http://customerdevlabs.com/focus/wp-content/uploads/2015/05/Victory-Declaration-Front.jpg"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/f/01-declaring-victory/index.html">Declaring Victory</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> You can't achieve Product-Market Fit
+                                    until you've defined it for you and your team.
+
+                                    </p>This exercise will walk your entire team through the process of defining the most
+                                    important metric of your startup...what success looks like.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 1...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/f/01-declaring-victory/index.html"><b>Finding Early Adopters:</b> Exercise 1</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 22 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> The problem you're
+                                solving will lead you on a path to Product-Market Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Currency Testing - Your
+                                    Early Adopters will Pay you.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Calculate your the size of this market
+                                    to determine if Product-Market Fit is achievable.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/c/03-currency-calculator/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/08/2016-01-21-21_07_40.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/c/03-currency-calculator/index.html">Currency Calculator</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This spreadsheet will tell you how
+                                    large your segment has the potential to be and exactly what conversion rates you'll need
+                                    to achieve in order to find Product-Market Fit.
+                                  </div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 3...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/c/03-currency-calculator/index.html"><b>Currency Testing:</b> Exercise 3</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 23 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Are customers using the product?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>41</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>24</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 24 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why aren't your customers paying to use your product?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">Product isn't high enough quality to charge yet (i.e. pilot phase, trialing, etc.)<i>25</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Going to monetize after reaching critical mass<i>26</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Pursuing a freemium model and haven't built paid features yet<i>25</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Tried charging but no one would pay<i>10</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 25 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Customers will
+                                pay you enough that you'll achieve Product-Market Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Currency Testing: Your Early
+                                    Adopters will Pay you.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Charge customers via pre-orders or
+                                    Letters of Intent for future functionality.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/c/07-how-to-pre-sell-anything/index.html"><img class="exercisePic" src="http://focusframework.files.wordpress.com/2015/08/2015-08-18_1724.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/c/07-how-to-pre-sell-anything/index.html">How to Pre-Sell Anything</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> Whether you're B2B or B2C, this exercise
+                                    will show you how to pre-sell a solution to a problem - without deceiving or disappointing
+                                    your customers.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 3...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/c/07-how-to-pre-sell-anything/index.html"><b>Currency Testing:</b> Exercise 7</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 26 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Are enough customers using it that, if you keep doing what you're doing, you'll achieve Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>28</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>38</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Not sure<i>20</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 27 -->
+                        <tr>
+                          <td>
+                            <!-- Dummy. This shouldn't show up -->
+                          </td>
+                        </tr>
+                        <!-- 28 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why aren't enough customers using for you to achieve Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">Having trouble finding them<i>7</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Conversion rate it too low<i>10</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Customer segment is too small<i>14</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Customer aren't referring enough other customers (i.e. Viral Coefficient is too low)<i>15</i></li>
+                                  </p>
+                                </ul>
+                                <div class="hint"><span class="hintLabel">Not sure?</span> Starting at the top, pick the first answer you <b>think</b>                                  could be the reason.</div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 29 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Have you defined a metric that represents when you have acheived Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>21</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>22</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 30 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Have you generated any pre-sales or signed Letters of Intent?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>35</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>31</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 31 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Are enough customers pre-paying for it that, if you solve their problems, you'll achieve Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>5</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>32</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Not sure<i>20</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 32 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why haven't you launched the product yet?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No development team<i>33</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Solution is still under development<i>33</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Testing the solution privately before making it available publicly<i>34</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 33 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> You can solve
+                                your customers' problems.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Utility Testing - You can
+                                    Satisfy your Early Adopters.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Test a manual solution.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/u/03-how-to-build-a-utility-test/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/08/what-features-to-utility-test-011.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/u/03-how-to-build-a-utility-test/index.html">How to Build a Utility Test</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will walk you through
+                                    how to create a manual solution in the most efficient way possible.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 4...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/u/03-how-to-build-a-utility-test/index.html"><b>Utility Testing:</b> Exercise 3</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 34 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> You can solve
+                                your customers' problems at scale.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Scaling to Fit - You can
+                                    achieve Product-Market Fit.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Test an automated solution.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/s/03-scaling-your-solution/index.html"><img class="exercisePic" src="http://focusframework.files.wordpress.com/2015/11/2015-11-05_1938.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/s/03-scaling-your-solution/index.html">Scaling your Solution</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will help you transition
+                                    from a manual solution to an automated one in the most efficient way possible.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 5...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/s/03-scaling-your-solution/index.html"><b>Scaling to Fit:</b> Exercise 3</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 35 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Have you identified a problem at least 60% of your customers are actively trying to solve?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>40</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>36</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 36 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">If you solve the problem, will you achieve Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>5</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>37</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Not sure<i>39</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 37 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why aren't you collecting pre-orders or Letters of Intent?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">Can't finding customers to pre-sell<i>7</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Don't know how<i>38</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Tried but no one bought<i>10</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 38 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Customers will
+                                pay you enough that you'll achieve Product-Market Fit.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Currency Testing - Your
+                                    Early Adopters will Pay you.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Charge customers via pre-orders or
+                                    Letters of Intent for future functionality.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/c/01-what-is-currency-testing/index.html"><img class="exercisePic" src="http://focusframework.files.wordpress.com/2015/08/screen-shot-2015-08-05-at-2-50-10-pm-e1438800584548.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/c/01-what-is-currency-testing/index.html">What is Currency Testing?</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will introduce you to
+                                    Currency Testing so you can confidently validate whether customers will pay you enough
+                                    for you to achieve Product-Market Fit.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 3...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/c/01-what-is-currency-testing/index.html"><b>Currency Testing:</b> Exercise 1</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 39 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Have you defined a metric that represents when you have acheived Product-Market Fit?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">No<i>21</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Yes<i>9</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 40 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Customers are
+                                actively trying to solve a problem your product will solve for them.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Finding Early Adopters for
+                                    your product.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Interview customers to determine what
+                                    problems they are actively trying to solve.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/05/adoption-behavior-curve-portrait-01.jpg"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"><a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html">Adoption Behavior Curve</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> Understand who your Early Adopters
+                                    are, and where to find them, by contrasting their behavior with your Early Majority,
+                                    Late Majority, etc.</p> Use this information to make your interviews easier and faster
+                                    to get.</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 1...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/f/04-adoption-behavior-curve/index.html"><b>Finding Early Adopters:</b> Exercise 4</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 41 -->
+                        <tr>
+                          <td>
+                            <div class="question panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">Why aren't customers using your product?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <ul>
+                                  <li class="btn btn-default">I'm not sure how/where to find customers to tell about it<i>8</i></li>
+                                  </p>
+                                  <li class="btn btn-default">I've told them about it, but they don't really use it<i>11</i></li>
+                                  </p>
+                                  <li class="btn btn-default">Customers use it a little, but then they stop<i>42</i></li>
+                                  </p>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- 42 -->
+                        <tr>
+                          <td>
+                            <div class="assessment panel panel-success">
+                              <div class="assumption panel-heading">
+                                <span class="assumptionLabel panel-title">Your Riskiest Assumption:</span> Your product solves
+                                your customers' problems.
+                              </div>
+                              <div class="panel-body">
+                                <div class="nextStep well">
+                                  <div class="phaseTitle"><span class="assumptionLabel">Product-Market Fit Phase:</span> Utility Testing - You can
+                                    Satisfy your Early Adopters.</div>
+                                  <div class="nextStep"><span class="assumptionLabel">Your Next Step:</span> Test ways to increase the value your
+                                    solution is providing to customers.
+                                  </div>
+                                </div>
+                                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#recommendedExercise" aria-expanded="false" aria-controls="recommendedExercise">
+                      Want Help?
+                    </a> This <a href="#recommendedExercise" data-toggle="collapse" href="#recommendedExercise"
+                                  aria-expanded="false" aria-controls="recommendedExercise">
+                      FOCUS exercise</a> will help...
+                                <div id="recommendedExercise" class="collapse well recommendedExercise">
+                                  <a href="http://customerdevlabs.com/focus/exercises/u/06-increasing-customer-lifetime-value/index.html"><img class="exercisePic" src="https://focusframework.files.wordpress.com/2015/09/increasing-ltv-01.png"
+                                    /></a>
+                                  <div class="exerciseDiv">
+                                    <h3 class="exerciseLabel">Recommended FOCUS Exercise...</h3>
+                                    <div class="exerciseName"> <a href="http://customerdevlabs.com/focus/exercises/u/06-increasing-customer-lifetime-value/index.html">Increasing Customer Lifetime Value</a></div>
+                                  </div>
+                                  <div class="exerciseDescription"><span class="descriptionHeader">Description:</span> This exercise will provide four different
+                                    techniques to increase your Customer Lifetime Value making it more likely you'll achieve
+                                    Product-Market Fit..</div>
+                                  <div class="workbookDiv">
+                                    <h4 class="workbookHeader">Found in FOCUS Workbook 4...</h4>
+                                    <div>
+                                      <h4><span class="workbookLabel"><a href="http://customerdevlabs.com/focus/exercises/u/06-increasing-customer-lifetime-value/index.html"><b>Utility Testing:</b> Exercise 6</a></span></h4></div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="bonusTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading">
+                        <h3 class="panel-title bold">Bonus #1</h3>
+                      </div>
+                      <div class="panel-body">
+                        <center>
+                          <h3>
+                              <span style="font-weight: bold; color: #428bca">FREE</span> Customer Interview Email Course<br/>
+                          </h3>
+                        </center>
+                        You'll learn...
+                        <ul>
+                          <li>Which customers to ask for interviews</li>
+                          <li>A cold email script that works to get interviews</li>
+                          <li>How to analyze your interview answers</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="panel panel-primary" style="margin-top: 20px">
+                      <div class="panel-heading">
+                        <h3 class="panel-title bold">Bonus #2</h3>
+                      </div>
+                      <div class="panel-body">
+                        <center>
+                          <h3><a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework</b></a></h3>
+                          <h4>$20 Off Launch-Day Coupon</h4>
+                          <a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/All-Bookshops.png" style="width: 100%; margin-top:20px"></a>
+                        </center>
+
+                        <div style="padding: 0px">
+                          <center>
+                            <h4>Crowdfunding on May 3rd</h4>
+                          </center>
+                        </div>
+                        </center>
+                      </div>
+                      <div class="panel-footer">
+                        <form class="form-inline" id="enrollForm" style="text-align: center">
+                          <div class="form-group">
+                            Enroll &amp; get $20 off:
+                            <input type="email" class="form-control" name="enrollEmail" id="enrollEmail" placeholder="your@email.com">
+                            <button id="enrollButton" type="submit" class="btn btn-success">Get both Bonuses!</button>
+                          </div>
+                        </form>
+                        <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Success!
+                          You have been enrolled and your coupon will hit your inbox before crowdfunding begins!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="feedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+
+                    <div class="panel panel-primary" style="margin-top: 20px">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">How likely would you be to recommend this workshop to a friend?</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="" style="text-align: center">
+                          <div class="btn-group npsButtons" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default">0</button>
+                            <button type="button" class="btn btn-default">1</button>
+                            <button type="button" class="btn btn-default">2</button>
+                            <button type="button" class="btn btn-default">3</button>
+                            <button type="button" class="btn btn-default">4</button>
+                            <button type="button" class="btn btn-default">5</button>
+                            <button type="button" class="btn btn-default">6</button>
+                            <button type="button" class="btn btn-default">7</button>
+                            <button type="button" class="btn btn-default">8</button>
+                            <button type="button" class="btn btn-default">9</button>
+                            <button type="button" class="btn btn-default">10</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel-footer" style="height: 40px">
+                        <div style="float: left">Not at likely</div>
+                        <div style="float: right">Extremely likely</div>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-primary" style="margin-top: 20px">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">What's one thing we can improve next time?</h3>
+                      </div>
+                      <div class="panel-body">
+                        <textarea id="toImprove" class="form-control" rows="3"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-primary" style="margin-top: 20px">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">What was your favorite part of the workshop?</h3>
+                      </div>
+                      <div class="panel-body">
+                        <textarea id="favoritePart" class="form-control" rows="3"></textarea>
+                      </div>
+                      <div class="panel-footer" style="text-align: center">
+                        <div class="alert alert-success alert-dismissable" id="feedbackSuccessAlert" style="display:none;">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Thank
+                          you, we got your feedback!
+                        </div>
+
+                        <button id="submitFeedbackButton" class="btn btn-large btn-primary" href="http://focus.customerdevlabs.com" target="_blank">Submit Feedback</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+  <footer class="fixed-footer-main" style="padding: 5px">
+    &copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015 - 2016
+  </footer>
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+  <script data-require="ui-bootstrap@*" data-semver="0.13.3" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap.min.js"></script>
+  <script data-require="firebase@*" data-semver="2.2.9" src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+  <script data-require="angularfire@*" data-semver="1.1.1" src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
+  <script src="http://ui-grid.info/release/ui-grid.js"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+
+  <script type="text/javascript" src="digitalWorksheets/js/lightbox.js"></script>
+  <script src="digitalWorksheets/js/declaringVictory.js"></script>
+  <script src="digitalWorksheets/js/assessment.js"></script>
+  <script src="fieast.js"></script>
 </body>
 
 </html>
