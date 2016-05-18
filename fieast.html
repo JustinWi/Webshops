@@ -34,7 +34,7 @@
 
   <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
   />
-  <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.min.css" type="text/css" />
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
@@ -108,7 +108,7 @@
       <center><span style="font-size:2em"><b>How to Find Product-Market Fit</b></span> with <a href="http://customerdevlabs.com"
           target="_blank">Justin Wilcox</a></center>
     </div>
-    <a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px" /></a>
+    <!--<a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px" /></a>-->
   </header>
 
   <div class="fixed-container-inner">
@@ -1976,7 +1976,7 @@
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
                   <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-primary" style="margin-top: 20px">
                       <div class="panel-heading">
                         <h3 class="panel-title bold">Bonus #1</h3>
                       </div>
@@ -1992,40 +1992,41 @@
                           <li>A cold email script that works to get interviews</li>
                           <li>How to analyze your interview answers</li>
                         </ul>
+
+                      </div>
+                      <div class="panel-footer">
+                        <form class="form-inline" id="enrollForm" style="text-align: center">
+                          <div class="form-group">
+                            Enroll:
+                            <input type="email" class="form-control" name="enrollEmail" id="enrollEmail" placeholder="your@email.com">
+                            <button id="enrollButton" type="submit" class="btn btn-success">Enroll Now</button>
+                          </div>
+                        </form>
+                        <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Success!
+                          The course will hit your inbox shortly!
+                        </div>
                       </div>
                     </div>
-                    <div class="panel panel-primary" style="margin-top: 20px">
+                    <div class="panel panel-primary">
                       <div class="panel-heading">
                         <h3 class="panel-title bold">Bonus #2</h3>
                       </div>
                       <div class="panel-body">
                         <center>
                           <h3><a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework</b></a></h3>
-                          <h4>$20 Off Launch-Day Coupon</h4>
+                          <h4><b>$20 Off</b> Coupon</h4>
                           <a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/All-Bookshops.png" style="width: 100%; margin-top:20px"></a>
                         </center>
 
                         <div style="padding: 0px">
                           <center>
-                            <h4>Crowdfunding on May 3rd</h4>
+                            <h4>Use coupon: <b>CDLFIT</b><br/>(next <b>24</b> hours)</h4>
                           </center>
-                        </div>
-                        </center>
-                      </div>
-                      <div class="panel-footer">
-                        <form class="form-inline" id="enrollForm" style="text-align: center">
-                          <div class="form-group">
-                            Enroll &amp; get $20 off:
-                            <input type="email" class="form-control" name="enrollEmail" id="enrollEmail" placeholder="your@email.com">
-                            <button id="enrollButton" type="submit" class="btn btn-success">Get both Bonuses!</button>
-                          </div>
-                        </form>
-                        <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
-                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Success!
-                          You have been enrolled and your coupon will hit your inbox before crowdfunding begins!
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
 
@@ -2113,7 +2114,7 @@
   <script data-require="firebase@*" data-semver="2.2.9" src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
   <script data-require="angularfire@*" data-semver="1.1.1" src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
-  <script src="http://ui-grid.info/release/ui-grid.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.min.js"></script>
   <script src="http://code.highcharts.com/highcharts.js"></script>
 
   <script type="text/javascript" src="digitalWorksheets/js/lightbox.js"></script>
