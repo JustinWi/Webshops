@@ -2,7 +2,7 @@
 <html ng-app="app">
 
 <head>
-  <title>Experiential Entrepreneurship Education | Justin Wilcox</title>
+  <title>5 Experiments to Find Product-Market Fit | Justin Wilcox</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width">
 
@@ -87,7 +87,7 @@
       <div class="modal-content">
         <form id="welcomeForm">
           <div class="modal-header bg-primary">
-            <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>Experiential Entrepreneurship Education</b>!</center></h2>
+            <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>5 Experiments to Find Product-Market Fit</b>!</center></h2>
           </div>
           <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
             <div class="form-group">
@@ -107,9 +107,11 @@
 
   <header class="fixed-header-main">
     <div style="float:left;">
-      <center><span style="font-size:2em"><b>Experiential Entrepreneurship Education</b></span> with Justin Wilcox, Diana Kander & Doan Winkle</center>
+      <center><span style="font-size:2em"><b>5 Experiments to Find Product-Market Fit</b></span> with <a href="http://startupweekend.org"
+          target="_blank">Startup Weekend</a> and <a href="http://customerdevlabs.com" target="_blank">Justin Wilcox</a></center>
     </div>
-    <!--<a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px" /></a>-->
+    <a href="http://startupweekend.org" target="_blank"><img src="https://brandisty.com/img?id=53bd79ee3926f2376100007a&format=png&w=300&h=127" style="display: inline-block; width: 100px; float:right; margin-top:-5px"
+      /></a>
   </header>
 
   <div class="fixed-container-inner">
@@ -118,7 +120,7 @@
         <div class="top-row">
 
           <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
-            <iframe class="youtube-iframe" data-youtube-src="https://www.youtube.com/embed/kAi5AFoXZXw?rel=0&amp;showinfo=0" width="100%"
+            <iframe class="youtube-iframe" data-youtube-src="https://www.youtube.com/embed/AXvexQ0tZUQ?rel=0&amp;showinfo=0" width="100%"
               height="100%" src="" frameborder="0" allowfullscreen></iframe>
           </div>
 
@@ -211,8 +213,11 @@
                 <li><a data-toggle="tab" id="declaringVictoryFeedbackTab" href="#declaringVictoryFeedbackTabContent">DV Feedback</a></li>
 
                 <li><a data-toggle="tab" id="pmfAssessmentTab" href="#pmfAssessmentTabContent">PMF Assessment</a></li>
+
                 <li><a data-toggle="tab" id="earlyAdoptersTab" href="#earlyAdoptersTabContent">Your Early Adopters</a></li>
-                <li><a data-toggle="tab" id="ideaGenerationTab" href="#ideaGenerationTabContent">Idea Generation</a></li>
+                <li><a data-toggle="tab" id="earlyAdoptersFeedbackTab" href="#earlyAdoptersFeedbackTabContent">EA Feedback</a></li>
+
+                <!--<li><a data-toggle="tab" id="ideaGenerationTab" href="#ideaGenerationTabContent">Idea Generation</a></li>-->
 
                 <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
                 <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
@@ -244,6 +249,20 @@
                         </p>
                         <h2>Takeaways</h2>
                         </p>
+                        <h3><b>- Declaring Victory:</b> What's your Victory?</h3>
+                        </p>
+                        &nbsp;
+                        <h3><b>- Product-Market Fit Assessment:</b></h3>
+                        <ul>
+                          <li>Phase are you in: </li>
+                          <li>Riskiest Assumption: </li>
+                          <li>Next step: </li>
+                        </ul>
+                        </p>
+                        &nbsp;
+
+                        <h3><b>Where are your Early Adopters:</b></h3>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -258,19 +277,13 @@
                   </div>
                   <div class="fluid-container">
                     <div class="fluid-box full-height full-width">
-                      <iframe src="" data-src="http://www.slideshare.net/slideshow/embed_code/key/4HiT8eN44ernNz" width="100%" height="100%" frameborder="0"
+                      <iframe src="" data-src="http://www.slideshare.net/slideshow/embed_code/key/5A2coykWmifbd" width="100%" height="100%" frameborder="0"
                         marginheight="0" marginwidth="0">Loading...</iframe>
                     </div>
                   </div>
                 </div>
 
                 <div id="declaringVictoryFeedbackTabContent" class="tab-pane fade tabContent">
-                  <!--<div class="btn-group tabButtonGroup" role="group" style="display:none";>
-                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                    <button type="button" class="btn btn-default activeTabButton">Active</button>
-                    <button type="button" class="btn btn-default showTabButton">Show</button>
-                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                  </div>-->
 
                   <div class="worksheet-container">
                     <div class="worksheet declaring-victory worksheet-feedback">
@@ -661,8 +674,8 @@
                         <div class="digital-worksheet behavior-curve wood-background">
                           <img src="digitalWorksheets/img/adoptionBehaviorCurve.jpg" class="worksheet-background-img" />
 
-                          <div contenteditable class="segment-field blank">Your customer segment</div>
-                          <div contenteditable class="problem-field blank">Your customer's problem (in their words)</div>
+                          <div contenteditable class="segment-field blank" ng-model="earlyAdopters.segment" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="problem-field blank" ng-model="earlyAdopters.problem" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
 
                           <div contenteditable class="laggard have-problem grid-field blank"></div>
                           <div contenteditable class="laggard know-problem grid-field blank"></div>
@@ -677,24 +690,74 @@
                           <div contenteditable class="adopters know-problem grid-field blank yes-field"></div>
                           <div contenteditable class="adopters paying-problem grid-field blank yes-field"></div>
 
-                          <div contenteditable class="blank internal behaviors-field">1.
+                          <div contenteditable class="blank internal behaviors-field" ng-model="earlyAdopters.behaviors" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">1.
                             <br/>2.
                             <br/>3.
                             <br/>4.
                             <br/>5.
                             <br>
                           </div>
-                          <div contenteditable class="blank external behaviors-field">1.
+                          <div contenteditable class="blank external behaviors-field" ng-model="earlyAdopters.externalBehaviors" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">1.
                             <br/>2.
                             <br/>3.
                             <br/>4.
                             <br/>5.
                             <br>
                           </div>
+
+                          <div contenteditable class="ea-feedback-opt-in-field blank" ng-model="earlyAdopters.optIn" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <div id="earlyAdoptersFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="worksheet-container">
+                    <div class="digital-worksheet behavior-curve wood-background">
+                      <img src="digitalWorksheets/img/adoptionBehaviorCurve.jpg" class="worksheet-background-img" style="top: 10px" />
+
+                      <div contenteditable class="segment-field blank feedback-blank" ng-model="earlyAdoptersFeedback.segment" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="problem-field blank feedback-blank" ng-model="earlyAdoptersFeedback.problem" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+
+                      <div contenteditable class="laggard have-problem grid-field blank">N</div>
+                      <div contenteditable class="laggard know-problem grid-field blank">N</div>
+                      <div contenteditable class="laggard paying-problem grid-field blank">N</div>
+                      <div contenteditable class="late have-problem grid-field blank yes-field">Y</div>
+                      <div contenteditable class="late know-problem grid-field blank">N</div>
+                      <div contenteditable class="late paying-problem grid-field blank">N</div>
+                      <div contenteditable class="early have-problem grid-field blank yes-field">Y</div>
+                      <div contenteditable class="early know-problem grid-field blank yes-field">Y</div>
+                      <div contenteditable class="early paying-problem grid-field blank">N</div>
+                      <div contenteditable class="adopters have-problem grid-field blank yes-field">Y</div>
+                      <div contenteditable class="adopters know-problem grid-field blank yes-field">Y</div>
+                      <div contenteditable class="adopters paying-problem grid-field blank yes-field">Y</div>
+
+                      <div contenteditable class="blank internal behaviors-field feedback-blank" ng-model="earlyAdoptersFeedback.behaviors" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="blank external behaviors-field feedback-blank" ng-model="earlyAdoptersFeedback.externalBehaviors" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      
+                      <div contenteditable class="ea-feedback-opt-in-field feedback-blank" ng-model="earlyAdoptersFeedback.optIn" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                    </div>
+
+                    <div ui-grid="vm.earlyAdoptersFeedbackGrid" ui-grid-auto-resize ui-grid-save-state ui-grid-resize-columns ui-grid-move-columns
+                      class="grid property-grid" style="width:100%; height: 100%; position: absolute; top: 155%"></div>
+                  </div>
+
+                  <!--<img src="digitalWorksheets/img/folded.png" class="worksheet-img fly-in" />
+
+                      <div contenteditable class="date-field blank feedback-blank" ng-model="declaringVictoryFeedback.date" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="step1-field blank feedback-blank" ng-model="declaringVictoryFeedback.step1" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="step2-field blank feedback-blank" ng-model="declaringVictoryFeedback.step2" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="number-field blank feedback-blank" ng-model="declaringVictoryFeedback.number" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="things-field blank feedback-blank" ng-model="declaringVictoryFeedback.things" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="emotion-field blank feedback-blank" ng-model="declaringVictoryFeedback.emotion" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="signature-field blank feedback-blank" ng-model="declaringVictoryFeedback.signature" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                      <div contenteditable class="feedback-opt-in-field blank feedback-blank" ng-model="declaringVictoryFeedback.optIn" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+
+                    </div>
+                  </div>-->
+
                 </div>
 
                 <div id="ideaGenerationTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
@@ -2022,38 +2085,62 @@
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
                   <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+
                     <div class="panel panel-primary" style="margin-top: 20px">
                       <div class="panel-heading">
-                        <h3 class="panel-title bold">FOCUS Framework</h3>
+                        <h3 class="panel-title bold">Bonus #1</h3>
                       </div>
                       <div class="panel-body">
                         <center>
                           <h3>
-                              <span style="font-weight: bold; color: #428bca">FREE</span> 60-Day Eval of <a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework</b></a><br/>
+                              <span style="font-weight: bold; color: #428bca">FREE</span> Customer Interview Email Course<br/>
                           </h3>
-                          <h4><b>FOCUS Framework</b> Coupon</h4>
-                          <a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/All-Bookshops.png" style="width: 100%; margin-top:20px"></a>
                         </center>
+                        You'll learn...
+                        <ul>
+                          <li>Which customers to ask for interviews</li>
+                          <li>A cold email script that works to get interviews</li>
+                          <li>How to analyze your interview answers</li>
+                        </ul>
 
                       </div>
                       <div class="panel-footer">
                         <form class="form-inline" id="enrollForm" style="text-align: center">
                           <div class="form-group">
-                            University/College Email:
+                            Enroll:
                             <input type="email" class="form-control" name="enrollEmail" id="enrollEmail" placeholder="your@email.com">
-                            <button id="enrollButton" type="submit" class="btn btn-success">Request Eval</button>
+                            <button id="enrollButton" type="submit" class="btn btn-success">Enroll Now</button>
                           </div>
-                          <!--<div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <label for="enrollEmail"></label>
-                          </div>-->
-
-                          <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Thank you!
-                          </div>
+                          <input type="hidden" name="GROUPINGS[14241]" value="Customer Interviewing - Webshop">
+                          <input type="hidden" name="update_existing" value="true">
+                          <input type="hidden" name="replace_interests" value="false">
                         </form>
+                        <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                          <label for="enrollEmail"></label>
+                        </div>
                       </div>
                     </div>
+
+                    <div class="panel panel-primary">
+                      <div class="panel-heading">
+                        <h3 class="panel-title bold">Bonus #2</h3>
+                      </div>
+                      <div class="panel-body">
+                        <center>
+                          <h3><a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework</b></a></h3>
+                          <h4><b>$20 Off</b> Coupon</h4>
+                          <a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/All-Bookshops.png" style="width: 100%; margin-top:20px"></a>
+                        </center>
+
+                        <div style="padding: 0px">
+                          <center>
+                            <h4>Use coupon: <b>SWAlum</b><br/>(next <b>24</b> hours)</h4>
+                          </center>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
 
@@ -2148,7 +2235,7 @@
   <script src="digitalWorksheets/js/assessment.js"></script>
   <script src="js/jquery.ajaxchimp.js"></script>
 
-  <script src="entedu.js"></script>
+  <script src="swpacific.js"></script>
 </body>
 
 </html>
