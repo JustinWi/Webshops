@@ -1,24 +1,24 @@
-#treeTable td {
+.treeTable td {
   padding: 3px 1em;
   /*border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #FeF;*/
 }
 
-#treeTable {
+.treeTable {
   width: 100%;
   border-spacing: 0.5em
 }
 
-#treeTable li {
+.treeTable li {
   cursor: pointer
 }
 
-#qTable tr {
+.qTable tr {
   display: none
 }
 
-#treeTable p {
+.treeTable p {
   font-weight: bold;
   /*line-height: 50%*/
 }
@@ -35,7 +35,7 @@
   color: #060
 }
 
-#treeTable i {
+.treeTable i {
   display: none
 }
 

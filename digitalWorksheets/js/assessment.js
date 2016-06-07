@@ -4,12 +4,51 @@ $(document).ready(function () {
     var link = $(this);
 
     if (link.attr("href").toLowerCase().indexOf("customerdevlabs.com/focus") >= 0) {
-      link.attr("href", "http://focus.customerdevlabs.com/#focus-framework");
+      link.attr("href", "https://www.thefocusframework.com/#toc");
       link.attr("target", "_blank");
     }
   });
 
-  $('#qTable li').on('click', function () {
+  configDynamicQuestionSurvey("#qTable", "#treeTable", function () {
+    setCurrentPhase($('#treeTable .phaseTitle:visible'));
+    setAssessmentPath();
+  });
+
+  configDynamicQuestionSurvey("#pollQTable", "#pollTreeTable", function () {
+    setPollAnswer();
+    if (refreshPollCharts) {
+      refreshPollCharts()
+    }
+  });
+
+});
+
+function setPollAnswer() {
+  var path = "";
+  var questions = {};
+
+  if (!myPollRef) {
+    return;
+  }
+
+  // get selected buttons
+  $('#pollTreeTable .question .btn-primary').each(function (ndx) {
+    if ($(this).text()) {
+      var html = $(this).html();
+
+      if (html.indexOf("<i>") != -1) {
+        html = html.substring(0, html.indexOf("<i>"));
+      }
+
+      questions["Question_" + (ndx + 1)] = html;
+    }
+  });
+
+  myPollRef.update(questions);
+}
+
+function configDynamicQuestionSurvey(questionTableSelector, treeTableSelector, onSelectionFunction) {
+  $(questionTableSelector + ' li').on('click', function () {
     //style the selected answer
     $(this).removeClass('btn-default').addClass('btn-primary').siblings("li").removeClass('btn-primary').addClass('btn-default');
     //hide all rows after the currently displayed row and remove selectedAnswer style
@@ -18,25 +57,22 @@ $(document).ready(function () {
     //show the next row that matches the question id
     var italNum = $(this).find('i').text();
     var qNextSelector = ' tr:nth-child(' + italNum + ')';
-    var nextQuestion = $('#qTable' + qNextSelector).clone(true).hide();
+    var nextQuestion = $(questionTableSelector + qNextSelector).clone(true).hide();
 
-    $('#treeTable').prepend(nextQuestion);
-    nextQuestion.fadeIn(800, function () {
-      setCurrentPhase($('#treeTable .phaseTitle:visible'));
-      setAssessmentPath();
-    });
+    $(treeTableSelector).prepend(nextQuestion);
+    nextQuestion.fadeIn(800, onSelectionFunction);
   })
 
   // setup first question
-  var firstQuestion = $('#qTable tr').first().clone(true);
-  $('#treeTable').prepend(firstQuestion);
-})
+  var firstQuestion = $(questionTableSelector + ' tr').first().clone(true);
+  $(treeTableSelector).prepend(firstQuestion);
+}
 
 function setAssessmentPath() {
   var path = "";
-  
+
   // get selected buttons
-  $('.question .btn-primary').each(function (ndx) {
+  $('#treeTable .question .btn-primary').each(function (ndx) {
     if ($(this).text()) {
       path = $(this).text() + ", " + path;
     }

@@ -19,6 +19,7 @@ var exerciseValuesRef = new Firebase(firebaseRoot + "/exerciseValues");
 var declaringVictoryRef = exerciseValuesRef.child("declaringVictory");
 var earlyAdoptersRef = exerciseValuesRef.child("earlyAdopters");
 var pmfAssessmentRef = exerciseValuesRef.child("pmfAssessment");
+var pollRef = exerciseValuesRef.child("poll");
 
 var loggedInUserId;
 var questionPad, responsePad;
@@ -268,12 +269,56 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 
 function connectExercisesToFirebase(userId) {
   myPMFAssessmentRef = pmfAssessmentRef.child(userId);
+  myPollRef = pollRef.child(userId);
 
   if (isSimpleMode()) {
     $('#refreshPMFChartsButton').show();
 
     refreshPMFCharts();
   }
+}
+
+function refreshPollCharts() {
+  pollRef.once("value", function (data) {
+    populatePoll(data.val());
+  });
+}
+
+function populatePoll(model, chartContainer, title) {
+  var values = {};
+
+  for (value in model) {
+    var node = model[value];
+
+    if (values[node.Question_1]) {
+      values[node.Question_1].data += 1;
+    }
+    else {
+      values[node.Question_1] = {
+        name: node.Question_1,
+        data: 1
+      };
+    }
+  }
+
+  var question1 = [];
+  var question1Counts = [];
+
+  for (key in Object.keys(values)) {
+    question1.push(values[Object.keys(values)[key]].name);
+    question1Counts.push(values[Object.keys(values)[key]].data);
+  }
+
+  $('#question1Chart').highcharts({
+    chart: { type: 'column' },
+    title: { text: 'Question 1' },
+    xAxis: {
+      categories: question1
+    },
+    series: [{
+      data: question1Counts
+    }]
+  });
 }
 
 function refreshPMFCharts() {
@@ -351,8 +396,9 @@ function populateChart(model, chartContainer, title) {
 
 function initParameters() {
   firstName = getParameterByName('firstName');
+  emailAddress = getParameterByName('attendeeEmail');
 
-  return firstName != null;
+  return firstName != null && emailAddress != null;
 }
 
 function getAttendees() {
@@ -541,6 +587,7 @@ function initEnrollForm() {
   $("#enrollForm").submit(function (event) {
     event.preventDefault();
     enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+    $('#enrollSuccessAlert').show();
   });
 }
 
@@ -762,6 +809,7 @@ function initModal() {
 
   $("#welcomeForm").submit(function (event) {
     firstName = $("#attendeeName").val();
+    emailAddress = $("#attendeeEmail").val();
   });
 
   $('#welcomeModal').modal({
@@ -810,7 +858,10 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
 
   connectExercisesToFirebase(loggedInUserId);
 
-  emailsRef.child(loggedInUserId).set({ name: firstName });
+  emailsRef.child(loggedInUserId).set({ 
+    name: firstName,
+    email: emailAddress 
+  });
 
   setupTextEditors();
 
