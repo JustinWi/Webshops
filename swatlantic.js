@@ -137,7 +137,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
       vm.gridApi = gridApi;
     }
   };
-  
+
   var EarlyAdoptersFactory = $firebaseObject.$extend({
     // each time an update arrives from the server, apply the change locally
     $$defaults: {
@@ -186,7 +186,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     onRegisterApi: function (gridApi) {
       vm2.gridApi = gridApi;
     }
-  };  
+  };
 
   if (isSimpleMode()) {
     vm.properties = $firebaseArray(declaringVictoryRef);
@@ -259,7 +259,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     var victorySyncObj = VictoryDeclarationFactory(victoryRef);
 
     victorySyncObj.$bindTo($scope, "declaringVictory");
-    
+
     var eaRef = earlyAdoptersRef.child(authData.uid);
     var eaSyncObj = EarlyAdoptersFactory(eaRef);
 
@@ -471,20 +471,23 @@ function initUI() {
   //setupQuizzes();
 
   setupiFrames();
+  setupVideo();
 
+  if (isSimpleMode()) {
+    setupSimpleTabButtons();
+  }
+}
+
+function setupVideo() {
   if (isWebViewerMode()) {
     // load video stream
     var youTubeIFrame = $('.youtube-iframe');
-    youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src"));
+    youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src") + "&autoplay=1");
   }
   else {
     // get ride of video holder
     $('.left-column .top-row').hide();
     $('.left-column .bottom-row').addClass("full-height").removeClass("bottom-row");
-  }
-
-  if (isSimpleMode()) {
-    setupSimpleTabButtons();
   }
 }
 
@@ -577,20 +580,20 @@ function initEnrollForm() {
     }
   });
 
-  // $('#enrollForm').ajaxChimp({
-  //   url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
-  //   callback: function (resp) {
-  //     $('#enrollSuccessAlert').html(resp.msg);
-  //     $('#enrollSuccessAlert').show();
-  //     enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
-  //   }
-  // });
-
-  $("#enrollForm").submit(function (event) {
-    event.preventDefault();
-    enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
-    $('#enrollSuccessAlert').show();
+  $('#enrollForm').ajaxChimp({
+    url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
+    callback: function (resp) {
+      $('#enrollSuccessAlert').html(resp.msg);
+      $('#enrollSuccessAlert').show();
+      enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+    }
   });
+
+  // $("#enrollForm").submit(function (event) {
+  //   event.preventDefault();
+  //   enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+  //   $('#enrollSuccessAlert').show();
+  // });
 }
 
 function isSimpleMode() {
@@ -860,9 +863,9 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
 
   connectExercisesToFirebase(loggedInUserId);
 
-  emailsRef.child(loggedInUserId).set({ 
+  emailsRef.child(loggedInUserId).set({
     name: firstName,
-    email: emailAddress 
+    email: emailAddress
   });
 
   setupTextEditors();
