@@ -482,7 +482,7 @@ function setupVideo() {
   if (isWebViewerMode()) {
     // load video stream
     var youTubeIFrame = $('.youtube-iframe');
-    youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src") + "&autoplay=1");
+    youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src") + "&autoplay=0");
   }
   else {
     // get ride of video holder
