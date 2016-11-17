@@ -2,7 +2,7 @@
 <html ng-app="app">
 
 <head>
-  <title>How to Find Product-Market Fit | Justin Wilcox</title>
+  <title>Experiential Entrepreneurship Education | Justin Wilcox</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width">
 
@@ -67,9 +67,11 @@
   <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
 
   <!-- Digital Worksheets -->
+  <link rel="stylesheet" href="digitalWorksheets/css/worksheets.css" />
   <link rel="stylesheet" href="digitalWorksheets/css/declaringVictory.css" />
   <link rel="stylesheet" href="digitalWorksheets/css/assessment.css" />
   <link rel="stylesheet" href="digitalWorksheets/css/adoptionBehaviorCurve.css" />
+  <link rel="stylesheet" href="digitalWorksheets/css/ideaGeneration.css" />
 
   <!-- This app  -->
   <link rel="stylesheet" href="css/style.css" />
@@ -85,7 +87,7 @@
       <div class="modal-content">
         <form id="welcomeForm">
           <div class="modal-header bg-primary">
-            <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>How to Find Product-Market Fit</b>!</center></h2>
+            <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>Experiential Entrepreneurship Education</b>!</center></h2>
           </div>
           <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
             <div class="form-group">
@@ -105,19 +107,19 @@
 
   <header class="fixed-header-main">
     <div style="float:left;">
-      <center><span style="font-size:2em"><b>How to Find Product-Market Fit</b></span> with <a href="http://customerdevlabs.com"
+      <center><span style="font-size:2em"><b>5 Experiments to Product-Market Fit</b></span> with <a href="http://customerdevlabs.com"
           target="_blank">Justin Wilcox</a></center>
     </div>
-    <a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px" /></a>
+    <!--<a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px" /></a>-->
   </header>
 
   <div class="fixed-container-inner">
     <div class="fluid-container">
-      <div class="fluid-box full-height left-column">
+      <div class="fluid-box full-height left-column" style="">
         <div class="top-row">
 
           <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
-            <iframe class="youtube-iframe" data-youtube-src="https://www.youtube.com/embed/OYm9ik_Az8c?rel=0&amp;showinfo=0" width="100%"
+            <iframe class="youtube-iframe" data-youtube-src="https://www.youtube.com/embed/kAi5AFoXZXw?rel=0&amp;showinfo=0" width="100%"
               height="100%" src="" frameborder="0" allowfullscreen></iframe>
           </div>
 
@@ -198,7 +200,7 @@
         </div>
       </div>
 
-      <div class="fluid-box full-height right-column">
+      <div class="fluid-box full-height right-column" style="">
         <div class="panel panel-info exercisesPanel" style="height: 100%" ng-controller="MainCtrl as vm">
           <div class="panel-body" style="position: relative; height: 100%">
             <div class="exercisesPanel">
@@ -210,9 +212,9 @@
                 <li><a data-toggle="tab" id="declaringVictoryFeedbackTab" href="#declaringVictoryFeedbackTabContent">DV Feedback</a></li>
 
                 <li><a data-toggle="tab" id="pmfAssessmentTab" href="#pmfAssessmentTabContent">PMF Assessment</a></li>
-                <li><a data-toggle="tab" id="pmfResultsTab" href="#pmfResultsTabContent">PMF Results</a></li>
-
                 <li><a data-toggle="tab" id="earlyAdoptersTab" href="#earlyAdoptersTabContent">Your Early Adopters</a></li>
+                <li><a data-toggle="tab" id="ideaGenerationTab" href="#ideaGenerationTabContent">Idea Generation</a></li>
+
                 <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
                 <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
 
@@ -243,20 +245,6 @@
                         </p>
                         <h2>Takeaways</h2>
                         </p>
-                        <h3><b>- Declaring Victory:</b> What's your Victory?</h3>
-                        </p>
-                        &nbsp;
-                        <h3><b>- Product-Market Fit Assessment:</b></h3>
-                        <ul>
-                          <li>Phase are you in: </li>
-                          <li>Riskiest Assumption: </li>
-                          <li>Next step: </li>
-                        </ul>
-                        </p>
-                        &nbsp;
-
-                        <h3><b>Where are your Early Adopters:</b></h3>
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -270,8 +258,7 @@
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
                   <div class="fluid-container">
-                    <div class="fluid-box full-height full-width">
-                      <iframe src="" data-src="http://www.slideshare.net/slideshow/embed_code/key/4mitCLAAe2egqV" width="100%" height="100%" frameborder="0"
+                      <iframe src="" data-src="http://www.slideshare.net/slideshow/embed_code/key/4HiT8eN44ernNz" width="100%" height="100%" frameborder="0"
                         marginheight="0" marginwidth="0">Loading...</iframe>
                     </div>
                   </div>
@@ -315,7 +302,7 @@
                   </div>
 
                   <div class="worksheet-container">
-                    <div class="worksheet declaring-victory">
+                    <div class="worksheet declaring-victory wood-background">
                       <img src="digitalWorksheets/img/front.jpg" id="declaring-victory-worksheet" class="worksheet-img" />
 
                       <div contenteditable class="date-field blank" ng-model="declaringVictory.date" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
@@ -671,7 +658,7 @@
                     <div class="fluid-box full-height full-width wood-background">
 
                       <div>
-                        <div class="behavior-curve wood-background" style="">
+                        <div class="digital-worksheet behavior-curve wood-background">
                           <img src="digitalWorksheets/img/adoptionBehaviorCurve.jpg" class="worksheet-background-img" />
 
                           <div contenteditable class="segment-field blank">Your customer segment</div>
@@ -704,6 +691,65 @@
                             <br/>5.
                             <br>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="ideaGenerationTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                  <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width wood-background worksheet-container">
+
+                      <div>
+                        <div class="digital-worksheet idea-generation-worksheet wood-background" style="">
+                          <img src="digitalWorksheets/img/ideaGeneration.jpg" class="worksheet-background-img" />
+
+                          <div contenteditable class="cross-out blank"></div>
+
+                          <div contenteditable class="blank segment-member">
+                            1.
+                            <br/>2.
+                            <br/>3.
+                            <br/>4.
+                            <br/>5.
+                            <br/>
+                          </div>
+
+                          <div contenteditable class="blank segment-former-member">
+                            1.
+                            <br/>2.
+                            <br/>3.
+                            <br/>4.
+                            <br/>5.
+                            <br/>
+                          </div>
+
+                          <div contenteditable class="blank segment-passion">
+                            1.
+                            <br/>2.
+                            <br/>3.
+                            <br/>4.
+                            <br/>5.
+                            <br/>
+                          </div>
+
+                          <div contenteditable class="victory-number blank">#</div>
+                          <div contenteditable class="victory-things blank">of things</div>
+
+                          <div contenteditable class="segment-1 blank"></div>
+                          <div contenteditable class="problem-1 blank"></div>
+                          <div contenteditable class="segment-2 blank"></div>
+                          <div contenteditable class="problem-2 blank"></div>
+                          <div contenteditable class="segment-3 blank"></div>
+                          <div contenteditable class="problem-3 blank"></div>
+
                         </div>
                       </div>
                     </div>
@@ -1976,54 +2022,32 @@
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
                   <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-primary" style="margin-top: 20px">
                       <div class="panel-heading">
-                        <h3 class="panel-title bold">Bonus #1</h3>
+                        <h3 class="panel-title bold">FOCUS Framework</h3>
                       </div>
                       <div class="panel-body">
                         <center>
                           <h3>
-                              <span style="font-weight: bold; color: #428bca">FREE</span> Customer Interview Email Course<br/>
+                              <span style="font-weight: bold; color: #428bca">FREE</span> 60-Day Eval of <a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework</b></a><br/>
                           </h3>
-                        </center>
-                        You'll learn...
-                        <ul>
-                          <li>Which customers to ask for interviews</li>
-                          <li>A cold email script that works to get interviews</li>
-                          <li>How to analyze your interview answers</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="panel panel-primary" style="margin-top: 20px">
-                      <div class="panel-heading">
-                        <h3 class="panel-title bold">Bonus #2</h3>
-                      </div>
-                      <div class="panel-body">
-                        <center>
-                          <h3><a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework</b></a></h3>
-                          <h4>$20 Off Launch-Day Coupon</h4>
+                          <h4><b>FOCUS Framework</b> Coupon</h4>
                           <a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/All-Bookshops.png" style="width: 100%; margin-top:20px"></a>
                         </center>
 
-                        <div style="padding: 0px">
-                          <center>
-                            <h4>Crowdfunding on May 3rd</h4>
-                          </center>
-                        </div>
-                        </center>
                       </div>
                       <div class="panel-footer">
                         <form class="form-inline" id="enrollForm" style="text-align: center">
                           <div class="form-group">
-                            Enroll &amp; get $20 off:
+                            University/College Email:
                             <input type="email" class="form-control" name="enrollEmail" id="enrollEmail" placeholder="your@email.com">
-                            <button id="enrollButton" type="submit" class="btn btn-success">Get both Bonuses!</button>
+                            <button id="enrollButton" type="submit" class="btn btn-success">Request Eval</button>
+                          </div>
+                          <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <label for="enrollEmail"></label>
                           </div>
                         </form>
-                        <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
-                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Success!
-                          You have been enrolled and your coupon will hit your inbox before crowdfunding begins!
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -2107,7 +2131,6 @@
     &copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015 - 2016
   </footer>
 
-
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
   <script data-require="ui-bootstrap@*" data-semver="0.13.3" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap.min.js"></script>
   <script data-require="firebase@*" data-semver="2.2.9" src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
@@ -2119,7 +2142,9 @@
   <script type="text/javascript" src="digitalWorksheets/js/lightbox.js"></script>
   <script src="digitalWorksheets/js/declaringVictory.js"></script>
   <script src="digitalWorksheets/js/assessment.js"></script>
-  <script src="fieast.js"></script>
+  <script src="js/jquery.ajaxchimp.js"></script>
+
+  <script src="entedu.js"></script>
 </body>
 
 </html>

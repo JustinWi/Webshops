@@ -407,6 +407,14 @@ function getAttendees() {
   });
 }
 
+function getAttendeeEmails() {
+  emailsRef.once('value', function (emailsSnap) {
+    emailsSnap.forEach(function (snapshot) {
+      console.log(snapshot.val().email);
+    });
+  });
+}
+
 function getEnrollees() {
   enrolledRef.once('value', function (enrolledSnap) {
     enrolledSnap.forEach(function (snapshot) {
@@ -508,7 +516,9 @@ function setupTextEditors() {
 
 function setupiFrames() {
   $("iframe[data-src*='.']").each(function () {
-    $(this).attr('src', $(this).attr('data-src'));
+    if (!isSimpleMode() || $(this).attr('data-src').indexOf("youtube") == -1) {
+      $(this).attr('src', $(this).attr('data-src'));
+    }
   });
 }
 

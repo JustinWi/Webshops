@@ -1,0 +1,448 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Webshops: Better Online Learning | Customer Development Labs</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+        <!-- Firepad -->
+        <!-- <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script> -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.min.js"></script>
+
+        <!-- Firechat -->
+        <link rel="stylesheet" href="firechat/firechat-default-custom.css" />
+        <script src="firechat/firechat-default.js"></script>
+
+        <!-- BootstrapValidator -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+        <!-- Bootbox for Alerts -->
+        <script src="bootbox.min.js"></script>
+
+        <!-- This app  -->
+        <link rel="stylesheet" href="css/style.css">
+        <script src="hybrid.js"></script>
+
+        <style type="text/css">
+
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form id="welcomeForm">
+                <div class="modal-header alert-success">
+                  <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>How to Interview Customers</b>!</center></h2>
+                </div>
+                <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
+                  <div class="form-group">
+                    <label class="control-label">First Name</label>
+                    <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+                  </div>
+                  <!-- <div class="form-group">
+                    <label class="control-label">Student Number</label>
+                    <input type="name" class="form-control" id="studentNum" name="studentNum" placeholder="What's your student number?">
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Campus</label>
+                    <select class="form-control" id="studentCampus" name="studentCampus" title="Select your campus...">
+                      <option value=""></option>
+                      <option value="Aguascalientes">Aguascalientes</option>
+                      <option value="Central de Veracruz">Central de Veracruz</option>
+                      <option value="Chiapas">Chiapas</option>
+                      <option value="Chihuahua">Chihuahua</option>
+                      <option value="Ciudad de Mexico">Ciudad de México</option>
+                      <option value="Ciudad Juarez">Ciudad Juárez</option>
+                      <option value="Ciudad Obregon">Ciudad Obregón</option>
+                      <option value="Cuernavaca">Cuernavaca</option>
+                      <option value="Estado de Mexico">Estado de México</option>
+                      <option value="Guadalajara">Guadalajara</option>
+                      <option value="Hidalgo">Hidalgo</option>
+                      <option value="Irapuato">Irapuato</option>
+                      <option value="Laguna">Laguna</option>
+                      <option value="Leon">León</option>
+                      <option value="Monterrey">Monterrey</option>
+                      <option value="Morelia">Morelia</option>
+                      <option value="Puebla">Puebla</option>
+                      <option value="Queretaro">Querétaro</option>
+                      <option value="Saltillo">Saltillo</option>
+                      <option value="San Luis Potosi">San Luis Potosí</option>
+                      <option value="Santa Fe">Santa Fe</option>
+                      <option value="Sinaloa">Sinaloa</option>
+                      <option value="Sonora Norte">Sonora Norte</option>
+                      <option value="Tampico">Tampico</option>
+                      <option value="Toluca">Toluca</option>
+                      <option value="Zacatecas">Zacatecas</option>
+                      <option value="Prepa Tec">Cumbres (Preparatoria)</option>
+                      <option value="Prepa Tec">Eugenio Garza Lagüera (Preparatoria)</option>
+                      <option value="Prepa Tec">Eugenio Garza Sada (Preparatoria)</option>
+                      <option value="Prepa Tec">Santa Catarina (Preparatoria)</option>
+                      <option value="Prepa Tec">Valle Alto (Preparatoria)</option>
+                    </select>
+                  </div> -->
+                </div>
+                <div class="modal-footer alert-success">
+                  <button type="submit" class="btn btn-success">Let's go!</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <header class="fixed-header-main">
+          <div style="float:left;">
+            <center><span style="font-size:2em"><b>How to Interview Customers</b></span> with <a href="http://customerdevlabs.com" target="_blank">Justin Wilcox</a></center>
+          </div>
+          <!-- <a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px"/></a> -->
+        </header>
+        <div class="fixed-container-inner">
+          <div class="fluid-container">
+            <div class="fluid-box full-height left-column">
+              <!-- <div class="top-row"> -->
+              <div class="panel panel-info exercisesPanel" style="height: 100%">
+                <div class="panel-body" style="position: relative; height: 100%">
+                  <div class="exercisesPanel">
+                      <ul class="nav nav-tabs exerciseTabs">
+                          <!-- <li><a data-toggle="tab" id="whoIsHereTab" href="#whoIsHereTabContent">Who's Here?</a></li>
+                          <li><a data-toggle="tab" id="notesTab" href="#notesTabContent">My Notes</a></li> -->
+                          <li><a data-toggle="tab" id="worksheet1Tab" href="#worksheet1TabContent">Worksheets</a></li>
+                          <!-- <li><a data-toggle="tab" id="worksheet2Tab" href="#worksheet2TabContent">Interview Script Generator</a></li> -->
+                          <li><a data-toggle="tab" id="slidesTab" href="#slidesTabContent">Slides</a></li>
+                          <!-- <li><a data-toggle="tab" id="meetYourPartnerTab" href="#meetYourPartnerTabContent">Meet your Partner</a></li>
+                          <li><a data-toggle="tab" id="quiz1QuestionsTab" href="#quiz1QuestionsTabContent">Seed Funding</a></li>
+                          <li><a data-toggle="tab" id="quiz1AnswersTab" href="#quiz1AnswersTabContent">Leaderboard</a></li>
+                          <li><a data-toggle="tab" id="liveInterviewTab" href="#liveInterviewTabContent">Pitch Practice</a></li>
+                          <li><a data-toggle="tab" id="quiz2QuestionsTab" href="#quiz2QuestionsTabContent">Series A</a></li>
+                          <li><a data-toggle="tab" id="quiz2AnswersTab" href="#quiz2AnswersTabContent">Series A: Answers</a></li> -->
+                          <!-- <li><a data-toggle="tab" id="feedbackFormTab" href="#feedbackFormTabContent">Feedback</a></li> -->
+                          <!-- <li><a data-toggle="tab" id="quiz3QuestionsTab" href="#quiz3QuestionsTabContent">Series B</a></li>
+                          <li><a data-toggle="tab" id="quiz3AnswersTab" href="#quiz3AnswersTabContent">Series B: Answers</a></li> -->
+                          <!-- <li><a data-toggle="tab" id="practiceInterviewTab" href="#practiceInterviewTabContent">You Try It</a></li>
+                          <li><a data-toggle="tab" id="interviewScriptTab" href="#interviewScriptTabContent">Your Interview Script</a></li>-->
+                          <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
+                          <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
+                      </ul>
+                      <div class="tab-content">
+
+                        <div id="bonusTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+                            <div class="panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title bold">Bonus #1</h3>
+                              </div>
+                              <div class="panel-body">
+                                <center>
+                                  <h3>
+                                    <span style="">$50</span> Customer Interview Email Course<br/>
+                                    <span style="font-weight: bold; color: #428bca">FREE</span>
+                                  </h3>
+                                </center>
+                                You'll learn...
+                                <ul>
+                                  <li>Which customers to ask for interviews</li>
+                                  <li>A cold email script that works to get interviews</li>
+                                  <li>How to analyze your interview answers</li>
+                                </ul>
+                                <p>Plus: Get free <a href="http://customerdiscovery.ninja" target="_blank">Customer Discovery Ninja</a> coupon codes.</p>
+                              </div>
+                              <div class="panel-footer">
+                                <form class="form-inline" id="enrollForm" style="text-align: center">
+                                  <div class="form-group">
+                                    Enroll now:
+                                    <input type="email" class="form-control" name="enrollEmail" id="enrollEmail" placeholder="your@email.com">
+                                    <button id="enrollButton" type="submit" class="btn btn-success">Enroll</button>
+                                  </div>
+                                </form>
+                                <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
+                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                   Success! You have been enrolled.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-success" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title bold">Bonus #2</h3>
+                              </div>
+                              <div class="panel-body">
+                                <center>
+                                  <h3><a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework Pre-Order</b></a></h3>
+                                  <a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/All-Bookshops.png" style="width: 400px"></a>
+                                </center>
+
+                                <div style="padding: 20px">
+                                  <center>
+                                    Step by step instructions on:</p>
+                                      <b>What</b> to test<br/>
+                                      <b>When</b> to test<br/>
+                                      <b>How</b> to test<br/>
+                                    </ul>
+                                    <!-- <ul>
+                                      <li><b>What</b> to test</li>
+                                      <li><b>When</b> to test</li>
+                                      <li><b>How</b> to test</li>
+                                    </ul> -->
+                                  </center>
+                                  <center><a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/Inside-workbook-Rendered---800---Transparent.png" style="width: 400px"></a></center>
+                                  <div>Use coupon code "<a href="http://focus.customerdevlabs.com" target="_blank">FounderInstitute</a>" by <b>March 13th</b> for:</div>
+                                  <ul>
+                                    <li>25% off</li>
+                                    <li>Early access to chapters</li>
+                                  </ul>
+                                  Check out the <a href="http://focus.customerdevlabs.com" target="_blank">FOCUS Framework</a>.
+                                </div>
+                              </center>
+                              </div>
+                              <div class="panel-footer" style="text-align: center">
+                                <a class="btn btn-large btn-success" href="http://focus.customerdevlabs.com" target="_blank">Find your Focus</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="feedbackTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">How likely would you be to recommend this workshop to a friend?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <div class="" style="text-align: center">
+                                  <div class="btn-group npsButtons" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-default">0</button>
+                                    <button type="button" class="btn btn-default">1</button>
+                                    <button type="button" class="btn btn-default">2</button>
+                                    <button type="button" class="btn btn-default">3</button>
+                                    <button type="button" class="btn btn-default">4</button>
+                                    <button type="button" class="btn btn-default">5</button>
+                                    <button type="button" class="btn btn-default">6</button>
+                                    <button type="button" class="btn btn-default">7</button>
+                                    <button type="button" class="btn btn-default">8</button>
+                                    <button type="button" class="btn btn-default">9</button>
+                                    <button type="button" class="btn btn-default">10</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="panel-footer" style="height: 40px">
+                                <div style="float: left">Not at likely</div><div style="float: right">Extremely likely</div>
+                              </div>
+                            </div>
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">What's one thing we can improve next time?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <textarea id="toImprove" class="form-control" rows="3"></textarea>
+                              </div>
+                            </div>
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">What was your favorite part of the workshop?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <textarea id="favoritePart" class="form-control" rows="3"></textarea>
+                              </div>
+                              <div class="panel-footer" style="text-align: center">
+                                <div class="alert alert-success alert-dismissable" id="feedbackSuccessAlert" style="display:none;">
+                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                   Thank you, we got your feedback!
+                                </div>
+
+                                <button id="submitFeedbackButton" class="btn btn-large btn-primary" href="http://focus.customerdevlabs.com" target="_blank">Submit Feedback</button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+
+                        <div id="slidesTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="http://www.slideshare.net/slideshow/embed_code/key/CQsq2GmLpEHWbp" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="worksheet1TabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="https://docs.google.com/presentation/d/1S7Rnid3Y-dv5T09osRV8TkvpHHKxC0Dr2nJYBuPAbwU/edit" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="feedbackTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">How likely would you be to recommend this workshop to a friend?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <div class="" style="text-align: center">
+                                  <div class="btn-group npsButtons" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-default">0</button>
+                                    <button type="button" class="btn btn-default">1</button>
+                                    <button type="button" class="btn btn-default">2</button>
+                                    <button type="button" class="btn btn-default">3</button>
+                                    <button type="button" class="btn btn-default">4</button>
+                                    <button type="button" class="btn btn-default">5</button>
+                                    <button type="button" class="btn btn-default">6</button>
+                                    <button type="button" class="btn btn-default">7</button>
+                                    <button type="button" class="btn btn-default">8</button>
+                                    <button type="button" class="btn btn-default">9</button>
+                                    <button type="button" class="btn btn-default">10</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="panel-footer" style="height: 40px">
+                                <div style="float: left">Not at likely</div><div style="float: right">Extremely likely</div>
+                              </div>
+                            </div>
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">What's one thing we can improve next time?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <textarea id="toImprove" class="form-control" rows="3"></textarea>
+                              </div>
+                            </div>
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">What was your favorite part of the workshop?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <textarea id="favoritePart" class="form-control" rows="3"></textarea>
+                              </div>
+                              <div class="panel-footer" style="text-align: center">
+                                <div class="alert alert-success alert-dismissable" id="feedbackSuccessAlert" style="display:none;">
+                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                   Thank you, we got your feedback!
+                                </div>
+
+                                <button id="submitFeedbackButton" class="btn btn-large btn-primary" href="http://focus.customerdevlabs.com" target="_blank">Submit Feedback</button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- </div> -->
+
+              <!-- <div class="bottom-row">
+                <div class="panel panel-info chatPanel" style="height: 100%; position: relative">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i><b>Chat:</b></i> <span id="partnerName" style="">Looking for a partner for you...</span><button id="newPartner" type="button" class="btn btn-sm btn-primary" style="float: right;margin-top: -5px;margin-right: -10px;">Get New Partner</button></h3>
+                  </div>
+                  <div class="panel-body" style="position: absolute; top: 38px; right: 0px; bottom: 0px; left: 0px;">
+                    <div style="position: relative; height: 100%; width: 100%; padding:0px">
+                      <div id="public-firechat-wrapper" class="firechatUI"></div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+
+            <div class="fluid-box top-row right-column">
+              <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><b>Live Stream</b></h3>
+                </div>
+                <div class="panel-body" style="position: absolute; top: 38px; left: 0px; right: 0px; bottom: 0px; overflow-y: scroll;">
+
+                </div>
+              </div>
+            </div>
+
+            <div class="fluid-box bottom-row right-column">
+              <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i><b>Questions:</b></i> Ask and up vote.</h3>
+                </div>
+                <div class="panel-body" style="position: absolute; top: 38px; left: 0px; right: 0px; bottom: 50px; overflow-y: scroll;">
+                  <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                </div>
+                <div class="panel-footer" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
+                  <div style="overflow: hidden; padding-right: .5em;">
+                    <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+                  </div>
+                  <div class="input-group"  style="display:none;">
+                    <h3>Value:</h3>
+                    <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          </div>
+            <footer class="fixed-footer-main" style="padding: 5px">
+                &copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015
+            </footer>
+
+    </body>
+
+</html>

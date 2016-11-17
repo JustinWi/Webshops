@@ -1,5 +1,5 @@
 //var app = angular.module('app', ['firebase']);
-var firebaseRoot = "https://cdlwebshops.firebaseio.com/cdl";
+var firebaseRoot = "https://cdlwebshops.firebaseio.com/focuscon";
 
 var rootRef = new Firebase(firebaseRoot);
 var publicChatRef = new Firebase(firebaseRoot);
@@ -17,6 +17,8 @@ var notesRef = new Firebase(firebaseRoot + "/notes");
 var exerciseValuesRef = new Firebase(firebaseRoot + "/exerciseValues");
 
 var declaringVictoryRef = exerciseValuesRef.child("declaringVictory");
+var earlyAdoptersRef = exerciseValuesRef.child("earlyAdopters");
+var offerDesignRef = exerciseValuesRef.child("offerDesign");
 var pmfAssessmentRef = exerciseValuesRef.child("pmfAssessment");
 
 var loggedInUserId;
@@ -77,6 +79,8 @@ var app = angular.module('app', [
 
 app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$firebaseObject', 'uiGridConstants', function ($scope, $firebaseArray, $firebaseAuth, $firebaseObject, uiGridConstants) {
   var vm = this;
+  var vm2 = this;
+  var vm3 = this;
 
   var VictoryDeclarationFactory = $firebaseObject.$extend({
     // each time an update arrives from the server, apply the change locally
@@ -135,11 +139,111 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     }
   };
 
+  var EarlyAdoptersFactory = $firebaseObject.$extend({
+    // each time an update arrives from the server, apply the change locally
+    $$defaults: {
+      segment: 'Your customer segment',
+      problem: "Your customer's problem (in their words)",
+      behaviors: '1. <br/>2. <br/>3. <br/>4. <br/>5. <br>',
+      externalBehaviors: '1. <br/>2. <br/>3. <br/>4. <br/>5. <br>',
+      optIn: 'Want Feedback?'
+    }
+  });
+
+  vm2.earlyAdoptersFeedbackGrid = {
+    columnDefs: [
+      {
+        displayName: 'Help?',
+        field: 'optIn',
+      },
+      {
+        displayName: 'Behaviors',
+        field: 'behaviors'
+      },
+      {
+        displayName: 'Ext. Behaviors',
+        field: 'externalBehaviors'
+      },
+      {
+        displayName: 'Segment',
+        field: 'segment',
+      },
+      {
+        displayName: 'Problem',
+        field: 'problem',
+      },
+      {
+        name: 'select',
+        displayName: 'Select',
+        cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="grid.appScope.vm.giveEarlyAdopterFeedback(row.entity)" >Select</button> ',
+        width: 60,
+        enableSorting: false
+      }
+    ],
+    // enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+    flatEntityAccess: true,
+    enableGridMenu: true,
+    enableFiltering: true,
+    onRegisterApi: function (gridApi) {
+      vm2.gridApi = gridApi;
+    }
+  };
+
+  var OfferDesignFactory = $firebaseObject.$extend({
+    // each time an update arrives from the server, apply the change locally
+    $$defaults: {
+      channel1: 'Write here',
+      pcm1: "Write here"
+    }
+  });
+
+  vm3.offerDesignFeedbackGrid = {
+    columnDefs: [
+      {
+        displayName: 'PCM1',
+        field: 'pcm1'
+      },
+      {
+        displayName: 'PCM2',
+        field: 'pcm2'
+      },
+      {
+        displayName: 'PCM3',
+        field: 'pcm3'
+      },
+      {
+        name: 'select',
+        displayName: 'Select',
+        cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="grid.appScope.vm.giveOfferDesignFeedback(row.entity)" >Select</button> ',
+        width: 60,
+        enableSorting: false
+      }
+    ],
+    // enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+    flatEntityAccess: true,
+    enableGridMenu: true,
+    enableFiltering: true,
+    onRegisterApi: function (gridApi) {
+      vm3.gridApi = gridApi;
+    }
+  };
+
+
   if (isSimpleMode()) {
     vm.properties = $firebaseArray(declaringVictoryRef);
     vm.properties.$loaded().then(function () {
       vm.gridOptions.data = vm.properties;
     });
+
+    vm2.earlyAdopterProperties = $firebaseArray(earlyAdoptersRef);
+    vm2.earlyAdopterProperties.$loaded().then(function () {
+      vm2.earlyAdoptersFeedbackGrid.data = vm2.earlyAdopterProperties;
+    });
+
+    vm3.offerDesignProperties = $firebaseArray(offerDesignRef);
+    vm3.offerDesignProperties.$loaded().then(function () {
+      vm3.offerDesignFeedbackGrid.data = vm3.offerDesignProperties;
+    });    
 
     vm.giveFeedback = function (exercise) {
       var victoryRef = declaringVictoryRef.child(exercise.$id);
@@ -151,6 +255,28 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
       vm.feedbackObj = VictoryDeclarationFactory(victoryRef);
       vm.feedbackObj.$bindTo($scope, "declaringVictoryFeedback");
     };
+
+    vm2.giveEarlyAdopterFeedback = function (exercise) {
+      var eaRef = earlyAdoptersRef.child(exercise.$id);
+
+      if (vm2.feedbackObj) {
+        vm2.feedbackObj.$destroy();
+      }
+
+      vm2.feedbackObj = EarlyAdoptersFactory(eaRef);
+      vm2.feedbackObj.$bindTo($scope, "earlyAdoptersFeedback");
+    };
+
+    vm3.giveOfferDesignFeedback = function (exercise) {
+      var odRef = offerDesignRef.child(exercise.$id);
+
+      if (vm3.feedbackObj) {
+        vm3.feedbackObj.$destroy();
+      }
+
+      vm3.feedbackObj = OfferDesignFactory(odRef);
+      vm3.feedbackObj.$bindTo($scope, "offerDesignFeedback");
+    };    
   }
 
   // $scope.giveFeedback = function(exercise) {
@@ -186,102 +312,20 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
   auth.$onAuth(function (authData) {
     postAuthConfig(authData, publicChat, PUBLIC_CHAT_ROOM_ID, GET_PARTNER);
 
-    // var VictoryDeclarationGridFactory = $firebaseArray.$extend({
-    //   // each time an update arrives from the server, apply the change locally
-    //   columnDefs: [
-    //     { field: 'date', displayName: 'Id' },
-    //     { field: 'step1', displayName: 'Club Id', visible: false },
-    //     { field: 'step2', displayName: 'Club Name' },
-    //     { name: 'select', displayName: 'Select', cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="getExternalScopes().giveFeedback(row.entity)" >Select</button> ' }
-    //   ]
-    // });
-
     var victoryRef = declaringVictoryRef.child(authData.uid);
     var victorySyncObj = VictoryDeclarationFactory(victoryRef);
 
     victorySyncObj.$bindTo($scope, "declaringVictory");
 
-    // $scope.victoryDeclarations = {
-    //   data: '$firebaseArray(declaringVictoryRef)',
-    //   columnDefs: [
-    //     {field: 'date', displayName: 'Id'},
-    //     {field: 'step1', displayName: 'Club Id', visible: false},
-    //     {field: 'step2', displayName: 'Club Name'},
-    //     {name: 'select', displayName: 'Select', cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="getExternalScopes().giveFeedback(row.entity)" >Select</button> '}
-    //   ]
-    // };
+    var eaRef = earlyAdoptersRef.child(authData.uid);
+    var eaSyncObj = EarlyAdoptersFactory(eaRef);
 
-    // $scope.victoryDeclarations = {
-    //   columnDefs: [
-    //     {field: 'date', displayName: 'Id'},
-    //     {field: 'step1', displayName: 'Club Id', visible: false},
-    //     {field: 'step2', displayName: 'Club Name'},
-    //     {name: 'select', displayName: 'Select', cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="getExternalScopes().giveFeedback(row.entity)" >Select</button> '}
-    //   ]
-    // };
+    eaSyncObj.$bindTo($scope, "earlyAdopters");
 
-    // var vm = this;
+    var odRef = offerDesignRef.child(authData.uid);
+    var odSyncObj = OfferDesignFactory(odRef);
 
-
-    // vm.gridOptions = {
-    //   columnDefs: [
-    //     {
-    //       displayName: 'PROS Number',
-    //       field: 'date'
-    //     },
-    //     {
-    //       displayName: 'MLS Status',
-    //       field: 'step1'
-    //     },
-    //     {
-    //       displayName: 'Deal Status',
-    //       field: 'step2',
-    //       enableColumnMenu: false,
-    //       enableSorting: false
-    //     }
-    //   ],
-    //   //enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
-    //   flatEntityAccess: true,
-    //   //rowHeight: '33',
-    //   enableGridMenu: true,
-    //   enableFiltering: true,
-    //   onRegisterApi: function (gridApi) {
-    //     vm.gridApi = gridApi;
-    //   }
-    // };  
-
-
-    // //var dataRef = new Firebase('https://itjustwerks.firebaseio.com/data/properties'); // jshint ignore:line
-    // vm.properties = $firebaseArray(declaringVictoryRef);
-    // vm.properties.$loaded().then(function() {
-    //   vm.gridOptions.data = vm.properties;
-    // });
-
-
-
-    // $scope.victoryDeclarations = {
-    //   columnDefs: [
-    //     { field: 'date', displayName: 'Id' },
-    //     { field: 'step1', displayName: 'Club Id', visible: false },
-    //     { field: 'step2', displayName: 'Club Name' },
-    //     { name: 'select', displayName: 'Select', cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="getExternalScopes().giveFeedback(row.entity)" >Select</button> ' }
-    //   ]
-    // };
-
-    // var hope = $firebaseArray(declaringVictoryRef);
-
-    // hope.$loaded().then(function () {
-    //   $scope.victoryDeclarations.data = hope;
-    // });
-
-    // hope.columnDefs = [
-    //     {field: 'date', displayName: 'Id'},
-    //     {field: 'step1', displayName: 'Club Id', visible: false},
-    //     {field: 'step2', displayName: 'Club Name'},
-    //     {name: 'select', displayName: 'Select', cellTemplate: '<button id="selectBtn" type="button" class="btn-small" ng-click="getExternalScopes().giveFeedback(row.entity)" >Select</button> '}
-    //   ]; 
-
-    //$scope.victoryDeclarations = hope;
+    odSyncObj.$bindTo($scope, "offerDesign");
   });
 }]);
 
@@ -389,7 +433,7 @@ function getEnrollees() {
 }
 
 function escapeRegExp(str) {
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+  return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 }
 
 function replaceAll(str, find, replace) {
@@ -451,7 +495,7 @@ function initUI() {
     youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src"));
   }
   else {
-    // get ride of video holder
+    // get rid of video holder
     $('.left-column .top-row').hide();
     $('.left-column .bottom-row').addClass("full-height").removeClass("bottom-row");
   }
@@ -548,11 +592,17 @@ function initEnrollForm() {
     }
   });
 
+  $('#enrollForm').ajaxChimp({
+    url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
+    callback: function (resp) {
+      $('#enrollSuccessAlert').html(resp.msg);
+      $('#enrollSuccessAlert').show();
+      enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+    }
+  });
+
   $("#enrollForm").submit(function (event) {
     event.preventDefault();
-
-    enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
-    $('#enrollSuccessAlert').show();
   });
 }
 
@@ -561,7 +611,9 @@ function isSimpleMode() {
 }
 
 function isWebViewerMode() {
-  return !isSimpleMode() && document.URL.indexOf("vip.html") == -1;
+  // Special case for EarlyStage
+  return false;
+  //return !isSimpleMode() && document.URL.indexOf("vip.html") == -1;
 }
 
 function getExerciseName(obj) {
@@ -1476,7 +1528,7 @@ var lastdir = 'L';
 var newdir = 'L';
 var authUserName = '';
 
-const DEFAULT_QUESTION_VOTES = 0;
+const DEFAULT_QUESTION_VOTES = 1;
 const MIDDLE_OF_LIST_VOTES = 50;
 const TOP_OF_LIST_VOTES = 100;
 

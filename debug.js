@@ -24,6 +24,16 @@ var studentCampus = null;
 var lastSoloPriority = 0;
 var lastQuestionAnswered;
 
+function getEnrollees() {
+  enrolledRef.on('value', function(enrolledSnap) {
+    var enrolled = enrolledSnap.val();
+
+    for (property in enrolled) {
+      console.log(property.email);
+    }
+  });
+}
+
 function init() {
   firstName = getParameterByName('firstName');
   studentNum = getParameterByName('studentNum');

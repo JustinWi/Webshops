@@ -1,5 +1,5 @@
 //var app = angular.module('app', ['firebase']);
-var firebaseRoot = "https://cdlwebshops.firebaseio.com/lsw";
+var firebaseRoot = "https://cdlwebshops.firebaseio.com/gan";
 
 var rootRef = new Firebase(firebaseRoot);
 var publicChatRef = new Firebase(firebaseRoot);
@@ -529,17 +529,18 @@ function initEnrollForm() {
     }
   });
 
-  $('#enrollForm').ajaxChimp({
-    url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
-    callback: function (resp) {
-      $('#enrollSuccessAlert').html(resp.msg);
-      $('#enrollSuccessAlert').show();
-      enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
-    }
-  });
+  // $('#enrollForm').ajaxChimp({
+  //   url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
+  //   callback: function (resp) {
+  //     $('#enrollSuccessAlert').html(resp.msg);
+  //     $('#enrollSuccessAlert').show();
+  //     enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+  //   }
+  // });
 
   $("#enrollForm").submit(function (event) {
     event.preventDefault();
+    enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
   });
 }
 

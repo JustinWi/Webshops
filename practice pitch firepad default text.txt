@@ -1,0 +1,41 @@
+<b>1.</b> Decide which partner will be green, and which will be yellow.<br/>
+&nbsp;<br/>
+<i>Note:</i> your partner will be able to see your text as you type it.<br/>
+&nbsp;<br/>
+Try editing this text!<br/>
+&nbsp;<br/>
+&nbsp;<br/>
+<b>2.</b> Secretly pick a company below to pitch:<br/>
+&nbsp;<br/>
+<ul>
+<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li>
+</ul>
+&nbsp;<br/>
+<b>3.</b> Fill out the pitch template for the company you're pitching:<br/>
+&nbsp;<br/>
+ - <i>Problem:</i></br>
+&nbsp;<br/>
+&nbsp;<br/>
+&nbsp;<br/>
+ - <i>Solution:</i></br>
+&nbsp;<br/>
+&nbsp;<br/>
+&nbsp;<br/>
+ - <i>Market:</i></br>
+&nbsp;<br/>
+&nbsp;<br/>
+&nbsp;<br/>
+<b>4.</b> Summarize it into a single-sentence pitch:<br/>
+&nbsp;<br/>
+&nbsp;<br/>
+&nbsp;<br/>
+-------------------------------------------------------<br/>
+&nbsp;<br/>
+<b>5.</b> Guess which company your partner is pitching:</br>
+&nbsp;<br/>
+&nbsp;<br/>
+&nbsp;<br/>
+<b>6.</b> What's one thing he/she improve in their pitch?
+&nbsp;<br/>
+&nbsp;<br/>
+&nbsp;<br/>

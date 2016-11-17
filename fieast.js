@@ -382,6 +382,15 @@ function getEnrollees() {
   });
 }
 
+function getFeedback() {
+  feedbackRef.once('value', function (feedbackSnap) {
+    feedbackSnap.forEach(function (snapshot) {
+      var feedback = snapshot.val();
+      console.log(feedback.nps + ",'" + feedback.favorite + "','" + feedback.improve + "'");
+    });
+  });
+}
+
 function initUI() {
   $('.carousel').carousel({
     interval: 5000

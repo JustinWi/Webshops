@@ -548,18 +548,18 @@ function initEnrollForm() {
     }
   });
 
-  $('#enrollForm').ajaxChimp({
-    url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
-    callback: function (resp) {
-      $('#enrollSuccessAlert').show();
-      enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
-    }
-  });
-
-  // $("#enrollForm").submit(function (event) {
-  //   event.preventDefault();
-  //   enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+  // $('#enrollForm').ajaxChimp({
+  //   url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
+  //   callback: function (resp) {
+  //     $('#enrollSuccessAlert').show();
+  //     enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+  //   }
   // });
+
+  $("#enrollForm").submit(function (event) {
+    event.preventDefault();
+    enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
+  });
 }
 
 function isSimpleMode() {
