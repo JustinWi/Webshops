@@ -22,10 +22,12 @@ var offerDesignRef = exerciseValuesRef.child("offerDesign");
 var pmfAssessmentRef = exerciseValuesRef.child("pmfAssessment");
 
 var loggedInUserId;
+var globalUser;
 var questionPad, responsePad;
 var myPMFAssessmentRef;
 
 const PUBLIC_CHAT_ROOM_ID = '-JjXjD6_LIzT4f5DS9jP';
+const RTC_URL = 'https://focus-rtc.herokuapp.com/';
 const GET_PARTNER = false;
 
 var publicChat;
@@ -243,7 +245,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     vm3.offerDesignProperties = $firebaseArray(offerDesignRef);
     vm3.offerDesignProperties.$loaded().then(function () {
       vm3.offerDesignFeedbackGrid.data = vm3.offerDesignProperties;
-    });    
+    });
 
     vm.giveFeedback = function (exercise) {
       var victoryRef = declaringVictoryRef.child(exercise.$id);
@@ -276,7 +278,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 
       vm3.feedbackObj = OfferDesignFactory(odRef);
       vm3.feedbackObj.$bindTo($scope, "offerDesignFeedback");
-    };    
+    };
   }
 
   // $scope.giveFeedback = function(exercise) {
@@ -472,9 +474,17 @@ function initUI() {
     pushData();
   });
 
-  $("#newPartner").hide();
-  $("#newPartner").click(function () {
+  // $("#newPartner").hide();
+  // $("#newPartner").click(function () {
+  //   leavePartnership();
+  // });
+
+  $("#stopNetworkingBtn").click(function () {
     leavePartnership();
+  });
+
+  $("#startNetworkingBtn").click(function () {
+    searchForPartner();
   });
 
   $('.meetYourPartnerMe').on("input", function () {
@@ -866,6 +876,7 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   console.log("Authenticated successfully with payload: ", authData);
 
   var user = authData;
+  globalUser = authData;
 
   loggedInUserId = user.uid;
   user.firstName = firstName;
@@ -1148,11 +1159,11 @@ function unloadFirepads() {
 
 function joinPartnership(user, partnership) {
   user.partnership = partnership;
-  user.lastPartner = partnership.replace(useruser.uid, "");
+  user.lastPartner = partnership.replace(user.uid, "");
 
   attendeesRef.child(user.uid).update(user);
 
-  leavePrivateChatRooms();
+  //leavePrivateChatRooms();
 
   // join chat room
   partnershipsRef.child(partnership).on('value', function (partSnap) {
@@ -1163,11 +1174,15 @@ function joinPartnership(user, partnership) {
       forgetPartnership(false);
       $("#partnerName").html("Your partner isn't available. Let's find another for you!");
 
+      showNewRTCConversationButtons();
+
       return;
     }
     else if (part.room != null) {
       console.log("Entering our partner chat room: " + part.room);
-      publicChat._chat.enterRoom(part.room);
+      //publicChat._chat.enterRoom(part.room);
+
+      joinRTCRoom(part.room);
 
       user.partnerChatRoom = part.room;
       attendeesRef.child(user.uid).update(user);
@@ -1177,16 +1192,34 @@ function joinPartnership(user, partnership) {
   soloRef.off('child_changed');
 
   // intro partners
-  $("#partnerName").html("Say hi to your workshop partner, <span class='partnerName bold'></span>!");
+  $("#partnerName").html("Say hi to <span class='partnerName bold'></span>!");
   $('.partnerName').text(user.partnerName);
   $("#newPartner").show();
 
-  getMeetYourPartnerUpdates(user);
+  $("#stopNetworkingBtn").show();
+  $("#startNetworkingBtn").hide();
+
+  //getMeetYourPartnerUpdates(user);
+}
+
+function joinRTCRoom(room) {
+  $("#rouletteIFrame").attr('src', RTC_URL + room);
+}
+
+function leaveRTCRoom() {
+  $("#rouletteIFrame").attr('src', "");
+}
+
+function showNewRTCConversationButtons() {
+  $("#stopNetworkingBtn").hide();
+  $("#startNetworkingBtn").show();
 }
 
 function lookingForPartnerUI() {
-  $("#partnerName").html("Looking for a partner for you...");
-  $("#newPartner").hide();
+  $("#partnerName").html("Want to network with someone?");
+  //$("#newPartner").hide();
+
+  showNewRTCConversationButtons();
 }
 
 function joinSoloList(user) {
@@ -1208,7 +1241,7 @@ function joinSoloList(user) {
   soloRef.on('child_changed', function (soloSnap) {
     var solo = soloSnap.val();
 
-    if (solo.id != user.uid) {
+    if (solo.uid != user.uid) {
       console.log("Someone else's solo changed");
       return;
     }
@@ -1233,13 +1266,21 @@ function joinSoloList(user) {
       user.partnerName = solo.partnerName;
       user.partnership = solo.partnership;
 
-      publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function (roomId) {
-        console.log('Created our partnership chat room');
-        partnershipsRef.child(solo.partnership).set({ "room": roomId });
+      // Text chat version
+      // publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function (roomId) {
+      //   console.log('Created our partnership chat room');
+      //   partnershipsRef.child(solo.partnership).set({ "room": roomId });
 
-        user.partnerChatRoom = roomId;
-        joinPartnership(user, solo.partnership);
-      });
+      //   user.partnerChatRoom = roomId;
+      //   joinPartnership(user, solo.partnership);
+      // });
+
+      // Video chat version
+      var roomId = solo.partnership;
+      partnershipsRef.child(solo.partnership).set({ "room": roomId });
+
+      user.partnerChatRoom = roomId;
+      joinPartnership(user, solo.partnership);
     }
   });
 }
@@ -1285,14 +1326,14 @@ function partnerWithFirstSolo(user, attemptNum) {
 
       lastSoloPriority = soloSnap.getPriority();
 
-      if (solo.id == user.lastPartner) {
+      if (solo.uid == user.lastPartner) {
         console.log("Found potential partner, but I just left a partnership with them. Skipping.");
 
         searchForNextSolo(user, attemptNum);
         return;
       }
 
-      soloRef.child(solo.id).transaction(function (currentData) {
+      soloRef.child(solo.uid).transaction(function (currentData) {
         if (currentData == null) {
           // This is just an inconsistent state. Keep going.
           return null;
@@ -1302,17 +1343,17 @@ function partnerWithFirstSolo(user, attemptNum) {
           // let's make a baby!
           var partnership;
 
-          if (user.uid.localeCompare(solo.id) < 0) {
-            partnership = user.uid + solo.id;
+          if (user.uid.localeCompare(solo.uid) < 0) {
+            partnership = user.uid + solo.uid;
           }
           else {
-            partnership = solo.id + user.uid;
+            partnership = solo.uid + user.uid;
           }
 
           user.partnership = partnership;
           user.partnerName = currentData.firstName;
-          user.questionsPad = "q-" + solo.id;
-          user.responsesPad = "r-" + solo.id;
+          user.questionsPad = "q-" + solo.uid;
+          user.responsesPad = "r-" + solo.uid;
 
           currentData.partnership = partnership;
           currentData.partnerName = user.firstName;
@@ -1409,7 +1450,7 @@ function checkAttendeeList(user) {
       console.log("I already have a partnership: " + attendee.partnership);
 
       partnerFound = true;
-      loadFirepads(attendee);
+      //loadFirepads(attendee);
       joinPartnership(attendee, attendee.partnership);
       return;
     }
@@ -1422,6 +1463,10 @@ function checkAttendeeList(user) {
 }
 
 function searchForPartner(user) {
+  if (user == null) {
+    user = globalUser;
+  }
+
   console.log("My user id is: " + user.uid);
 
   checkAttendeeList(user);
@@ -1504,9 +1549,10 @@ function forgetPartnership(searchForPartnerImmediately) {
   attendeesRef.child(loggedInUserId).once('value', function (attendeeSnap) {
     var user = attendeeSnap.val();
 
-    leavePrivateChatRooms();
+    //leavePrivateChatRooms();
+    leaveRTCRoom();
     clearPartnerFromUser(user);
-    unloadFirepads();
+    //unloadFirepads();
 
     attendeesRef.child(user.uid).update(user);
 
