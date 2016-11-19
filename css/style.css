@@ -259,3 +259,8 @@ body * {
 #bonusTabContent ul {
 	margin-top:10px;
 }
+
+#rtc-shot {
+	height: 198px;
+	width: 264px;
+}

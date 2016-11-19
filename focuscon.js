@@ -32,6 +32,7 @@ var publicChat;
 
 var firstName = null;
 var emailAddress = null;
+var cameraWorks = false;
 
 var lastSoloPriority = 0;
 var lastQuestionAnswered;
@@ -414,8 +415,12 @@ function populateChart(model, chartContainer, title) {
 
 function initParameters() {
   firstName = getParameterByName('firstName');
+  attendeeEmail = getParameterByName('attendeeEmail');
+  attendeeLocation = getParameterByName('attendeeLocation');
+  attendeeUrl = getParameterByName('attendeeUrl');
+  photoId = getParameterByName('photoId');
 
-  return firstName != null;
+  return (firstName != null || attendeeEmail != null || attendeeLocation != null || attendeeUrl != null || photoId != null);
 }
 
 function getAttendees() {
@@ -790,6 +795,7 @@ function setPartnerDetails(details, isMyDetails) {
 
 function initModal() {
   $('#welcomeForm').bootstrapValidator({
+    excluded: [':disabled'],
     message: 'This value is not valid',
     feedbackIcons: {
       valid: 'glyphicon glyphicon-ok',
@@ -798,26 +804,50 @@ function initModal() {
     },
     fields: {
       firstName: {
-        message: "That's not your name",
+        message: "Hmm, something doesn't look right with your first name.",
         validators: {
           notEmpty: {
-            message: 'We need your name'
+            message: 'Enter your first name'
           },
           stringLength: {
             min: 2,
             max: 20,
-            message: 'We can do names between 2 and 20 characters'
+            message: 'We support names between 2 and 20 characters'
           }
         }
       },
       attendeeEmail: {
-        message: "Hmm, something doesn't look right.",
+        message: "Hmm, something doesn't look right with your email address.",
         validators: {
           notEmpty: {
             message: 'Please enter your email address'
           },
           emailAddress: {
-            message: 'The value is not a valid email address'
+            message: "Your email address isn't valid"
+          }
+        }
+      },
+      attendeeLocation: {
+        message: "Hmm, something doesn't look right with your location.",
+        validators: {
+          notEmpty: {
+            message: "Please enter your location"
+          }
+        }
+      },
+      attendeeUrl: {
+        message: "Hmm, something doesn't look right with your Internet address.",
+        validators: {
+          notEmpty: {
+            message: "Please enter an Internet address"
+          }
+        }
+      },
+      photoId: {
+        message: "Hmm, something doesn't look right with your picture.",
+        validators: {
+          notEmpty: {
+            message: "Pleas take a picture"
           }
         }
       }
@@ -825,12 +855,130 @@ function initModal() {
   });
 
   $("#welcomeForm").submit(function (event) {
+    console.log("submit hit");
     firstName = $("#attendeeName").val();
   });
 
   $('#welcomeModal').modal({
     keyboard: false,
     backdrop: 'static'
+  });
+
+  /*var element = document.querySelector('#rtc-camera');
+  var options = {
+    insertMode: 'append'
+  };
+
+  window.component = createOpentokHardwareSetupComponent(element, options, function(error) {
+    console.log('ot called back');
+    if (error) {
+      console.error('Error: ', error);
+      element.innerHTML = '<strong>Error getting devices</strong>: '
+        error.message;
+      return;
+    }
+    // Add a button to call component.destroy() to close the component.
+  });*/
+
+  OT.getDevices(function(error, devices) {
+    videoInputDevices = devices.filter(function(element) {
+      return element.kind == "videoInput";
+    });
+
+    console.log(videoInputDevices.length);
+    if (videoInputDevices.length == 0) {
+      console.log("no cameras attached to the system");
+      cameraWorks = false;
+    }
+    else {
+      var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' }};
+      var publisher = OT.initPublisher('rtc-camera', publisherOptions, function(error) {
+        if (error) {
+          console.log("your camera isn't working (initPublisher callback)");
+          $("#rtc-shoot").hide();
+          $("#rtc-camera").hide();
+
+          $('#camera-problem-error').show();
+          cameraWorks = false;
+        } else {
+          console.log("your camera is working (initPublisher callback)");
+          cameraWorks = true;
+        }
+      });
+
+      //console.log('here2-post-init');
+      publisher.on('accessAllowed', function(event) {
+        console.log('granted access to camera');
+      });
+
+      publisher.on('accessDenied', function(event) {
+        console.log('denied access to camera');
+      });
+
+      $("#rtc-shoot").click(function() {
+        console.log("shoot clicked");
+        var imgData = publisher.getImgData();
+        publisher.destroy();
+
+        $('#rtc-shot').attr("src", "data:image/png;base64," + imgData);
+        $('#rtc-shot').show();
+
+        var albumBucketName = 'focus-con-avatars';
+        var bucketRegion = 'us-west-2';
+        var IdentityPoolId = 'us-west-2:f5420202-fbee-4491-a43e-cec00477d656';
+
+        AWS.config.update({
+          region: bucketRegion,
+          credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: IdentityPoolId
+          })
+        });
+
+        var s3 = new AWS.S3({
+          apiVersion: '2006-03-01',
+          params: {Bucket: albumBucketName}
+        });
+
+        var photoId = guid();
+        s3.upload({
+          Key: photoId,
+          Body: imgData,
+          ACL: 'public-read'
+        }, function(err, data) {
+          if (err) {
+            console.error('There was an error uploading your photo: ', err.message);
+          } else {
+            console.log('Successfully uploaded photo.');
+            $('#photoId').val(photoId);
+            $('#welcomeForm').data('bootstrapValidator').updateStatus('photoId', 'VALID');
+          }
+        });
+
+        $("#rtc-shoot").hide();
+        $("#rtc-retake").show();
+        $("#rtc-submit").show();
+      });
+
+      $("#rtc-retake").click(function() {
+        $('#rtc-shot').hide();
+
+        //var publisherOptions = { mirror: false, style: { buttonDisplayMode: 'off' }};
+        publisher = OT.initPublisher('rtc-camera', publisherOptions, function(error) {
+          if (error) {
+            console.log("your camera isn't working (initPublisher callback)");
+          } else {
+            console.log("your camera is working (initPublisher callback)");
+          }
+        });
+
+        $('#photoId').val('');
+        $('#welcomeForm').data('bootstrapValidator').resetForm();
+
+        $("#rtc-shoot").show();
+        $("#rtc-retake").hide();
+        $("#rtc-submit").hide();
+      });
+    }
   });
 }
 
@@ -875,6 +1023,7 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   connectExercisesToFirebase(loggedInUserId);
 
   emailsRef.child(loggedInUserId).set({ name: firstName });
+  profilesRef.push({ id: loggedInUserId, name: firstName, email: attendeeEmail, location: attendeeLocation, url: attendeeUrl, photoId: photoId });
 
   setupTextEditors();
 
@@ -1654,4 +1803,14 @@ function pushData() {
 
   $("#question-txt").val('');
 
+}
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
 }
