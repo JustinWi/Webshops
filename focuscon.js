@@ -929,7 +929,9 @@ function initModal() {
 
       $("#rtc-shoot").click(function() {
         console.log("shoot clicked");
+
         var imgData = publisher.getImgData();
+        var imgBinary = convertImgFromBase64ToBinary(imgData);
         publisher.destroy();
 
         $('#rtc-shot').attr("src", "data:image/png;base64," + imgData);
@@ -954,7 +956,7 @@ function initModal() {
         var photoId = guid();
         s3.upload({
           Key: photoId,
-          Body: imgData,
+          Body: imgBinary,
           ACL: 'public-read'
         }, function(err, data) {
           if (err) {
@@ -992,6 +994,19 @@ function initModal() {
       });
     }
   });
+}
+
+function convertImgFromBase64ToBinary(imgData) {
+  // http://stackoverflow.com/a/14988118
+  var binaryImg = atob(imgData);
+  var length = binaryImg.length;
+  var ab = new ArrayBuffer(length);
+  var ua = new Uint8Array(ab);
+  for (var i = 0; i < length; i++) {
+      ua[i] = binaryImg.charCodeAt(i);
+  }
+
+  return ua;
 }
 
 function initPad(url, div, msg) {
