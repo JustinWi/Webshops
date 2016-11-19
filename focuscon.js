@@ -26,6 +26,7 @@ var loggedInUserId;
 var globalUser;
 var questionPad, responsePad;
 var myPMFAssessmentRef;
+var thisUsersProfileRef;
 
 const PROFILE_PIC_URL = 'https://s3-us-west-2.amazonaws.com/focus-con-avatars/';
 const PUBLIC_CHAT_ROOM_ID = '-JjXjD6_LIzT4f5DS9jP';
@@ -331,21 +332,6 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     }
 
     postAuthConfig(authData, publicChat, PUBLIC_CHAT_ROOM_ID, GET_PARTNER);
-
-    var victoryRef = declaringVictoryRef.child(authData.uid);
-    var victorySyncObj = VictoryDeclarationFactory(victoryRef);
-
-    victorySyncObj.$bindTo($scope, "declaringVictory");
-
-    var eaRef = earlyAdoptersRef.child(authData.uid);
-    var eaSyncObj = EarlyAdoptersFactory(eaRef);
-
-    eaSyncObj.$bindTo($scope, "earlyAdopters");
-
-    var odRef = offerDesignRef.child(authData.uid);
-    var odSyncObj = OfferDesignFactory(odRef);
-
-    odSyncObj.$bindTo($scope, "offerDesign");
   });
 }]);
 
@@ -1059,6 +1045,23 @@ function enterRoomAfterUserSessionCreated(chatUI, roomId) {
   chatUI._chat.enterRoom(roomId);
 }
 
+function configureInteractiveWorksheets(ui) {
+  var victoryRef = declaringVictoryRef.child(uid);
+  var victorySyncObj = VictoryDeclarationFactory(victoryRef);
+
+  victorySyncObj.$bindTo($scope, "declaringVictory");
+
+  var eaRef = earlyAdoptersRef.child(uid);
+  var eaSyncObj = EarlyAdoptersFactory(eaRef);
+
+  eaSyncObj.$bindTo($scope, "earlyAdopters");
+
+  var odRef = offerDesignRef.child(uid);
+  var odSyncObj = OfferDesignFactory(odRef);
+
+  odSyncObj.$bindTo($scope, "offerDesign");
+}
+
 function postAuthConfig(authData, chatUI, roomId, getPartner) {
   console.log("Authenticated successfully with payload: ", authData);
 
@@ -1080,7 +1083,12 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   connectExercisesToFirebase(loggedInUserId);
 
   emailsRef.child(loggedInUserId).set({ name: firstName });
-  profilesRef.push({ id: loggedInUserId, name: firstName, email: attendeeEmail, location: attendeeLocation, url: attendeeUrl, photoId: photoId });
+
+  if (thisUsersProfileRef != null) {
+    console.log("Re-authorizing this user. Remove from profiles");
+    thisUsersProfileRef.remove();
+  }
+  thisUsersProfileRef = profilesRef.push({ id: loggedInUserId, name: firstName, email: attendeeEmail, location: attendeeLocation, url: attendeeUrl, photoId: photoId });
 
   setupTextEditors();
 
@@ -1089,6 +1097,7 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   }
 
   configWhoIsHere();
+  configureInteractiveWorksheets(loggedInUserId);
 
   // simple should see all of the questions, everyone else should only see the unhidden ones
   var startAtNum = isSimpleMode() ? -1000000 : 1;
