@@ -1,3 +1,7 @@
+.profilePic {
+	width: 250px;
+}
+
 .note-dialog .modal-dialog {
 	z-index:1050;
 }

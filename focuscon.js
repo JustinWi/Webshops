@@ -8,6 +8,7 @@ var attendeesRef = new Firebase(firebaseRoot + "/attendees");
 var soloRef = new Firebase(firebaseRoot + "/solos");
 var partnershipsRef = new Firebase(firebaseRoot + "/partnerships");
 var questionsRef = new Firebase(firebaseRoot + "/questions");
+var profilesRef = new Firebase(firebaseRoot + "/profiles");
 var meetPartnerRef = new Firebase(firebaseRoot + "/meetYourPartner");
 var exercisesRef = new Firebase(firebaseRoot + "/exercises");
 var enrolledRef = new Firebase(firebaseRoot + "/enrolled");
@@ -461,6 +462,7 @@ function initUI() {
   // REGISTER DOM ELEMENTS
   questionField = $('#question-txt');
   questionList = $('#example-questions');
+  profilePics = $('#profile-pics');
 
   // LISTEN FOR KEYPRESS EVENT
   questionField.keypress(function (e) {
@@ -893,6 +895,8 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
     searchForPartner(user);
   }
 
+  configWhoIsHere();
+
   authUserName = firstName;
   fbid = user.uid;
 
@@ -987,6 +991,22 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
     });
 
     questionList.prepend(activeQuestion);
+  });
+}
+
+function configWhoIsHere() {
+  profilesRef.on('value', function (allProfilesSnapshot) {
+    profilePics.empty();
+
+    allProfilesSnapshot.forEach(function (snapshot) {
+      var data = snapshot.val();
+
+      var profileDiv = $("<span class='profileHolder'>");
+      var img = $("<img class='profilePic' src='" + data.pic + "'>");
+
+      profileDiv.append(img);
+      profilePics.prepend(profileDiv);
+    });
   });
 }
 
@@ -1695,9 +1715,15 @@ function pushData() {
   //***********************************************************
   //Set current text question direction to push it to firebase.
   //***********************************************************
-
   var newQ = questionsRef.push({ name: username, text: question, fbid: fbid, currentdate: cdate.toLocaleString(), votes: DEFAULT_QUESTION_VOTES });
 
   $("#question-txt").val('');
+}
 
+function addProfileTestData() {
+  profilesRef.push({ name: "Test User", pic: "http://profiledps.com/images/dps/full/itm_new-fb-profile-pictures-for-stylish-girls2013-05-02_04-49-20_1.jpg" });
+  profilesRef.push({ name: "Test User", pic: "http://4.bp.blogspot.com/-PIZFJ3RO-i4/VNUUp8nV1cI/AAAAAAAAIvM/1MTv11pOe4E/s1600/cool_fb_profile_pics_for_girl-2xjra46jod1x90mg7zylfu.jpg" });
+  profilesRef.push({ name: "Test User", pic: "http://onlinegupshup.com/wp-content/uploads/2015/12/Good-Girls-Profile-Picture-For-FB.jpg" });
+  profilesRef.push({ name: "Test User", pic: "http://i2.cdn.cnn.com/cnnnext/dam/assets/141218020208-ravi-agrawal-profile-large-tease.jpg" });
+  profilesRef.push({ name: "Test User", pic: "http://3.bp.blogspot.com/-6EfvCzpVEhM/VSPw-grD5II/AAAAAAAAAMc/MlgbdM-2PfA/s1600/Most%2BRomantic%2BDp%2BFor%2BWhatsApp%2BProfile%2BPicture,%2BCool%2BRomantic%2BWhatsApp%2BDp,%2BBeautiful%2BWhatsApp%2BRomantic%2BProfile%2BPictures,%2BBest%2BRomantic%2BWhatsApp%2BStatus%2B(7).jpg" });  
 }
