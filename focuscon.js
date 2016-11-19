@@ -27,6 +27,7 @@ var globalUser;
 var questionPad, responsePad;
 var myPMFAssessmentRef;
 
+const PROFILE_PIC_URL = 'https://s3-us-west-2.amazonaws.com/focus-con-avatars/';
 const PUBLIC_CHAT_ROOM_ID = '-JjXjD6_LIzT4f5DS9jP';
 const RTC_URL = 'https://focus-rtc.herokuapp.com/';
 const GET_PARTNER = false;
@@ -314,6 +315,19 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
   }
 
   auth.$onAuth(function (authData) {
+    if (authData == null) {
+      console.warn("authData is null. Trying to get it again.");
+      
+      authData = auth.$getAuth();
+      if (authData == null) {
+        console.error("authData is still null. Reloading page.");
+        location.reload();
+      }
+      else {
+        console.log("Successfully got authData");
+      }
+    }
+
     postAuthConfig(authData, publicChat, PUBLIC_CHAT_ROOM_ID, GET_PARTNER);
 
     var victoryRef = declaringVictoryRef.child(authData.uid);
@@ -1166,7 +1180,7 @@ function configWhoIsHere() {
       var data = snapshot.val();
 
       var profileDiv = $("<span class='profileHolder'>");
-      var img = $("<img class='profilePic' src='" + data.pic + "'>");
+      var img = $("<img class='profilePic' src='" + PROFILE_PIC_URL + data.photoId + "'>");
 
       profileDiv.append(img);
       profilePics.prepend(profileDiv);

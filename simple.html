@@ -8,7 +8,9 @@
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-
+  <script src="https://static.opentok.com/v2/js/opentok.js"></script>
+  <script src="https://static.opentok.com/hardware-setup/v1/js/opentok-hardware-setup.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 
   <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     
@@ -96,13 +98,33 @@
             <div class="form-group">
               <label class="control-label">First Name</label>
               <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+              <br/>
+              <label class="control-label">Email</label>
+        			<input type="email" class="form-control" name="attendeeEmail" id="attendeeEmail" placeholder="What's your email address?'">
+              <br/>
+              <label class="control-label">Location</label>
+        			<input type="text" class="form-control" name="attendeeLocation" id="attendeeLocation" placeholder="Where are you located?">
+              <br/>
+              <label class="control-label">Web Page</label>
+        			<input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?">
+              <br/>
+              <label class="control-label">Your Photo</label>
+              <p>Let's make sure your camera works and snap a live photo for FOCUS Con!</p>
+              <div id="rtc-camera"></div>
+              <div><img id="rtc-shot" style="display: none"></img></div>
+              <input type="hidden" id="photoId" name="photoId" value=""></input>
+              <div id="camera-problem-error" style="display: none; color: red">To join FOCUS Con, please make sure your camera is connected to your computer and this page can access it. Then, refresh this page.</div>
               <!--<label class="control-label">Email</label>
 			<input type="email" class="form-control" name="attendeeEmail" id="attendeeEmail" placeholder="What email did you register with?">-->
             </div>
           </div>
           <div class="modal-footer bg-primary">
+            <button type="button" class="btn btn-success" id="rtc-shoot">1. Take a picture</button>
+            <button type="button" class="btn btn-success" id="rtc-retake" style="display: none">Retake picture</button>
+            <button type="submit" class="btn btn-success" id="rtc-submit" style="display: none">2. Let's go!</button>
             <button type="submit" class="btn btn-success">Let's go!</button>
           </div>
+
         </form>
       </div>
     </div>  
