@@ -1077,18 +1077,26 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   //chatUI.setUser(user.uid, firstName);
   //enterRoomAfterUserSessionCreated(chatUI, roomId);
 
+  if (thisUsersProfileRef != null) {
+    console.log("Re-authorizing this user. Remove previous profile.");
+    thisUsersProfileRef.remove();
+  }
+  
+  thisUsersProfileRef = profilesRef.child(loggedInUserId).update({ 
+    name: firstName, 
+    email: attendeeEmail, 
+    location: attendeeLocation, 
+    url: attendeeUrl, 
+    photoId: photoId,
+    updated: new Date().getTime()
+  });
+
   // Add user to attendees
   attendeesRef.child(user.uid).update(user);
 
   connectExercisesToFirebase(loggedInUserId);
 
   emailsRef.child(loggedInUserId).set({ name: firstName });
-
-  if (thisUsersProfileRef != null) {
-    console.log("Re-authorizing this user. Remove from profiles");
-    thisUsersProfileRef.remove();
-  }
-  thisUsersProfileRef = profilesRef.push({ id: loggedInUserId, name: firstName, email: attendeeEmail, location: attendeeLocation, url: attendeeUrl, photoId: photoId });
 
   setupTextEditors();
 
@@ -1194,7 +1202,7 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
 }
 
 function configWhoIsHere() {
-  profilesRef.on('value', function (allProfilesSnapshot) {
+  profilesRef.orderByChild('updated').on('value', function (allProfilesSnapshot) {
     profilePics.empty();
 
     allProfilesSnapshot.forEach(function (snapshot) {
@@ -1209,24 +1217,24 @@ function configWhoIsHere() {
   });
 }
 
-function logInToChat(ref, chatUI, roomId, getPartner) {
-  var dataFromAuth = ref.getAuth();
+// function logInToChat(ref, chatUI, roomId, getPartner) {
+//   var dataFromAuth = ref.getAuth();
 
-  if (dataFromAuth) {
-    postAuthConfig(dataFromAuth, chatUI, roomId, getPartner);
-    return;
-  }
+//   if (dataFromAuth) {
+//     postAuthConfig(dataFromAuth, chatUI, roomId, getPartner);
+//     return;
+//   }
 
-  ref.authAnonymously(function (error, authData) {
-    if (error) {
-      console.log("Login Failed!", error);
-      return;
-    }
+//   ref.authAnonymously(function (error, authData) {
+//     if (error) {
+//       console.log("Login Failed!", error);
+//       return;
+//     }
 
-    postAuthConfig(authData, chatUI, roomId, getPartner);
+//     postAuthConfig(authData, chatUI, roomId, getPartner);
 
-  });
-}
+//   });
+// }
 
 //   var simpleLogin = new FirebaseSimpleLogin(chatRef, function(err, user) {
 //     if (user) {
