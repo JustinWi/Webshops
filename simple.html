@@ -336,12 +336,15 @@
                   </div>
                   <div class="fluid-container">
                     <div class="fluid-box full-height full-width">
-                      <div id="rouletteControls" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
-                        <div id="newPartner"><span id="partnerName"></span></div>
-                        <button id="startNetworkingBtn" class="btn btn-success">Start Networking</button>
-                        <button id="stopNetworkingBtn" class="btn btn-success" style="display:none;">Leave Conversation</button>
+                      <div id="rouletteControls" class="defaultNetworkingButtons">
+                        <center>
+                          <div id="networking-text"><span id="default-networking-text">Want to grow your network?</span><span id="dynamic-networking-text"></span></div>
+                          <button id="startNetworkingBtn" class="btn btn-success">Start Networking</button>
+                          <button id="stopNetworkingBtn" class="btn btn-success">Leave Conversation</button>
+                          <button id="cancelNetworkingBtn" class="btn btn-success">Cancel</button>
+                        </center>
                       </div>
-                      <div id="rouletteIFrameHolder" style="position: absolute; bottom: 50px; left: 0px; right: 0px; top 0px;">
+                      <div id="rouletteIFrameHolder">
                         <iframe id="rouletteIFrame" src="" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
                       </div>
                     </div>
@@ -2370,6 +2373,7 @@
   <script data-require="ui-bootstrap@*" data-semver="0.13.3" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap.min.js"></script>
   <script data-require="firebase@*" data-semver="2.2.9" src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
   <script data-require="angularfire@*" data-semver="1.1.1" src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
   <script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>

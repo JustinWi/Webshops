@@ -1,3 +1,27 @@
+.defaultNetworkingButtons {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.inConversationNetworkingButtons {
+	position: absolute; 
+	height: 80px; 
+	bottom: 0px; 
+	left: 0px; 
+	right: 0px;
+}
+
+#rouletteIFrameHolder {
+	position: absolute; 
+	bottom: 80px; 
+	left: 0px; 
+	right: 0px; 
+	top: 0px;
+	display: none;
+}
+
 .profilePic {
 	width: 250px;
 }

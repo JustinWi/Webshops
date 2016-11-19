@@ -317,11 +317,13 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
   auth.$onAuth(function (authData) {
     if (authData == null) {
       console.warn("authData is null. Trying to get it again.");
-      
+
       authData = auth.$getAuth();
       if (authData == null) {
-        console.error("authData is still null. Reloading page.");
-        location.reload();
+        console.error("authData is still null. reAuthing.");
+        auth.$authAnonymously();
+
+        return;
       }
       else {
         console.log("Successfully got authData");
@@ -507,6 +509,12 @@ function initUI() {
   $("#startNetworkingBtn").click(function () {
     searchForPartner();
   });
+
+  $("#cancelNetworkingBtn").click(function () {
+    cancelSearchForPartnership();
+  });
+
+  showNewRTCConversationButton();
 
   $('.meetYourPartnerMe').on("input", function () {
     updateMyInfo($(this));
@@ -906,8 +914,8 @@ function initModal() {
     // Add a button to call component.destroy() to close the component.
   });*/
 
-  OT.getDevices(function(error, devices) {
-    videoInputDevices = devices.filter(function(element) {
+  OT.getDevices(function (error, devices) {
+    videoInputDevices = devices.filter(function (element) {
       return element.kind == "videoInput";
     });
 
@@ -917,8 +925,8 @@ function initModal() {
       cameraWorks = false;
     }
     else {
-      var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' }};
-      var publisher = OT.initPublisher('rtc-camera', publisherOptions, function(error) {
+      var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' } };
+      var publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
         if (error) {
           console.log("your camera isn't working (initPublisher callback)");
           $("#rtc-shoot").hide();
@@ -933,15 +941,15 @@ function initModal() {
       });
 
       //console.log('here2-post-init');
-      publisher.on('accessAllowed', function(event) {
+      publisher.on('accessAllowed', function (event) {
         console.log('granted access to camera');
       });
 
-      publisher.on('accessDenied', function(event) {
+      publisher.on('accessDenied', function (event) {
         console.log('denied access to camera');
       });
 
-      $("#rtc-shoot").click(function() {
+      $("#rtc-shoot").click(function () {
         console.log("shoot clicked");
 
         var imgData = publisher.getImgData();
@@ -964,7 +972,7 @@ function initModal() {
 
         var s3 = new AWS.S3({
           apiVersion: '2006-03-01',
-          params: {Bucket: albumBucketName}
+          params: { Bucket: albumBucketName }
         });
 
         var photoId = guid();
@@ -972,7 +980,7 @@ function initModal() {
           Key: photoId,
           Body: imgBinary,
           ACL: 'public-read'
-        }, function(err, data) {
+        }, function (err, data) {
           if (err) {
             console.error('There was an error uploading your photo: ', err.message);
           } else {
@@ -987,11 +995,11 @@ function initModal() {
         $("#rtc-submit").show();
       });
 
-      $("#rtc-retake").click(function() {
+      $("#rtc-retake").click(function () {
         $('#rtc-shot').hide();
 
         //var publisherOptions = { mirror: false, style: { buttonDisplayMode: 'off' }};
-        publisher = OT.initPublisher('rtc-camera', publisherOptions, function(error) {
+        publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
           if (error) {
             console.log("your camera isn't working (initPublisher callback)");
           } else {
@@ -1017,7 +1025,7 @@ function convertImgFromBase64ToBinary(imgData) {
   var ab = new ArrayBuffer(length);
   var ua = new Uint8Array(ab);
   for (var i = 0; i < length; i++) {
-      ua[i] = binaryImg.charCodeAt(i);
+    ua[i] = binaryImg.charCodeAt(i);
   }
 
   return ua;
@@ -1055,12 +1063,19 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   console.log("Authenticated successfully with payload: ", authData);
 
   var user = authData;
-  globalUser = authData;
 
+  // At some point we should remove one of thesee  redundant variables
   loggedInUserId = user.uid;
+  fbid = user.uid;
+
   user.firstName = firstName;
+  authUserName = firstName;
+
   //chatUI.setUser(user.uid, firstName);
   //enterRoomAfterUserSessionCreated(chatUI, roomId);
+
+  // Add user to attendees
+  attendeesRef.child(user.uid).update(user);
 
   connectExercisesToFirebase(loggedInUserId);
 
@@ -1074,9 +1089,6 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   }
 
   configWhoIsHere();
-
-  authUserName = firstName;
-  fbid = user.uid;
 
   // simple should see all of the questions, everyone else should only see the unhidden ones
   var startAtNum = isSimpleMode() ? -1000000 : 1;
@@ -1370,9 +1382,9 @@ function joinPartnership(user, partnership) {
     if (part == null) {
       console.log("Partnership is null. Request to be terminated.");
       forgetPartnership(false);
-      $("#partnerName").html("Your partner isn't available. Let's find another for you!");
+      setRouletteText("Your partner isn't available. Let's find another for you!");
 
-      showNewRTCConversationButtons();
+      showNewRTCConversationButton();
 
       return;
     }
@@ -1390,34 +1402,80 @@ function joinPartnership(user, partnership) {
   soloRef.off('child_changed');
 
   // intro partners
-  $("#partnerName").html("Say hi to <span class='partnerName bold'></span>!");
-  $('.partnerName').text(user.partnerName);
-  $("#newPartner").show();
+  setRouletteText("Introducing you to <span class='partnerName bold'>" + user.partnerName + "</span>...");
 
-  $("#stopNetworkingBtn").show();
-  $("#startNetworkingBtn").hide();
+  showStopRTCConversationButton();
 
   //getMeetYourPartnerUpdates(user);
 }
 
+function setRouletteText(html) {
+  if (html == null) {
+    $("#default-networking-text").show();
+    $("#dynamic-networking-text").hide();
+    return;
+  }
+
+  $("#default-networking-text").hide();
+  $("#dynamic-networking-text").html(html);
+  $("#dynamic-networking-text").show();
+}
+
 function joinRTCRoom(room) {
   $("#rouletteIFrame").attr('src', RTC_URL + room);
+
+  $("#rouletteIFrameHolder").show();
+  $("#rouletteControls").addClass("inConversationNetworkingButtons");
+  $("#rouletteControls").removeClass("defaultNetworkingButtons");
 }
 
 function leaveRTCRoom() {
   $("#rouletteIFrame").attr('src', "");
+
+  $("#rouletteIFrameHolder").hide();
+  $("#rouletteControls").removeClass("inConversationNetworkingButtons");
+  $("#rouletteControls").addClass("defaultNetworkingButtons");
 }
 
-function showNewRTCConversationButtons() {
+function showStopRTCConversationButton() {
+  $("#stopNetworkingBtn").show();
+  $("#startNetworkingBtn").hide();
+  $("#cancelNetworkingBtn").hide();
+}
+
+function showNewRTCConversationButton() {
   $("#stopNetworkingBtn").hide();
   $("#startNetworkingBtn").show();
+  $("#cancelNetworkingBtn").hide();
+}
+
+function showCancelNewRTCConversationButton() {
+  $("#stopNetworkingBtn").hide();
+  $("#startNetworkingBtn").hide();
+  $("#cancelNetworkingBtn").show();
 }
 
 function lookingForPartnerUI() {
-  $("#partnerName").html("Want to network with someone?");
-  //$("#newPartner").hide();
+  setRouletteText("Looking for someone to introduce you to...");
 
-  showNewRTCConversationButtons();
+  showCancelNewRTCConversationButton();
+}
+
+function cancelSearchForPartnership() {
+  leaveSoloList(loggedInUserId);
+  showNewRTCConversationButton();
+  setRouletteText();
+}
+
+function leaveSoloList(userId) {
+  soloRef.child(userId).remove(function (error) {
+    if (error) {
+      console.log("Error removing myself from the solo list", error);
+    }
+    else {
+      console.log("Successfully removed myself from the solo list", error);
+    }
+  });
 }
 
 function joinSoloList(user) {
@@ -1452,14 +1510,7 @@ function joinSoloList(user) {
     else {
       console.log("and we have a new partnership!");
 
-      soloRef.child(user.uid).remove(function (error) {
-        if (error) {
-          console.log("Error removing myself from the solo list", error);
-        }
-        else {
-          console.log("Successfully removed myself from the solo list", error);
-        }
-      });
+      leaveSoloList(user.uid);
 
       user.partnerName = solo.partnerName;
       user.partnership = solo.partnership;
@@ -1662,7 +1713,17 @@ function checkAttendeeList(user) {
 
 function searchForPartner(user) {
   if (user == null) {
-    user = globalUser;
+    if (fbid == null) {
+      console.log("Don't know my user id. Can't search for partner.");
+      return;
+    }
+
+    attendeesRef.child(fbid).once('value', function (attendeeSnap) {
+      var attendee = attendeeSnap.val();
+
+      searchForPartner(attendee);
+    });
+    return;
   }
 
   console.log("My user id is: " + user.uid);
@@ -1690,11 +1751,12 @@ function leavePartnership() {
 
     if (user.partnership == null) {
       console.log("User doesn't have a partnership to leave. Partner already left.");
-      searchForSolos(user);
+      forgetPartnership(true);
     }
     else {
       console.log("This user is requesting to leave partnership.");
-      lookingForPartnerUI();
+      showNewRTCConversationButton();
+      setRouletteText();
 
       var partnership = user.partnership;
 
@@ -1706,9 +1768,11 @@ function leavePartnership() {
         } else {
           console.log('Partnership removed.');
 
-          forgetPartnership(true);
+          forgetPartnership(false);
         }
       });
+
+      setRouletteText();
     }
   });
 }
