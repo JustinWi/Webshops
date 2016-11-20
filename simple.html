@@ -75,6 +75,7 @@
   <link rel="stylesheet" href="digitalWorksheets/css/adoptionBehaviorCurve.css" />
   <link rel="stylesheet" href="digitalWorksheets/css/ideaGeneration.css" />
   <link rel="stylesheet" href="digitalWorksheets/css/offerDesign.css" />
+  <link rel="stylesheet" href="digitalWorksheets/css/interviewTemplate.css" />
 
   <!-- This app  -->
   <link rel="stylesheet" href="css/style.css" />
@@ -100,20 +101,22 @@
               <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
               <br/>
               <label class="control-label">Email</label>
-        			<input type="email" class="form-control" name="attendeeEmail" id="attendeeEmail" placeholder="What's your email address?'">
+              <input type="email" class="form-control" name="attendeeEmail" id="attendeeEmail" placeholder="What's your email address?'">
               <br/>
               <label class="control-label">Location</label>
-        			<input type="text" class="form-control" name="attendeeLocation" id="attendeeLocation" placeholder="Where are you located?">
+              <input type="text" class="form-control" name="attendeeLocation" id="attendeeLocation" placeholder="Where are you located?">
               <br/>
               <label class="control-label">Web Page</label>
-        			<input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?">
+              <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?">
               <br/>
               <label class="control-label">Your Photo</label>
               <p>Let's make sure your camera works and snap a live photo for FOCUS Con!</p>
               <div id="rtc-camera"></div>
-              <div><img id="rtc-shot" style="display: none"></img></div>
+              <div><img id="rtc-shot" style="display: none"></img>
+              </div>
               <input type="hidden" id="photoId" name="photoId" value=""></input>
-              <div id="camera-problem-error" style="display: none; color: red">To join FOCUS Con, please make sure your camera is connected to your computer and this page can access it. Then, refresh this page.</div>
+              <div id="camera-problem-error" style="display: none; color: red">To join FOCUS Con, please make sure your camera is connected to your computer and this page can access it.
+                Then, refresh this page.</div>
             </div>
           </div>
           <div class="modal-footer bg-primary">
@@ -124,13 +127,12 @@
 
         </form>
       </div>
-    </div>  
+    </div>
   </div>
 
   <header class="fixed-header-main">
     <div style="float:left;">
-      <center><span style="font-size:2em"><b>5 Experiments to Startup Success</b></span> with <a href="https://earlystage.no"
-          target="_blank">EarlyStage</a> and <a href="https://customerdevlabs.com" target="_blank">Justin Wilcox</a></center>
+      <center><span style="font-size:2em"><b>5 Experiments to Startup Success</b></span> with <a href="https://earlystage.no" target="_blank">EarlyStage</a>        and <a href="https://customerdevlabs.com" target="_blank">Justin Wilcox</a></center>
     </div>
     <a href="https://startupweekend.org" target="_blank"><img src="https://brandisty.com/img?id=53bd79ee3926f2376100007a&format=png&w=300&h=127" style="display: inline-block; width: 100px; float:right; margin-top:-5px"
       /></a>
@@ -234,18 +236,20 @@
                 <li><a data-toggle="tab" id="whoIsHereTab" href="#whoIsHereTabContent">Who's Here</a></li>
                 <li><a data-toggle="tab" id="rtcTab" href="#rtcTabContent">Networking Roulette</a></li>
                 <li><a data-toggle="tab" id="slidesTab" href="#slidesTabContent">Slides</a></li>
-                <li><a data-toggle="tab" id="postItsTab" href="#postItsTabContent">Post Its</a></li>
+                <!--<li><a data-toggle="tab" id="postItsTab" href="#postItsTabContent">Post Its</a></li>
                 <li><a data-toggle="tab" id="notesTab" href="#notesTabContent">Notes</a></li>
                 <li><a data-toggle="tab" id="declaringVictoryTab" href="#declaringVictoryTabContent">Declaring Victory</a></li>
                 <li><a data-toggle="tab" id="declaringVictoryFeedbackTab" href="#declaringVictoryFeedbackTabContent">DV Feedback</a></li>
 
-                <li><a data-toggle="tab" id="pmfAssessmentTab" href="#pmfAssessmentTabContent">PMF Assessment</a></li>
+                <li><a data-toggle="tab" id="pmfAssessmentTab" href="#pmfAssessmentTabContent">PMF Assessment</a></li>-->
 
                 <li><a data-toggle="tab" id="earlyAdoptersTab" href="#earlyAdoptersTabContent">Your Early Adopters</a></li>
                 <li><a data-toggle="tab" id="earlyAdoptersFeedbackTab" href="#earlyAdoptersFeedbackTabContent">EA Feedback</a></li>
 
-                <li><a data-toggle="tab" id="offerDesignTab" href="#offerDesignTabContent">Offer Design</a></li>
-                <li><a data-toggle="tab" id="offerDesignFeedbackTab" href="#offerDesignFeedbackTabContent">Offer Design Feedback</a></li>
+                <li><a data-toggle="tab" id="interviewTemplateTab" href="#interviewTemplateTabContent">What to Ask</a></li>
+
+                <!--<li><a data-toggle="tab" id="offerDesignTab" href="#offerDesignTabContent">Offer Design</a></li>
+                <li><a data-toggle="tab" id="offerDesignFeedbackTab" href="#offerDesignFeedbackTabContent">Offer Design Feedback</a></li>-->
 
                 <!--<li><a data-toggle="tab" id="ideaGenerationTab" href="#ideaGenerationTabContent">Idea Generation</a></li>-->
 
@@ -325,7 +329,7 @@
                     <div id="profile-pics" class="fluid-box full-height full-width">
                     </div>
                   </div>
-                </div>           
+                </div>
 
                 <div id="rtcTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
                   <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
@@ -349,7 +353,7 @@
                       </div>
                     </div>
                   </div>
-                </div>       
+                </div>
 
                 <div id="postItsTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
                   <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
@@ -882,6 +886,40 @@
 
                     <div ui-grid="vm.offerDesignFeedbackGrid" ui-grid-auto-resize ui-grid-save-state ui-grid-resize-columns ui-grid-move-columns
                       class="grid property-grid" style="width:100%; height: 100%; position: absolute; top: 155%"></div>
+                  </div>
+                </div>
+
+                <div id="interviewTemplateTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                  <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div class="fluid-container">
+                    <div class="fluid-box full-height full-width wood-background worksheet-container">
+
+                      <div>
+                        <div class="digital-worksheet interview-template-worksheet wood-background" style="">
+                          <img src="digitalWorksheets/img/interview-template.jpg" class="worksheet-background-img" />
+
+                          <div contenteditable class="fill-in question-problem"></div>
+                          <div contenteditable class="fill-in question-last-time"></div>
+                          <div contenteditable class="fill-in question-why"></div>
+                          <div contenteditable class="fill-in question-current-solutions"></div>
+                          <div contenteditable class="fill-in question-deficiencies"></div>
+                          <div contenteditable class="fill-in question-channels"></div>
+
+                          <div contenteditable class="blank question-problem-response"></div>
+                          <div contenteditable class="blank question-last-time-response"></div>
+                          <div contenteditable class="blank question-why-response"></div>
+                          <div contenteditable class="blank question-current-solutions-response"></div>
+                          <div contenteditable class="blank question-deficiencies-response"></div>
+                          <div contenteditable class="blank question-channels-response"></div>
+
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
