@@ -6,6 +6,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width">
 
+  <link rel=icon” href=”/img/favicon.png?v=2”/>
+
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
   <script src="https://static.opentok.com/v2/js/opentok.js"></script>
@@ -92,7 +94,7 @@
         <form id="welcomeForm">
           <div class="modal-header bg-primary">
             <h2 class="modal-title" id="myModalLabel">
-              <center>Welcome to<br/><b>FOCUS Con:</b> <br>Mastering Customer Interviews!</center>
+              <center>Welcome to <b>FOCUS&nbsp;Con:</b> <br>Mastering&nbsp;Customer&nbsp;Interviews!</center>
             </h2>
           </div>
           <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
@@ -104,13 +106,14 @@
               <input type="email" class="form-control" name="attendeeEmail" id="attendeeEmail" placeholder="What's your email address?'">
               <br/>
               <label class="control-label">Location</label>
-              <input type="text" class="form-control" name="attendeeLocation" id="attendeeLocation" placeholder="Where are you located?">
+              <input type="text" class="form-control" name="attendeeLocation" id="attendeeLocation" placeholder='Where are you? (E.g. "Oakland, CA")'>
               <br/>
-              <label class="control-label">Web Page</label>
+              <label class="control-label">Webpage About You</label>
+              <p>LinkedIn profile, Twitter, etc.</p>
               <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?" value="http://">
               <br/>
-              <label class="control-label">Your Photo</label>
-              <p>Let's make sure your camera works and snap your profile pic for FOCUS Con!</p>
+              <label class="control-label">Profile Pic</label>
+              <p>Everyone will be using their webcam, giving FOCUS Con a connected, "face-to-face" feel.</p>
               <center>
                 <div id="rtc-camera"></div>
                 <div><img id="rtc-shot" style="display: none"></img>
@@ -128,7 +131,7 @@
           </div>
           <div class="modal-footer bg-primary">
             <button type="button" class="btn btn-success" id="rtc-shoot">1. Take a picture</button>
-            <button type="button" class="btn btn-primary disabled" id="rtc-uploading" style="display: none">Uploading your picture...</button>
+            <button type="button" class="btn btn-primary disabled" id="rtc-uploading" style="display: none">Loading your picture...</button>
             <button type="button" class="btn btn-default" id="rtc-retake" style="display: none">Retake picture</button>
             <button type="submit" class="btn btn-success" id="rtc-submit" style="display: none">2. Let's go!</button>
           </div>
@@ -2445,7 +2448,7 @@
 
   </div>
   <footer class="fixed-footer-main" style="padding: 5px">
-    &copy; <a href="https://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015 - 2016
+    Powered by <a href="https://unbouncepages.com/digital-conferences" target="_blank">Digital Conferences</a> &copy; 2016
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>

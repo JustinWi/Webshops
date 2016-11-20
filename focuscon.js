@@ -649,9 +649,7 @@ function isSimpleMode() {
 }
 
 function isWebViewerMode() {
-  // Special case for EarlyStage
-  return false;
-  //return !isSimpleMode() && document.URL.indexOf("vip.html") == -1;
+  return !isSimpleMode() && document.URL.indexOf("vip.html") == -1;
 }
 
 function getExerciseName(obj) {
