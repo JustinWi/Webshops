@@ -107,7 +107,7 @@
               <input type="text" class="form-control" name="attendeeLocation" id="attendeeLocation" placeholder="Where are you located?">
               <br/>
               <label class="control-label">Web Page</label>
-              <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?">
+              <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?" value="http://">
               <br/>
               <label class="control-label">Your Photo</label>
               <p>Let's make sure your camera works and snap your profile pic for FOCUS Con!</p>
@@ -123,7 +123,8 @@
           </div>
           <div class="modal-footer bg-primary">
             <button type="button" class="btn btn-success" id="rtc-shoot">1. Take a picture</button>
-            <button type="button" class="btn btn-success" id="rtc-retake" style="display: none">Retake picture</button>
+            <button type="button" class="btn btn-primary disabled" id="rtc-uploading" style="display: none">Uploading your picture...</button>
+            <button type="button" class="btn btn-default" id="rtc-retake" style="display: none">Retake picture</button>
             <button type="submit" class="btn btn-success" id="rtc-submit" style="display: none">2. Let's go!</button>
           </div>
 
