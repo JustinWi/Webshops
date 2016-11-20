@@ -115,10 +115,15 @@
                 <div id="rtc-camera"></div>
                 <div><img id="rtc-shot" style="display: none"></img>
                 </div>
-                <input type="hidden" id="photoId" name="photoId" value=""></input>
-                <div id="camera-problem-error" style="display: none; color: red">To join FOCUS Con, please make sure your camera is connected to your computer and this page can access it.
-                  Then, refresh this page.</div>
               </center>
+              <input type="hidden" id="photoId" name="photoId" value=""></input>
+              <div id="camera-problem-error" style="display: none; color: red">To join FOCUS Con, please make sure:
+                <ul>
+                  <li>Your browser fully supports WebRTC (Chrome and Firefox only)</li>
+                  <li>Your camera is connected to your computer</li>
+                  <li>You grant this page permission to use it</li>
+                </ul>
+                Then, refresh this page.</div>
             </div>
           </div>
           <div class="modal-footer bg-primary">

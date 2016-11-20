@@ -1138,15 +1138,16 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   //   console.log("Re-authorizing this user. Remove previous profile.");
   //   thisUsersProfileRef.remove();
   // }
+  //thisUsersProfileRef = profilesRef.child(loggedInUserId).update({
 
-  // thisUsersProfileRef = profilesRef.child(loggedInUserId).update({
-  //   name: firstName,
-  //   email: attendeeEmail,
-  //   location: attendeeLocation,
-  //   url: attendeeUrl,
-  //   photoId: photoId,
-  //   updated: new Date().getTime()
-  // });
+  profilesRef.child(loggedInUserId).update({
+    name: firstName,
+    email: attendeeEmail,
+    location: attendeeLocation,
+    url: attendeeUrl,
+    photoId: photoId,
+    updated: new Date().getTime()
+  });
 
   // Add user to attendees
   attendeesRef.child(user.uid).update(user);
