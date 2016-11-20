@@ -903,19 +903,19 @@
                         <div class="digital-worksheet interview-template-worksheet wood-background" style="">
                           <img src="digitalWorksheets/img/interview-template.jpg" class="worksheet-background-img" />
 
-                          <div contenteditable class="fill-in question-problem"></div>
-                          <div contenteditable class="fill-in question-last-time"></div>
-                          <div contenteditable class="fill-in question-why"></div>
-                          <div contenteditable class="fill-in question-current-solutions"></div>
-                          <div contenteditable class="fill-in question-deficiencies"></div>
-                          <div contenteditable class="fill-in question-channels"></div>
+                          <div contenteditable class="fill-in question-problem" ng-model="interviewTemplate.problem" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="fill-in question-last-time" ng-model="interviewTemplate.lastTime" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="fill-in question-why" ng-model="interviewTemplate.why" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="fill-in question-current-solutions" ng-model="interviewTemplate.currentSolutions" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="fill-in question-deficiencies" ng-model="interviewTemplate.deficiencies" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="fill-in question-channels" ng-model="interviewTemplate.channels" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
 
-                          <div contenteditable class="blank question-problem-response"></div>
-                          <div contenteditable class="blank question-last-time-response"></div>
-                          <div contenteditable class="blank question-why-response"></div>
-                          <div contenteditable class="blank question-current-solutions-response"></div>
-                          <div contenteditable class="blank question-deficiencies-response"></div>
-                          <div contenteditable class="blank question-channels-response"></div>
+                          <div contenteditable class="blank question-problem-response" ng-model="interviewTemplate.problemResponse" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="blank question-last-time-response" ng-model="interviewTemplate.lastTimeResponse" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="blank question-why-response" ng-model="interviewTemplate.whyResponse" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="blank question-current-solutions-response" ng-model="interviewTemplate.solutionsResponse" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="blank question-deficiencies-response" ng-model="interviewTemplate.deficienciesResponse" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="blank question-channels-response" ng-model="interviewTemplate.channelsResponse" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
 
                         </div>
                       </div>
