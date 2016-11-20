@@ -332,6 +332,22 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     }
 
     postAuthConfig(authData, publicChat, PUBLIC_CHAT_ROOM_ID, GET_PARTNER);
+
+    var uid = authData.uid;
+    var victoryRef = declaringVictoryRef.child(uid);
+    var victorySyncObj = VictoryDeclarationFactory(victoryRef);
+
+    victorySyncObj.$bindTo($scope, "declaringVictory");
+
+    var eaRef = earlyAdoptersRef.child(uid);
+    var eaSyncObj = EarlyAdoptersFactory(eaRef);
+
+    eaSyncObj.$bindTo($scope, "earlyAdopters");
+
+    var odRef = offerDesignRef.child(uid);
+    var odSyncObj = OfferDesignFactory(odRef);
+
+    odSyncObj.$bindTo($scope, "offerDesign");
   });
 }]);
 
@@ -1045,21 +1061,8 @@ function enterRoomAfterUserSessionCreated(chatUI, roomId) {
   chatUI._chat.enterRoom(roomId);
 }
 
-function configureInteractiveWorksheets(ui) {
-  var victoryRef = declaringVictoryRef.child(uid);
-  var victorySyncObj = VictoryDeclarationFactory(victoryRef);
+function configureInteractiveWorksheets(uid) {
 
-  victorySyncObj.$bindTo($scope, "declaringVictory");
-
-  var eaRef = earlyAdoptersRef.child(uid);
-  var eaSyncObj = EarlyAdoptersFactory(eaRef);
-
-  eaSyncObj.$bindTo($scope, "earlyAdopters");
-
-  var odRef = offerDesignRef.child(uid);
-  var odSyncObj = OfferDesignFactory(odRef);
-
-  odSyncObj.$bindTo($scope, "offerDesign");
 }
 
 function postAuthConfig(authData, chatUI, roomId, getPartner) {
@@ -1081,12 +1084,12 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
     console.log("Re-authorizing this user. Remove previous profile.");
     thisUsersProfileRef.remove();
   }
-  
-  thisUsersProfileRef = profilesRef.child(loggedInUserId).update({ 
-    name: firstName, 
-    email: attendeeEmail, 
-    location: attendeeLocation, 
-    url: attendeeUrl, 
+
+  thisUsersProfileRef = profilesRef.child(loggedInUserId).update({
+    name: firstName,
+    email: attendeeEmail,
+    location: attendeeLocation,
+    url: attendeeUrl,
     photoId: photoId,
     updated: new Date().getTime()
   });
