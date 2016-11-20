@@ -323,18 +323,8 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 
   auth.$onAuth(function (authData) {
     if (authData == null) {
-      console.warn("authData is null. Trying to get it again.");
-
-      authData = auth.$getAuth();
-      if (authData == null) {
-        console.error("authData is still null. reAuthing.");
-        auth.$authAnonymously();
-
-        return;
-      }
-      else {
-        console.log("Successfully got authData");
-      }
+      console.warn("authData is null. Returning and waiting for another auth w/ data.");
+      return;
     }
 
     postAuthConfig(authData, publicChat, PUBLIC_CHAT_ROOM_ID, GET_PARTNER);
@@ -1134,19 +1124,19 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
   //chatUI.setUser(user.uid, firstName);
   //enterRoomAfterUserSessionCreated(chatUI, roomId);
 
-  if (thisUsersProfileRef != null) {
-    console.log("Re-authorizing this user. Remove previous profile.");
-    thisUsersProfileRef.remove();
-  }
+  // if (thisUsersProfileRef != null) {
+  //   console.log("Re-authorizing this user. Remove previous profile.");
+  //   thisUsersProfileRef.remove();
+  // }
 
-  thisUsersProfileRef = profilesRef.child(loggedInUserId).update({
-    name: firstName,
-    email: attendeeEmail,
-    location: attendeeLocation,
-    url: attendeeUrl,
-    photoId: photoId,
-    updated: new Date().getTime()
-  });
+  // thisUsersProfileRef = profilesRef.child(loggedInUserId).update({
+  //   name: firstName,
+  //   email: attendeeEmail,
+  //   location: attendeeLocation,
+  //   url: attendeeUrl,
+  //   photoId: photoId,
+  //   updated: new Date().getTime()
+  // });
 
   // Add user to attendees
   attendeesRef.child(user.uid).update(user);
@@ -1265,7 +1255,7 @@ function configWhoIsHere() {
     allProfilesSnapshot.forEach(function (snapshot) {
       var data = snapshot.val();
 
-      var profileDiv = $("<span class='profileHolder'>");
+      var profileDiv = $("<div class='profileHolder'>");
       var img = $("<img class='profilePic' src='" + PROFILE_PIC_URL + data.photoId + "'>");
 
       profileDiv.append(img);
@@ -1910,7 +1900,7 @@ var lastdir = 'L';
 var newdir = 'L';
 var authUserName = '';
 
-const DEFAULT_QUESTION_VOTES = 1;
+const DEFAULT_QUESTION_VOTES = 0;
 const MIDDLE_OF_LIST_VOTES = 50;
 const TOP_OF_LIST_VOTES = 100;
 

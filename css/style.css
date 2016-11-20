@@ -1,3 +1,7 @@
+.saveWorksheetButton {
+	float: right;
+}
+
 .defaultNetworkingButtons {
 	position: absolute;
 	top: 50%;
@@ -22,8 +26,25 @@
 	display: none;
 }
 
+#profile-pics {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-start;
+		background-color: #f39c12;
+}
+
+.profileHolder {
+	  width: 225px;
+    height: 203px;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
 .profilePic {
-	width: 250px;
+	width: 100%;
 }
 
 .note-dialog .modal-dialog {
