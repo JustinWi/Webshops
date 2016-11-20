@@ -1,3 +1,7 @@
+.saveWorksheetButton {
+	float: right;
+}
+
 .defaultNetworkingButtons {
 	position: absolute;
 	top: 50%;
