@@ -2,7 +2,7 @@
 <html ng-app="app">
 
 <head>
-  <title>5 Experiments to Build Stuff that Sells | Justin Wilcox</title>
+  <title>FOCUS Con: Mastering Customer Interviews</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width">
 
@@ -92,7 +92,7 @@
         <form id="welcomeForm">
           <div class="modal-header bg-primary">
             <h2 class="modal-title" id="myModalLabel">
-              <center>Welcome to<br/><b>5 Experiments to Startup Success</b>!</center>
+              <center>Welcome to<br/><b>FOCUS Con:</b> <br>Mastering Customer Interviews!</center>
             </h2>
           </div>
           <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
@@ -107,21 +107,24 @@
               <input type="text" class="form-control" name="attendeeLocation" id="attendeeLocation" placeholder="Where are you located?">
               <br/>
               <label class="control-label">Web Page</label>
-              <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?">
+              <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?" value="http://">
               <br/>
               <label class="control-label">Your Photo</label>
-              <p>Let's make sure your camera works and snap a live photo for FOCUS Con!</p>
-              <div id="rtc-camera"></div>
-              <div><img id="rtc-shot" style="display: none"></img>
-              </div>
-              <input type="hidden" id="photoId" name="photoId" value=""></input>
-              <div id="camera-problem-error" style="display: none; color: red">To join FOCUS Con, please make sure your camera is connected to your computer and this page can access it.
-                Then, refresh this page.</div>
+              <p>Let's make sure your camera works and snap your profile pic for FOCUS Con!</p>
+              <center>
+                <div id="rtc-camera"></div>
+                <div><img id="rtc-shot" style="display: none"></img>
+                </div>
+                <input type="hidden" id="photoId" name="photoId" value=""></input>
+                <div id="camera-problem-error" style="display: none; color: red">To join FOCUS Con, please make sure your camera is connected to your computer and this page can access it.
+                  Then, refresh this page.</div>
+              </center>
             </div>
           </div>
           <div class="modal-footer bg-primary">
             <button type="button" class="btn btn-success" id="rtc-shoot">1. Take a picture</button>
-            <button type="button" class="btn btn-success" id="rtc-retake" style="display: none">Retake picture</button>
+            <button type="button" class="btn btn-primary disabled" id="rtc-uploading" style="display: none">Uploading your picture...</button>
+            <button type="button" class="btn btn-default" id="rtc-retake" style="display: none">Retake picture</button>
             <button type="submit" class="btn btn-success" id="rtc-submit" style="display: none">2. Let's go!</button>
           </div>
 
@@ -130,12 +133,37 @@
     </div>
   </div>
 
+  <div class="modal fade" id="worksheetSavedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h2 class="modal-title" id="myModalLabel">
+            <center id="worksheetSavedModalSaving">Saving to Google Drive...</center>
+            <center id="worksheetSavedModalSaved" style="display: none">Your worksheet has been saved to Google Drive!</center>
+          </h2>
+        </div>
+        <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
+          <center id="worksheetSavedModalSavingBody">Just a few seconds...</center>
+          <center id="worksheetSavedModalSavedBody" style="display: none">Click <a target="_blank" id="savedWorksheetUrl">here</a> to open the worksheet. It was also shared with you through
+            Google Drive directly, so you can always find it there as well.</center>
+          <center id="worksheetSavedModalErrorBody">Sorry, something went wrong. Please click OK and try again.</center>
+        </div>
+        <div class="modal-footer bg-primary">
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>-->
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="worksheetSavedModalOKButton" style="display: none">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <header class="fixed-header-main">
     <div style="float:left;">
-      <center><span style="font-size:2em"><b>5 Experiments to Startup Success</b></span> with <a href="https://earlystage.no" target="_blank">EarlyStage</a>        and <a href="https://customerdevlabs.com" target="_blank">Justin Wilcox</a></center>
+      <center><span style="font-size:2em"><b>FOCUS Con:</b> Mastering Customer Interviews</span> by <a href="https://customerdevlabs.com"
+          target="_blank">Justin Wilcox</a>, <a target="_blank" href="https://fi.co">Founder Institute</a> and <a target="_blank"
+          href="http://startupweekend.org">Startup Weekend</a></center>
     </div>
-    <a href="https://startupweekend.org" target="_blank"><img src="https://brandisty.com/img?id=53bd79ee3926f2376100007a&format=png&w=300&h=127" style="display: inline-block; width: 100px; float:right; margin-top:-5px"
-      /></a>
+    <!--<a href="https://startupweekend.org" target="_blank"><img src="https://brandisty.com/img?id=53bd79ee3926f2376100007a&format=png&w=300&h=127" style="display: inline-block; width: 100px; float:right; margin-top:-5px"
+      /></a>-->
   </header>
 
   <div class="fixed-container-inner">
@@ -153,7 +181,9 @@
 
           <div class="panel panel-warning" style="position: relative; height: 100%; width: 100%; padding:0px;">
             <div class="panel-heading">
-              <h3 class="panel-title"><i><b>Questions:</b></i> Ask and up vote.</h3>
+              <h3 class="panel-title" style="float:left"><i><b>Questions:</b></i> Ask Below</h3>
+              <h3 class="panel-title" style="float:right"><i><b>To Chat:</b></i> <a style="color: #2c3e50" href="https://focus-con-slack-invite.herokuapp.com/" target="_blank">Join us</a>                on Slack</h3>
+              <div style="clear:both;"></div>
             </div>
             <div class="panel-body" style="position: absolute; top: 41px; left: 0px; right: 0px; bottom: 50px; overflow-y: scroll;">
               <ul class="media-list example-chat-questions" id="example-questions"></ul>
@@ -318,7 +348,7 @@
                 </div>
 
 
-                <div id="whoIsHereTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                <div id="whoIsHereTabContent" class="tab-pane fade tabContent" style="overflow: auto; background-color: #333;">
                   <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
                     <button type="button" class="btn btn-default soloTabButton">Solo</button>
                     <button type="button" class="btn btn-default activeTabButton">Active</button>
@@ -754,6 +784,9 @@
                     <button type="button" class="btn btn-default showTabButton">Show</button>
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
+                  <div class="btn-group tabButtonGroup saveWorksheetButton" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default saveToGoogleButton" data-template-id="1fCY_TpKBj_MYISKAr5oniwHjj5EMVpBlImQHYdQhEnQ">Save to Google Drive</button>
+                  </div>
                   <div class="fluid-container">
                     <div class="fluid-box full-height full-width wood-background">
 
@@ -896,6 +929,9 @@
                     <button type="button" class="btn btn-default showTabButton">Show</button>
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
+                  <div class="btn-group tabButtonGroup saveWorksheetButton" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default saveToGoogleButton" data-template-id="1KJ4DafxmaLhclhtzmrrY_1g6LzNPUYHzOmHZEdSDC-A">Save to Google Drive</button>
+                  </div>
                   <div class="fluid-container">
                     <div class="fluid-box full-height full-width wood-background worksheet-container">
 
@@ -906,7 +942,7 @@
                           <div contenteditable class="fill-in question-problem" ng-model="interviewTemplate.problem" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
                           <div contenteditable class="fill-in question-last-time" ng-model="interviewTemplate.lastTime" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
                           <div contenteditable class="fill-in question-why" ng-model="interviewTemplate.why" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
-                          <div contenteditable class="fill-in question-current-solutions" ng-model="interviewTemplate.currentSolutions" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
+                          <div contenteditable class="fill-in question-current-solutions" ng-model="interviewTemplate.solutions" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
                           <div contenteditable class="fill-in question-deficiencies" ng-model="interviewTemplate.deficiencies" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
                           <div contenteditable class="fill-in question-channels" ng-model="interviewTemplate.channels" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></div>
 
