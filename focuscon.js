@@ -21,6 +21,7 @@ var declaringVictoryRef = exerciseValuesRef.child("declaringVictory");
 var earlyAdoptersRef = exerciseValuesRef.child("earlyAdopters");
 var offerDesignRef = exerciseValuesRef.child("offerDesign");
 var pmfAssessmentRef = exerciseValuesRef.child("pmfAssessment");
+var interviewTemplateRef = exerciseValuesRef.child("interviewTemplate");
 
 var loggedInUserId;
 var globalUser;
@@ -87,6 +88,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
   var vm = this;
   var vm2 = this;
   var vm3 = this;
+  var vm4 = this;
 
   var VictoryDeclarationFactory = $firebaseObject.$extend({
     // each time an update arrives from the server, apply the change locally
@@ -234,6 +236,10 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     }
   };
 
+  var InterviewTemplateFactory = $firebaseObject.$extend({
+    $$defaults: {
+    }
+  });
 
   if (isSimpleMode()) {
     vm.properties = $firebaseArray(declaringVictoryRef);
@@ -336,18 +342,19 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     var uid = authData.uid;
     var victoryRef = declaringVictoryRef.child(uid);
     var victorySyncObj = VictoryDeclarationFactory(victoryRef);
-
     victorySyncObj.$bindTo($scope, "declaringVictory");
 
     var eaRef = earlyAdoptersRef.child(uid);
     var eaSyncObj = EarlyAdoptersFactory(eaRef);
-
     eaSyncObj.$bindTo($scope, "earlyAdopters");
 
     var odRef = offerDesignRef.child(uid);
     var odSyncObj = OfferDesignFactory(odRef);
-
     odSyncObj.$bindTo($scope, "offerDesign");
+
+    var itRef = interviewTemplateRef.child(uid);
+    var itSyncObj = InterviewTemplateFactory(itRef);
+    itSyncObj.$bindTo($scope, "interviewTemplate");    
   });
 }]);
 

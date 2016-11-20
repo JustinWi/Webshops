@@ -25,6 +25,18 @@
   /*border: 1px solid;*/
 }
 
+.digital-worksheet .fill-in {
+  position: absolute;
+  font-family: 'Arial', 'Helvetica';
+  font-size: 12pt;
+  font-weight: bold;
+  color: #000;
+  outline: 0px solid transparent;
+  text-align: center;
+  display: inline-block;
+  /*border: 1px solid;*/
+}
+
 .digital-worksheet .worksheet-background-img {
   width: 90%;
   top: 0px;
