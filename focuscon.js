@@ -344,7 +344,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 
     var itRef = interviewTemplateRef.child(uid);
     var itSyncObj = InterviewTemplateFactory(itRef);
-    itSyncObj.$bindTo($scope, "interviewTemplate");    
+    itSyncObj.$bindTo($scope, "interviewTemplate");
   });
 }]);
 
@@ -710,7 +710,7 @@ function setupSimpleTabButtons() {
       method: "GET",
       jsonp: "callback",
       dataType: "jsonp",
-      success: function(response) {
+      success: function (response) {
         $('#worksheetSavedModalSaving').hide();
         $('#worksheetSavedModalSaved').show();
         $('#worksheetSavedModalSavingBody').hide();
@@ -719,7 +719,7 @@ function setupSimpleTabButtons() {
 
         $('#worksheetSavedModalOKButton').show();
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         $('#worksheetSavedModalSavingBody').hide();
         $('#worksheetSavedModalErrorBody').show();
 
@@ -1251,9 +1251,19 @@ function configWhoIsHere() {
       var data = snapshot.val();
 
       var profileDiv = $("<div class='profileHolder'>");
+      
+      var linkToUrl = $("<a href='" + data.url + "' target='_blank'>");
+
+      var overlayDiv = $("<div class='profileOverlay'>");
+      overlayDiv.html(data.name + "<br>" + data.location);
+
       var img = $("<img class='profilePic' src='" + PROFILE_PIC_URL + data.photoId + "'>");
 
-      profileDiv.append(img);
+      linkToUrl.append(overlayDiv);
+      linkToUrl.append(img);
+
+      profileDiv.append(linkToUrl);
+
       profilePics.prepend(profileDiv);
     });
   });

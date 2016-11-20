@@ -33,7 +33,7 @@
     justify-content: center;
     align-content: center;
     align-items: flex-start;
-		background-color: #f39c12;
+		background-color: #333;
 }
 
 .profileHolder {
@@ -41,8 +41,26 @@
     height: 203px;
     flex-grow: 1;
     flex-shrink: 0;
+		position: relative;
 }
 
+.profileOverlay {
+	width: 100%;
+	background-color: rgba(20,20,20,0.3);
+	position: absolute;
+	left: 0px;
+	top: 65%;
+	bottom: 0%;
+	z-index: 5;
+	background-color: rgba(20,20,20,0.5);
+	padding: 5px;
+	color: #FFFFFF;	
+}
+
+.profileOverlay:hover {
+	background-color: rgba(20,20,20,0.8);
+	font-weight: bold;
+}
 .profilePic {
 	width: 100%;
 }
