@@ -925,6 +925,9 @@ function initModal() {
         validators: {
           notEmpty: {
             message: "Please enter an Internet address"
+          },
+          uri: {
+            message: "Please enter an Internet address"
           }
         }
       },
@@ -976,7 +979,7 @@ function initModal() {
       cameraWorks = false;
     }
     else {
-      var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' } };
+      var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' }, resolution: '320x240' };
       var publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
         if (error) {
           console.log("your camera isn't working (initPublisher callback)");
@@ -1002,6 +1005,8 @@ function initModal() {
 
       $("#rtc-shoot").click(function () {
         console.log("shoot clicked");
+        $("#rtc-shoot").hide();
+        $("#rtc-uploading").show();
 
         var imgData = publisher.getImgData();
         var imgBinary = convertImgFromBase64ToBinary(imgData);
@@ -1035,15 +1040,15 @@ function initModal() {
           if (err) {
             console.error('There was an error uploading your photo: ', err.message);
           } else {
-            console.log('Successfully uploaded photo.');
+            console.log('Successfully uploaded photo (' + photoId + ').');
             $('#photoId').val(photoId);
             $('#welcomeForm').data('bootstrapValidator').updateStatus('photoId', 'VALID');
+
+            $("#rtc-uploading").hide();
+            $("#rtc-submit").show();
+            $("#rtc-retake").show();
           }
         });
-
-        $("#rtc-shoot").hide();
-        $("#rtc-retake").show();
-        $("#rtc-submit").show();
       });
 
       $("#rtc-retake").click(function () {
@@ -1059,7 +1064,7 @@ function initModal() {
         });
 
         $('#photoId').val('');
-        $('#welcomeForm').data('bootstrapValidator').resetForm();
+        $('#welcomeForm').data('bootstrapValidator').updateStatus('photoId', 'NOT_VALIDATED');
 
         $("#rtc-shoot").show();
         $("#rtc-retake").hide();
