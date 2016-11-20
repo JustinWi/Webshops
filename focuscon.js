@@ -958,6 +958,12 @@ function initModal() {
     // Add a button to call component.destroy() to close the component.
   });*/
 
+  if (OT.checkSystemRequirements() == 0) {
+    console.log("your camera isn't working (checkSystemRequirements)");
+    displayNoWebRtcErrorMessage();
+    return;
+  }
+
   OT.getDevices(function (error, devices) {
     videoInputDevices = devices.filter(function (element) {
       return element.kind == "videoInput";
@@ -965,103 +971,107 @@ function initModal() {
 
     console.log(videoInputDevices.length);
     if (videoInputDevices.length == 0) {
-      console.log("no cameras attached to the system");
-      cameraWorks = false;
+      console.log("your camera isn't working (no cameras attached to the system)");
+      displayNoWebRtcErrorMessage();
+      return;
     }
-    else {
-      var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' }, resolution: '320x240' };
-      var publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
+
+    var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' }, resolution: '320x240' };
+    var publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
+      if (error) {
+        console.log("your camera isn't working (initPublisher callback)");
+        displayNoWebRtcErrorMessage();
+      } else {
+        console.log("your camera is working (initPublisher callback)");
+        cameraWorks = true;
+      }
+    });
+
+    publisher.on('accessAllowed', function (event) {
+      console.log('granted access to camera');
+    });
+
+    publisher.on('accessDenied', function (event) {
+      console.log('denied access to camera');
+    });
+
+    $("#rtc-shoot").click(function () {
+      console.log("shoot clicked");
+      $("#rtc-shoot").hide();
+      $("#rtc-uploading").show();
+
+      var imgData = publisher.getImgData();
+      var imgBinary = convertImgFromBase64ToBinary(imgData);
+      publisher.destroy();
+
+      $('#rtc-shot').attr("src", "data:image/png;base64," + imgData);
+      $('#rtc-shot').show();
+
+      var albumBucketName = 'focus-con-avatars';
+      var bucketRegion = 'us-west-2';
+      var IdentityPoolId = 'us-west-2:f5420202-fbee-4491-a43e-cec00477d656';
+
+      AWS.config.update({
+        region: bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: IdentityPoolId
+        })
+      });
+
+      var s3 = new AWS.S3({
+        apiVersion: '2006-03-01',
+        params: { Bucket: albumBucketName }
+      });
+
+      var photoId = guid();
+      s3.upload({
+        Key: photoId,
+        Body: imgBinary,
+        ACL: 'public-read'
+      }, function (err, data) {
+        if (err) {
+          console.error('There was an error uploading your photo: ', err.message);
+        } else {
+          console.log('Successfully uploaded photo (' + photoId + ').');
+          $('#photoId').val(photoId);
+          $('#welcomeForm').data('bootstrapValidator').updateStatus('photoId', 'VALID');
+
+          $("#rtc-uploading").hide();
+          $("#rtc-submit").show();
+          $("#rtc-retake").show();
+        }
+      });
+    });
+
+    $("#rtc-retake").click(function () {
+      $('#rtc-shot').hide();
+
+      publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
         if (error) {
           console.log("your camera isn't working (initPublisher callback)");
-          $("#rtc-shoot").hide();
-          $("#rtc-camera").hide();
-
-          $('#camera-problem-error').show();
-          cameraWorks = false;
+          displayNoWebRtcErrorMessage();
         } else {
           console.log("your camera is working (initPublisher callback)");
           cameraWorks = true;
         }
       });
 
-      //console.log('here2-post-init');
-      publisher.on('accessAllowed', function (event) {
-        console.log('granted access to camera');
-      });
+      $('#photoId').val('');
+      $('#welcomeForm').data('bootstrapValidator').updateStatus('photoId', 'NOT_VALIDATED');
 
-      publisher.on('accessDenied', function (event) {
-        console.log('denied access to camera');
-      });
-
-      $("#rtc-shoot").click(function () {
-        console.log("shoot clicked");
-        $("#rtc-shoot").hide();
-        $("#rtc-uploading").show();
-
-        var imgData = publisher.getImgData();
-        var imgBinary = convertImgFromBase64ToBinary(imgData);
-        publisher.destroy();
-
-        $('#rtc-shot').attr("src", "data:image/png;base64," + imgData);
-        $('#rtc-shot').show();
-
-        var albumBucketName = 'focus-con-avatars';
-        var bucketRegion = 'us-west-2';
-        var IdentityPoolId = 'us-west-2:f5420202-fbee-4491-a43e-cec00477d656';
-
-        AWS.config.update({
-          region: bucketRegion,
-          credentials: new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: IdentityPoolId
-          })
-        });
-
-        var s3 = new AWS.S3({
-          apiVersion: '2006-03-01',
-          params: { Bucket: albumBucketName }
-        });
-
-        var photoId = guid();
-        s3.upload({
-          Key: photoId,
-          Body: imgBinary,
-          ACL: 'public-read'
-        }, function (err, data) {
-          if (err) {
-            console.error('There was an error uploading your photo: ', err.message);
-          } else {
-            console.log('Successfully uploaded photo (' + photoId + ').');
-            $('#photoId').val(photoId);
-            $('#welcomeForm').data('bootstrapValidator').updateStatus('photoId', 'VALID');
-
-            $("#rtc-uploading").hide();
-            $("#rtc-submit").show();
-            $("#rtc-retake").show();
-          }
-        });
-      });
-
-      $("#rtc-retake").click(function () {
-        $('#rtc-shot').hide();
-
-        //var publisherOptions = { mirror: false, style: { buttonDisplayMode: 'off' }};
-        publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
-          if (error) {
-            console.log("your camera isn't working (initPublisher callback)");
-          } else {
-            console.log("your camera is working (initPublisher callback)");
-          }
-        });
-
-        $('#photoId').val('');
-        $('#welcomeForm').data('bootstrapValidator').updateStatus('photoId', 'NOT_VALIDATED');
-
-        $("#rtc-shoot").show();
-        $("#rtc-retake").hide();
-        $("#rtc-submit").hide();
-      });
-    }
+      $("#rtc-shoot").show();
+      $("#rtc-retake").hide();
+      $("#rtc-submit").hide();
+    });
   });
+}
+
+function displayNoWebRtcErrorMessage() {
+  $("#rtc-shoot").hide();
+  $("#rtc-camera").hide();
+
+  $('#camera-problem-error').show();
+  cameraWorks = false;
 }
 
 function convertImgFromBase64ToBinary(imgData) {
