@@ -16,6 +16,7 @@ var emailsRef = new Firebase(firebaseRoot + "/emails");
 var feedbackRef = new Firebase(firebaseRoot + "/feedback");
 var notesRef = new Firebase(firebaseRoot + "/notes");
 var exerciseValuesRef = new Firebase(firebaseRoot + "/exerciseValues");
+var youTubeStreamsUrlRef = new Firebase(firebaseRoot + "/youTubeStreams");
 
 var declaringVictoryRef = exerciseValuesRef.child("declaringVictory");
 var earlyAdoptersRef = exerciseValuesRef.child("earlyAdopters");
@@ -529,8 +530,10 @@ function initUI() {
 
   if (isWebViewerMode()) {
     // load video stream
-    var youTubeIFrame = $('.youtube-iframe');
-    youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src"));
+    youTubeStreamsUrlRef.on('value', function(snapshot) {
+      var youTubeIFrame = $('.youtube-iframe');
+      youTubeIFrame.attr("src", snapshot.val().url);
+    });
   }
   else {
     // get rid of video holder
