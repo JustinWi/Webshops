@@ -127,6 +127,28 @@
     </div>  
   </div>
 
+  <div class="modal fade" id="worksheetSavedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h2 class="modal-title" id="myModalLabel">
+            <center id="worksheetSavedModalSaving">Saving to Google Drive...</center>
+            <center id="worksheetSavedModalSaved" style="display: none">Your worksheet has been saved to Google Drive!</center>
+          </h2>
+        </div>
+        <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
+          <center id="worksheetSavedModalSavingBody">Just a few seconds...</center>
+          <center id="worksheetSavedModalSavedBody" style="display: none">Click <a target="_blank" id="savedWorksheetUrl">here</a> to open the worksheet. It was also shared with you through Google Drive directly, so you can always find it there as well.</center>
+          <center id="worksheetSavedModalErrorBody">Sorry, something went wrong. Please click OK and try again.</center>
+        </div>
+        <div class="modal-footer bg-primary">
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>-->
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="worksheetSavedModalOKButton" style="display: none">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <header class="fixed-header-main">
     <div style="float:left;">
       <center><span style="font-size:2em"><b>5 Experiments to Startup Success</b></span> with <a href="https://earlystage.no"
@@ -749,6 +771,9 @@
                     <button type="button" class="btn btn-default activeTabButton">Active</button>
                     <button type="button" class="btn btn-default showTabButton">Show</button>
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                    <button type="button" class="btn btn-default saveToGoogleButton" data-template-id="1fCY_TpKBj_MYISKAr5oniwHjj5EMVpBlImQHYdQhEnQ">Save to Google Drive</button>
                   </div>
                   <div class="fluid-container">
                     <div class="fluid-box full-height full-width wood-background">
