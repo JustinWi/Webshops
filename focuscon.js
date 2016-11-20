@@ -1863,7 +1863,7 @@ var lastdir = 'L';
 var newdir = 'L';
 var authUserName = '';
 
-const DEFAULT_QUESTION_VOTES = 1;
+const DEFAULT_QUESTION_VOTES = 0;
 const MIDDLE_OF_LIST_VOTES = 50;
 const TOP_OF_LIST_VOTES = 100;
 
