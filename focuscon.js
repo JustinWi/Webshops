@@ -16,6 +16,7 @@ var emailsRef = new Firebase(firebaseRoot + "/emails");
 var feedbackRef = new Firebase(firebaseRoot + "/feedback");
 var notesRef = new Firebase(firebaseRoot + "/notes");
 var exerciseValuesRef = new Firebase(firebaseRoot + "/exerciseValues");
+var youTubeStreamsUrlRef = new Firebase(firebaseRoot + "/youTubeStreams");
 
 var declaringVictoryRef = exerciseValuesRef.child("declaringVictory");
 var earlyAdoptersRef = exerciseValuesRef.child("earlyAdopters");
@@ -52,20 +53,20 @@ var app = angular.module('app', [
     'ngSanitize',
     'ui.bootstrap',
     'firebase']).
-    directive('contenteditable', ['$sce', function($sce) {
+    directive('contenteditable', ['$sce', function ($sce) {
         return {
             restrict: 'A', // only activate on element attribute
             require: '?ngModel', // get a hold of NgModelController
-            link: function(scope, element, attrs, ngModel) {
+            link: function (scope, element, attrs, ngModel) {
                 if (!ngModel) return; // do nothing if no ng-model
 
                 // Specify how UI should be updated
-                ngModel.$render = function() {
+                ngModel.$render = function () {
                     element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
                 };
 
                 // Listen for change events to enable binding
-                element.on('blur keyup change', function() {
+                element.on('blur keyup change', function () {
                     scope.$evalAsync(read);
                 });
                 read(); // initialize
@@ -84,7 +85,7 @@ var app = angular.module('app', [
         };
     }]);
 
-app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$firebaseObject', 'uiGridConstants', function($scope, $firebaseArray, $firebaseAuth, $firebaseObject, uiGridConstants) {
+app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$firebaseObject', 'uiGridConstants', function ($scope, $firebaseArray, $firebaseAuth, $firebaseObject, uiGridConstants) {
     var vm = this;
     var vm2 = this;
     var vm3 = this;
@@ -142,7 +143,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
         flatEntityAccess: true,
         enableGridMenu: true,
         enableFiltering: true,
-        onRegisterApi: function(gridApi) {
+        onRegisterApi: function (gridApi) {
             vm.gridApi = gridApi;
         }
     };
@@ -192,7 +193,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
         flatEntityAccess: true,
         enableGridMenu: true,
         enableFiltering: true,
-        onRegisterApi: function(gridApi) {
+        onRegisterApi: function (gridApi) {
             vm2.gridApi = gridApi;
         }
     };
@@ -231,7 +232,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
         flatEntityAccess: true,
         enableGridMenu: true,
         enableFiltering: true,
-        onRegisterApi: function(gridApi) {
+        onRegisterApi: function (gridApi) {
             vm3.gridApi = gridApi;
         }
     };
@@ -243,21 +244,21 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 
     if (isSimpleMode()) {
         vm.properties = $firebaseArray(declaringVictoryRef);
-        vm.properties.$loaded().then(function() {
+        vm.properties.$loaded().then(function () {
             vm.gridOptions.data = vm.properties;
         });
 
         vm2.earlyAdopterProperties = $firebaseArray(earlyAdoptersRef);
-        vm2.earlyAdopterProperties.$loaded().then(function() {
+        vm2.earlyAdopterProperties.$loaded().then(function () {
             vm2.earlyAdoptersFeedbackGrid.data = vm2.earlyAdopterProperties;
         });
 
         vm3.offerDesignProperties = $firebaseArray(offerDesignRef);
-        vm3.offerDesignProperties.$loaded().then(function() {
+        vm3.offerDesignProperties.$loaded().then(function () {
             vm3.offerDesignFeedbackGrid.data = vm3.offerDesignProperties;
         });
 
-        vm.giveFeedback = function(exercise) {
+        vm.giveFeedback = function (exercise) {
             var victoryRef = declaringVictoryRef.child(exercise.$id);
 
             if (vm.feedbackObj) {
@@ -268,7 +269,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
             vm.feedbackObj.$bindTo($scope, "declaringVictoryFeedback");
         };
 
-        vm2.giveEarlyAdopterFeedback = function(exercise) {
+        vm2.giveEarlyAdopterFeedback = function (exercise) {
             var eaRef = earlyAdoptersRef.child(exercise.$id);
 
             if (vm2.feedbackObj) {
@@ -279,7 +280,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
             vm2.feedbackObj.$bindTo($scope, "earlyAdoptersFeedback");
         };
 
-        vm3.giveOfferDesignFeedback = function(exercise) {
+        vm3.giveOfferDesignFeedback = function (exercise) {
             var odRef = offerDesignRef.child(exercise.$id);
 
             if (vm3.feedbackObj) {
@@ -321,7 +322,7 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
         auth.$authAnonymously();
     }
 
-    auth.$onAuth(function(authData) {
+    auth.$onAuth(function (authData) {
         if (authData == null) {
             console.warn("authData is null. Returning and waiting for another auth w/ data.");
             return;
@@ -359,7 +360,7 @@ function connectExercisesToFirebase(userId) {
 }
 
 function refreshPMFCharts() {
-    pmfAssessmentRef.once("value", function(data) {
+    pmfAssessmentRef.once("value", function (data) {
         populateChart(data.val());
     });
 }
@@ -442,14 +443,14 @@ function initParameters() {
 }
 
 function getAttendees() {
-    emailsRef.once('value', function(emailsSnap) {
+    emailsRef.once('value', function (emailsSnap) {
         console.log(emailsSnap.numChildren());
     });
 }
 
 function getEnrollees() {
-    enrolledRef.once('value', function(enrolledSnap) {
-        enrolledSnap.forEach(function(snapshot) {
+    enrolledRef.once('value', function (enrolledSnap) {
+        enrolledSnap.forEach(function (snapshot) {
             console.log(snapshot.val().email);
         });
     });
@@ -466,8 +467,8 @@ function replaceAll(str, find, replace) {
 }
 
 function getFeedback() {
-    feedbackRef.once('value', function(feedbackSnap) {
-        feedbackSnap.forEach(function(snapshot) {
+    feedbackRef.once('value', function (feedbackSnap) {
+        feedbackSnap.forEach(function (snapshot) {
             var feedback = snapshot.val();
             console.log(feedback.nps + ",'" + replaceAll(feedback.favorite, "\r\n", "   ") + "','" + replaceAll(feedback.improve, "\r\n", "   ") + "'");
         });
@@ -485,14 +486,14 @@ function initUI() {
     profilePics = $('#profile-pics');
 
     // LISTEN FOR KEYPRESS EVENT
-    questionField.keypress(function(e) {
+    questionField.keypress(function (e) {
         if (e.keyCode == 13) {
             pushData();
             return false;
         }
     });
 
-    $("#btnSend").click(function() {
+    $("#btnSend").click(function () {
         pushData();
     });
 
@@ -501,21 +502,21 @@ function initUI() {
     //   leavePartnership();
     // });
 
-    $("#stopNetworkingBtn").click(function() {
+    $("#stopNetworkingBtn").click(function () {
         leavePartnership();
     });
 
-    $("#startNetworkingBtn").click(function() {
+    $("#startNetworkingBtn").click(function () {
         searchForPartner();
     });
 
-    $("#cancelNetworkingBtn").click(function() {
+    $("#cancelNetworkingBtn").click(function () {
         cancelSearchForPartnership();
     });
 
     showNewRTCConversationButton();
 
-    $('.meetYourPartnerMe').on("input", function() {
+    $('.meetYourPartnerMe').on("input", function () {
         updateMyInfo($(this));
     });
 
@@ -529,8 +530,10 @@ function initUI() {
 
     if (isWebViewerMode()) {
         // load video stream
-        var youTubeIFrame = $('.youtube-iframe');
-        youTubeIFrame.attr("src", youTubeIFrame.attr("data-youtube-src"));
+        youTubeStreamsUrlRef.on('value', function (snapshot) {
+            var youTubeIFrame = $('.youtube-iframe');
+            youTubeIFrame.attr("src", snapshot.val().url);
+        });
     }
     else {
         // get rid of video holder
@@ -550,8 +553,8 @@ function setupTextEditors() {
         menubar: false,
         plugins: 'autoresize autosave',
         autosave_interval: "2s",
-        setup: function(ed) {
-            ed.on('init', function() {
+        setup: function (ed) {
+            ed.on('init', function () {
                 this.getDoc().body.style.fontSize = '16px';
                 this.getDoc().body.style.fontName = 'Lato';
                 // ed.target.editorCommands.execCommand("fontSize", false, "2");
@@ -562,27 +565,27 @@ function setupTextEditors() {
 }
 
 function setupiFrames() {
-    $("iframe[data-src*='.']").each(function() {
+    $("iframe[data-src*='.']").each(function () {
         $(this).attr('src', $(this).attr('data-src'));
     });
 }
 
 function setupQuizzes() {
     // personalize each of the google form quizzes to include the student's number
-    $("iframe[data-src*='[studentNum]']").each(function() {
+    $("iframe[data-src*='[studentNum]']").each(function () {
         $(this).attr('data-src', $(this).attr('data-src').replace('[studentNum]', studentNum).replace('[studentCampus]', studentCampus));
     });
 }
 
 function setupFeedbackForm() {
-    $('#feedbackTabContent .npsButtons button').click(function(e) {
+    $('#feedbackTabContent .npsButtons button').click(function (e) {
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
 
         feedbackRef.child(loggedInUserId).update({ nps: Number($(this).text()) });
     });
 
-    $('#submitFeedbackButton').click(function(e) {
+    $('#submitFeedbackButton').click(function (e) {
         feedbackRef.child(loggedInUserId).update({
             improve: $('#toImprove').val(),
             favorite: $('#favoritePart').val(),
@@ -593,11 +596,11 @@ function setupFeedbackForm() {
 }
 
 function setupInterviewScriptGenerator() {
-    $("#customerRole").on("input", function() {
+    $("#customerRole").on("input", function () {
         $(".insertCustomerRole").text($(this).val());
     });
 
-    $("#problemContext").on("input", function() {
+    $("#problemContext").on("input", function () {
         $(".insertProblemContext").text($(this).val());
     });
 }
@@ -632,14 +635,14 @@ function initEnrollForm() {
 
     $('#enrollForm').ajaxChimp({
         url: 'http://CustomerDevLabs.us6.list-manage.com/subscribe/post?u=7de22f15c9e97df7b49df664f&id=583a7a794d',
-        callback: function(resp) {
+        callback: function (resp) {
             $('#enrollSuccessAlert').html(resp.msg);
             $('#enrollSuccessAlert').show();
             enrolledRef.child(loggedInUserId).set({ email: $('#enrollEmail').val() });
         }
     });
 
-    $("#enrollForm").submit(function(event) {
+    $("#enrollForm").submit(function (event) {
         event.preventDefault();
     });
 }
@@ -659,32 +662,32 @@ function getExerciseName(obj) {
 function setupSimpleTabButtons() {
     $(".tabButtonGroup").show();
 
-    $(".activeTabButton").click(function(obj) {
+    $(".activeTabButton").click(function (obj) {
         var exerciseName = getExerciseName(this);
 
         exercisesRef.child(exerciseName).update({ show: true });
         exercisesRef.child("active").update({ exercise: exerciseName });
     });
 
-    $(".showTabButton").click(function(obj) {
+    $(".showTabButton").click(function (obj) {
         var exerciseName = getExerciseName(this);
 
         exercisesRef.child(exerciseName).update({ show: true });
     });
 
-    $(".hideTabButton").click(function(obj) {
+    $(".hideTabButton").click(function (obj) {
         var exerciseName = getExerciseName(this);
 
         exercisesRef.child(exerciseName).update({ show: false });
     });
 
-    $(".soloTabButton").click(function(obj) {
+    $(".soloTabButton").click(function (obj) {
         var exerciseName = getExerciseName(this);
 
         spotlightTab(exerciseName + "Tab");
     });
 
-    $(".saveToGoogleButton").click(function(obj) {
+    $(".saveToGoogleButton").click(function (obj) {
         $('#worksheetSavedModalSaving').show();
         $('#worksheetSavedModalSaved').hide();
         $('#worksheetSavedModalSavingBody').show();
@@ -708,7 +711,7 @@ function setupSimpleTabButtons() {
             method: "GET",
             jsonp: "callback",
             dataType: "jsonp",
-            success: function(response) {
+            success: function (response) {
                 $('#worksheetSavedModalSaving').hide();
                 $('#worksheetSavedModalSaved').show();
                 $('#worksheetSavedModalSavingBody').hide();
@@ -717,7 +720,7 @@ function setupSimpleTabButtons() {
 
                 $('#worksheetSavedModalOKButton').show();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 $('#worksheetSavedModalSavingBody').hide();
                 $('#worksheetSavedModalErrorBody').show();
 
@@ -744,7 +747,7 @@ function spotlightTab(tabName) {
     }
 
     // Set all tabs to inactive
-    $('.exerciseTabs > li > a').each(function(index) {
+    $('.exerciseTabs > li > a').each(function (index) {
         exercisesRef.child($(this).attr("id").replace("Tab", '')).set(inactive);
     });
 
@@ -754,7 +757,7 @@ function spotlightTab(tabName) {
 }
 
 function keepTabsOnTabs() {
-    exercisesRef.on('value', function(exercisesSnap) {
+    exercisesRef.on('value', function (exercisesSnap) {
         var atLeastOneTabShown = false;
         var exercises = exercisesSnap.val();
 
@@ -795,14 +798,14 @@ function keepTabsOnTabs() {
     });
 
     // If we don't do this, the firepads show up blank, until they are clicked w/n
-    $('#liveInterviewTab').on('shown.bs.tab', function(e) {
+    $('#liveInterviewTab').on('shown.bs.tab', function (e) {
         questionPad.codeMirror_.refresh();
         responsePad.codeMirror_.refresh();
     });
 }
 
 function setActiveExercise(exercise) {
-    $('.exerciseTabs > li > a').each(function(index) {
+    $('.exerciseTabs > li > a').each(function (index) {
         $(this).removeClass('currentExercise');
     });
 
@@ -829,7 +832,7 @@ function updateMeetYourPartner(field, value) {
 }
 
 function getMeetYourPartnerUpdates(user) {
-    meetPartnerRef.child(user.uid).once('value', function(snap) {
+    meetPartnerRef.child(user.uid).once('value', function (snap) {
         console.log('updating my own partner details');
 
         if (snap == null) {
@@ -840,7 +843,7 @@ function getMeetYourPartnerUpdates(user) {
         setPartnerDetails(snap.val(), true);
     });
 
-    meetPartnerRef.child(user.lastPartner).on('value', function(snap) {
+    meetPartnerRef.child(user.lastPartner).on('value', function (snap) {
         console.log('partner updated their details');
 
         setPartnerDetails(snap.val(), false);
@@ -930,7 +933,7 @@ function initModal() {
         }
     });
 
-    $("#welcomeForm").submit(function(event) {
+    $("#welcomeForm").submit(function (event) {
         console.log("submit hit");
         firstName = $("#attendeeName").val();
     });
@@ -962,8 +965,8 @@ function initModal() {
         return;
     }
 
-    OT.getDevices(function(error, devices) {
-        videoInputDevices = devices.filter(function(element) {
+    OT.getDevices(function (error, devices) {
+        videoInputDevices = devices.filter(function (element) {
             return element.kind == "videoInput";
         });
 
@@ -975,7 +978,7 @@ function initModal() {
         }
 
         var publisherOptions = { insertMode: 'append', mirror: false, style: { buttonDisplayMode: 'off' }, resolution: '320x240' };
-        var publisher = OT.initPublisher('rtc-camera', publisherOptions, function(error) {
+        var publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
             if (error) {
                 console.log("your camera isn't working (initPublisher callback)");
                 displayNoWebRtcErrorMessage();
@@ -985,15 +988,15 @@ function initModal() {
             }
         });
 
-        publisher.on('accessAllowed', function(event) {
+        publisher.on('accessAllowed', function (event) {
             console.log('granted access to camera');
         });
 
-        publisher.on('accessDenied', function(event) {
+        publisher.on('accessDenied', function (event) {
             console.log('denied access to camera');
         });
 
-        $("#rtc-shoot").click(function() {
+        $("#rtc-shoot").click(function () {
             console.log("shoot clicked");
             $("#rtc-shoot").hide();
             $("#rtc-uploading").show();
@@ -1026,7 +1029,7 @@ function initModal() {
                 Key: photoId,
                 Body: imgBinary,
                 ACL: 'public-read'
-            }, function(err, data) {
+            }, function (err, data) {
                 if (err) {
                     console.error('There was an error uploading your photo: ', err.message);
                 } else {
@@ -1041,10 +1044,10 @@ function initModal() {
             });
         });
 
-        $("#rtc-retake").click(function() {
+        $("#rtc-retake").click(function () {
             $('#rtc-shot').hide();
 
-            publisher = OT.initPublisher('rtc-camera', publisherOptions, function(error) {
+            publisher = OT.initPublisher('rtc-camera', publisherOptions, function (error) {
                 if (error) {
                     console.log("your camera isn't working (initPublisher callback)");
                     displayNoWebRtcErrorMessage();
@@ -1092,7 +1095,7 @@ function initPad(url, div, msg) {
     var firepad = Firepad.fromCodeMirror(firepadRef.child(url), codeMirror,
         { richTextToolbar: false, richTextShortcuts: true });
 
-    firepad.on('ready', function() {
+    firepad.on('ready', function () {
         if (firepad.isHistoryEmpty()) {
             firepad.setHtml(msg);
         }
@@ -1167,12 +1170,12 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
     var startAtNum = isSimpleMode() ? -1000000 : 1;
 
     // Add a callback that is triggered for each chat question.
-    questionsRef.orderByChild('votes').startAt(startAtNum).on('value', function(allQuestionsSnapshot) {
+    questionsRef.orderByChild('votes').startAt(startAtNum).on('value', function (allQuestionsSnapshot) {
         questionList.empty();
 
         var activeQuestions = [];
 
-        allQuestionsSnapshot.forEach(function(snapshot) {
+        allQuestionsSnapshot.forEach(function (snapshot) {
 
             //GET DATA
             var questionId = snapshot.key();
@@ -1262,10 +1265,10 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
 }
 
 function configWhoIsHere() {
-    profilesRef.orderByChild('updated').on('value', function(allProfilesSnapshot) {
+    profilesRef.orderByChild('updated').on('value', function (allProfilesSnapshot) {
         profilePics.empty();
 
-        allProfilesSnapshot.forEach(function(snapshot) {
+        allProfilesSnapshot.forEach(function (snapshot) {
             var data = snapshot.val();
 
             var profileDiv = $("<div class='profileHolder'>");
@@ -1463,7 +1466,7 @@ function joinPartnership(user, partnership) {
     //leavePrivateChatRooms();
 
     // join chat room
-    partnershipsRef.child(partnership).on('value', function(partSnap) {
+    partnershipsRef.child(partnership).on('value', function (partSnap) {
         var part = partSnap.val();
 
         if (part == null) {
@@ -1555,7 +1558,7 @@ function cancelSearchForPartnership() {
 }
 
 function leaveSoloList(userId) {
-    soloRef.child(userId).remove(function(error) {
+    soloRef.child(userId).remove(function (error) {
         if (error) {
             console.log("Error removing myself from the solo list", error);
         }
@@ -1581,7 +1584,7 @@ function joinSoloList(user) {
 
     //loadFirepads(user, true);
 
-    soloRef.on('child_changed', function(soloSnap) {
+    soloRef.on('child_changed', function (soloSnap) {
         var solo = soloSnap.val();
 
         if (solo.uid != user.uid) {
@@ -1645,7 +1648,7 @@ function partnerWithFirstSolo(user, attemptNum) {
 
     var firstSolo = soloRef.startAt(lastSoloPriority + 1).limit(1);
 
-    firstSolo.once('value', function(solosSnap) {
+    firstSolo.once('value', function (solosSnap) {
         // Are there any solos?
 
         var solos = solosSnap.val();
@@ -1656,7 +1659,7 @@ function partnerWithFirstSolo(user, attemptNum) {
             return;
         }
 
-        firstSolo.once('child_added', function(soloSnap) {
+        firstSolo.once('child_added', function (soloSnap) {
             // iterate the solos
             var solo = soloSnap.val();
 
@@ -1669,7 +1672,7 @@ function partnerWithFirstSolo(user, attemptNum) {
                 return;
             }
 
-            soloRef.child(solo.uid).transaction(function(currentData) {
+            soloRef.child(solo.uid).transaction(function (currentData) {
                 if (currentData == null) {
                     // This is just an inconsistent state. Keep going.
                     return null;
@@ -1699,7 +1702,7 @@ function partnerWithFirstSolo(user, attemptNum) {
 
                 // user already has a partnership, let's get out of here
                 // not returning anything so we can retry on the solo list
-            }, function(error, committed, snapshot) {
+            }, function (error, committed, snapshot) {
                 if (error != null) {
                     console.log('Transaction failed abnormally!', error);
                 }
@@ -1712,7 +1715,7 @@ function partnerWithFirstSolo(user, attemptNum) {
                     console.log('Successfully claimed this solo');
 
                     // Wait for potential partner to confirm our hookup
-                    setTimeout(function() { confirmPartnershipAccepted(user) }, 3000);
+                    setTimeout(function () { confirmPartnershipAccepted(user) }, 3000);
                 }
             }, true);
         });
@@ -1721,7 +1724,7 @@ function partnerWithFirstSolo(user, attemptNum) {
 }
 
 function confirmPartnershipAccepted(user) {
-    partnershipsRef.child(user.partnership).once('value', function(partSnap) {
+    partnershipsRef.child(user.partnership).once('value', function (partSnap) {
         var part = partSnap.val();
 
         if (part == null) {
@@ -1732,7 +1735,7 @@ function confirmPartnershipAccepted(user) {
             clearPartnerFromUser(user);
 
             console.log("Removing flaky partner from solo list: " + flakySolo);
-            soloRef.child(flakySolo).remove(function(error) {
+            soloRef.child(flakySolo).remove(function (error) {
                 if (error) {
                     console.log('Error removing flaky solo: ' + error);
                 } else {
@@ -1751,12 +1754,12 @@ function confirmPartnershipAccepted(user) {
 
 function searchForSolos(user) {
     // Make sure we're not on the solo list
-    soloRef.child(user.uid).transaction(function(currentData) {
+    soloRef.child(user.uid).transaction(function (currentData) {
 
         // Always return null because we want off this list
         return null;
 
-    }, function(error, committed, snapshot) {
+    }, function (error, committed, snapshot) {
         if (error != null) {
             console.log('Transaction failed abnormally!', error);
             return;
@@ -1774,7 +1777,7 @@ function searchForSolos(user) {
 }
 
 function checkAttendeeList(user) {
-    attendeesRef.child(user.uid).once('value', function(attendeeSnap) {
+    attendeesRef.child(user.uid).once('value', function (attendeeSnap) {
         var attendee = attendeeSnap.val();
 
         if (attendee == null) {
@@ -1805,7 +1808,7 @@ function searchForPartner(user) {
             return;
         }
 
-        attendeesRef.child(fbid).once('value', function(attendeeSnap) {
+        attendeesRef.child(fbid).once('value', function (attendeeSnap) {
             var attendee = attendeeSnap.val();
 
             searchForPartner(attendee);
@@ -1833,7 +1836,7 @@ function leavePartnership() {
         return;
     }
 
-    attendeesRef.child(loggedInUserId).once('value', function(attendeeSnap) {
+    attendeesRef.child(loggedInUserId).once('value', function (attendeeSnap) {
         var user = attendeeSnap.val();
 
         if (user.partnership == null) {
@@ -1849,7 +1852,7 @@ function leavePartnership() {
 
             partnershipsRef.child(user.partnership).off('value');
 
-            partnershipsRef.child(partnership).remove(function(error) {
+            partnershipsRef.child(partnership).remove(function (error) {
                 if (error) {
                     console.log('Error removing partnership: ' + error);
                 } else {
@@ -1895,7 +1898,7 @@ function leavePrivateChatRooms() {
 function forgetPartnership(searchForPartnerImmediately) {
     console.log("Forgetting my partnership.");
 
-    attendeesRef.child(loggedInUserId).once('value', function(attendeeSnap) {
+    attendeesRef.child(loggedInUserId).once('value', function (attendeeSnap) {
         var user = attendeeSnap.val();
 
         //leavePrivateChatRooms();
@@ -1927,7 +1930,7 @@ const DEFAULT_QUESTION_VOTES = 0;
 const MIDDLE_OF_LIST_VOTES = 50;
 const TOP_OF_LIST_VOTES = 100;
 
-$(document).ready(function() {
+$(document).ready(function () {
     initUI();
 });
 
@@ -1935,7 +1938,7 @@ function toggleQuestionVisibility(questionId) {
     var elem = $("#q-" + questionId + "-hide");
     var amHiding = elem.text().toLowerCase() == "hide";
 
-    questionsRef.child(questionId).transaction(function(question) {
+    questionsRef.child(questionId).transaction(function (question) {
         if (question == null) {
             // This is just an inconsistent state. Keep going.
             return null;
@@ -1985,7 +1988,7 @@ function answerQuestion(questionId) {
 }
 
 function deleteQuestion(questionId) {
-    bootbox.confirm("Are you sure?", function(confirmed) {
+    bootbox.confirm("Are you sure?", function (confirmed) {
         if (confirmed) {
             questionsRef.child(questionId).remove();
         }
@@ -1993,7 +1996,7 @@ function deleteQuestion(questionId) {
 }
 
 function toggleVote(questionId) {
-    questionsRef.child(questionId).transaction(function(currentData) {
+    questionsRef.child(questionId).transaction(function (currentData) {
         var question = $('#q-' + questionId);
 
         if (currentData.votes == null) {
@@ -2020,7 +2023,7 @@ function toggleVote(questionId) {
 
         return currentData;
 
-    }, function(error, committed, snapshot) {
+    }, function (error, committed, snapshot) {
         if (error != null) {
             console.log('Transaction failed abnormally!', error);
         }
