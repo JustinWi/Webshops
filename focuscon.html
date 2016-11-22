@@ -6,6 +6,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width">
 
+  <link rel=icon” href=”/img/favicon.png?v=2”/>
+
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
   <script src="https://static.opentok.com/v2/js/opentok.js"></script>
@@ -178,7 +180,7 @@
         <div class="top-row">
 
           <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
-            <iframe class="youtube-iframe" data-youtube-src="https://www.youtube.com/embed/AXvexQ0tZUQ?rel=0&amp;showinfo=0" width="100%"
+            <iframe class="youtube-iframe" width="100%"
               height="100%" src="" frameborder="0" allowfullscreen></iframe>
           </div>
 
@@ -290,7 +292,10 @@
                 <!--<li><a data-toggle="tab" id="ideaGenerationTab" href="#ideaGenerationTabContent">Idea Generation</a></li>-->
 
                 <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
-                <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
+                <li><a data-toggle="tab" id="registrationFeedbackTab" href="#registrationFeedbackTabContent">Reg Feedback</a></li>
+                <li><a data-toggle="tab" id="sessionOneFeedbackTab" href="#sessionOneFeedbackTabContent">Feedback 1</a></li>
+                <li><a data-toggle="tab" id="sessionTwoFeedbackTab" href="#sessionTwoFeedbackTabContent">Feedback 2</a></li>
+                <li><a data-toggle="tab" id="sessionThreeFeedbackTab" href="#sessionThreeFeedbackTabContent">Feedback 3</a></li>
 
               </ul>
               <div class="tab-content">
@@ -2371,69 +2376,45 @@
                   </div>
                 </div>
 
-                <div id="feedbackTabContent" class="tab-pane fade tabContent">
+                <div id="registrationFeedbackTabContent" class="tab-pane fade tabContent">
                   <div class="btn-group tabButtonGroup" role="group">
                     <button type="button" class="btn btn-default soloTabButton">Solo</button>
                     <button type="button" class="btn btn-default activeTabButton">Active</button>
                     <button type="button" class="btn btn-default showTabButton">Show</button>
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
-                  <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
 
-                    <div class="panel panel-primary" style="margin-top: 20px">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">How likely would you be to recommend this workshop to a friend?</h3>
-                      </div>
-                      <div class="panel-body">
-                        <div class="" style="text-align: center">
-                          <div class="btn-group npsButtons" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default">0</button>
-                            <button type="button" class="btn btn-default">1</button>
-                            <button type="button" class="btn btn-default">2</button>
-                            <button type="button" class="btn btn-default">3</button>
-                            <button type="button" class="btn btn-default">4</button>
-                            <button type="button" class="btn btn-default">5</button>
-                            <button type="button" class="btn btn-default">6</button>
-                            <button type="button" class="btn btn-default">7</button>
-                            <button type="button" class="btn btn-default">8</button>
-                            <button type="button" class="btn btn-default">9</button>
-                            <button type="button" class="btn btn-default">10</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel-footer" style="height: 40px">
-                        <div style="float: left">Not at likely</div>
-                        <div style="float: right">Extremely likely</div>
-                      </div>
-                    </div>
-
-                    <div class="panel panel-primary" style="margin-top: 20px">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">What's one thing we can improve next time?</h3>
-                      </div>
-                      <div class="panel-body">
-                        <textarea id="toImprove" class="form-control" rows="3"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="panel panel-primary" style="margin-top: 20px">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">What was your favorite part of the workshop?</h3>
-                      </div>
-                      <div class="panel-body">
-                        <textarea id="favoritePart" class="form-control" rows="3"></textarea>
-                      </div>
-                      <div class="panel-footer" style="text-align: center">
-                        <div class="alert alert-success alert-dismissable" id="feedbackSuccessAlert" style="display:none;">
-                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Thank
-                          you, we got your feedback!
-                        </div>
-
-                        <button id="submitFeedbackButton" class="btn btn-large btn-primary" href="https://focus.customerdevlabs.com" target="_blank">Submit Feedback</button>
-                      </div>
-                    </div>
-
+                  <iframe id="registrationFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSeZkSY49Ji01UHihyRR5fd9VYSMo6VXj_UOBdDciZsI0385jA/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                </div>
+                <div id="sessionOneFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
+
+                  <iframe id="sessionOneFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSdIxJq4orq115dtrife2yalsiZhsBpptpKLFM9rsBXad2dJwQ/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                </div>
+                <div id="sessionTwoFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+
+                  <iframe id="sessionTwoFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLScw2hXLoTXEh0ar9IeZXTMolTo0Lmd2UpeVP_sBkXjSyQSUJw/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                </div>
+                <div id="sessionThreeFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+
+                  <iframe id="sessionThreeFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSd7CtTqLQRdjlwOCXVaE10cj7BPsvcU5kpZcFzmuXa-JaQBiQ/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
                 </div>
               </div>
             </div>
@@ -2446,7 +2427,7 @@
 
   </div>
   <footer class="fixed-footer-main" style="padding: 5px">
-    &copy; <a href="https://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015 - 2016
+    Powered by <a href="https://unbouncepages.com/digital-conferences" target="_blank">Digital Conferences</a> &copy; 2016
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
