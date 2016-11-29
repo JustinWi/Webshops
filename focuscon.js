@@ -1116,12 +1116,22 @@ function enterRoomAfterUserSessionCreated(chatUI, roomId) {
     chatUI._chat.enterRoom(roomId);
 }
 
-function configureInteractiveWorksheets(uid) {
-
+function loadUserSnap() {
+    (function () {
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = '//api.usersnap.com/load/' +
+            '5b8cbdbf-b9d1-487d-bf09-bac5e6e7d46f.js';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+    })();
 }
 
 function postAuthConfig(authData, chatUI, roomId, getPartner) {
     console.log("Authenticated successfully with payload: ", authData);
+
+    loadUserSnap();
 
     var user = authData;
 
@@ -1164,7 +1174,6 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
     }
 
     configWhoIsHere();
-    configureInteractiveWorksheets(loggedInUserId);
 
     // simple should see all of the questions, everyone else should only see the unhidden ones
     var startAtNum = isSimpleMode() ? -1000000 : 1;
