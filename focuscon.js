@@ -707,7 +707,7 @@ function setupSimpleTabButtons() {
         var templateId = $(this).attr('data-template-id');
 
         $.ajax({
-            url: "https://script.google.com/macros/s/AKfycbwqbO7rnlRZ3gNaX35tZ67-gSYOCGxfExYDZ-cHvw0dW3vNYc0/exec?userId=" + userId + "&worksheetName=" + exerciseName + "&templateId=" + templateId,
+            url: "https://script.google.com/macros/s/AKfycbwVlyn5ntlr1HRXap69I66sdG7TYCiPQKHxNkPSzTajHvbZZVY/exec?userId=" + userId + "&worksheetName=" + exerciseName + "&templateId=" + templateId,
             method: "GET",
             jsonp: "callback",
             dataType: "jsonp",
@@ -1276,6 +1276,8 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
 function configWhoIsHere() {
     profilesRef.orderByChild('updated').on('value', function (allProfilesSnapshot) {
         profilePics.empty();
+
+        $('#attendeeCount').html(allProfilesSnapshot.numChildren());
 
         allProfilesSnapshot.forEach(function (snapshot) {
             var data = snapshot.val();
