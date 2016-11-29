@@ -1,3 +1,14 @@
+.exerciseTabs {
+	overflow-x: auto;
+  overflow-y: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+}
+
+.exerciseTabs>li {
+  float: none;
+}
+
 .saveWorksheetButton {
 	float: right;
 }
@@ -251,7 +262,7 @@ body * {
 
 .exercisesPanel .tab-pane{
 	position: absolute;
-	top: 56px;
+	top: 72px;
 	bottom: 15px;
 	right: 15px;
 	left: 15px;
