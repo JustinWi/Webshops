@@ -6,8 +6,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width">
 
-  <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
+
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -132,7 +133,7 @@
             </div>
           </div>
           <div class="modal-footer bg-primary">
-            <button type="button" class="btn btn-success" id="rtc-shoot">1. Take a picture</button>
+            <button type="button" class="btn btn-success" id="rtc-shoot">1. Take your picture</button>
             <button type="button" class="btn btn-primary disabled" id="rtc-uploading" style="display: none">Loading your picture...</button>
             <button type="button" class="btn btn-default" id="rtc-retake" style="display: none">Retake picture</button>
             <button type="submit" class="btn btn-success" id="rtc-submit" style="display: none">2. Let's go!</button>
@@ -241,9 +242,9 @@
                             <h3>Value:</h3>
                             <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
                           </div>
-
                         </div>
                       </div>
+
                     </div>
                   </div>
 
@@ -273,7 +274,7 @@
             <div class="exercisesPanel">
               <ul class="nav nav-tabs exerciseTabs">
 
-                <li><a data-toggle="tab" id="whoIsHereTab" href="#whoIsHereTabContent">Who's Here</a></li>
+                <li><a data-toggle="tab" id="whoIsHereTab" href="#whoIsHereTabContent"><span id="attendeeCount"></span> Attendees</a></li>
                 <li><a data-toggle="tab" id="rtcTab" href="#rtcTabContent">Networking Roulette</a></li>
                 <li><a data-toggle="tab" id="slidesTab" href="#slidesTabContent">Slides</a></li>
                 <!--<li><a data-toggle="tab" id="postItsTab" href="#postItsTabContent">Post Its</a></li>
@@ -290,13 +291,12 @@
 
                 <!--<li><a data-toggle="tab" id="offerDesignTab" href="#offerDesignTabContent">Offer Design</a></li>
                 <li><a data-toggle="tab" id="offerDesignFeedbackTab" href="#offerDesignFeedbackTabContent">Offer Design Feedback</a></li>-->
+
                 <!--<li><a data-toggle="tab" id="ideaGenerationTab" href="#ideaGenerationTabContent">Idea Generation</a></li>-->
 
                 <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Upgrade</a></li>
-                <li><a data-toggle="tab" id="registrationFeedbackTab" href="#registrationFeedbackTabContent">Reg Feedback</a></li>
-                <li><a data-toggle="tab" id="sessionOneFeedbackTab" href="#sessionOneFeedbackTabContent">Feedback 1</a></li>
-                <li><a data-toggle="tab" id="sessionTwoFeedbackTab" href="#sessionTwoFeedbackTabContent">Feedback 2</a></li>
-                <li><a data-toggle="tab" id="sessionThreeFeedbackTab" href="#sessionThreeFeedbackTabContent">Feedback 3</a></li>
+                <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
+
               </ul>
               <div class="tab-content">
 
@@ -2420,45 +2420,69 @@
                   </div>
                 </div>
 
-                <div id="registrationFeedbackTabContent" class="tab-pane fade tabContent">
+                <div id="feedbackTabContent" class="tab-pane fade tabContent">
                   <div class="btn-group tabButtonGroup" role="group">
                     <button type="button" class="btn btn-default soloTabButton">Solo</button>
                     <button type="button" class="btn btn-default activeTabButton">Active</button>
                     <button type="button" class="btn btn-default showTabButton">Show</button>
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
+                  <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
 
-                  <iframe id="registrationFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSeZkSY49Ji01UHihyRR5fd9VYSMo6VXj_UOBdDciZsI0385jA/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                </div>
-                <div id="sessionOneFeedbackTabContent" class="tab-pane fade tabContent">
-                  <div class="btn-group tabButtonGroup" role="group">
-                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                    <button type="button" class="btn btn-default activeTabButton">Active</button>
-                    <button type="button" class="btn btn-default showTabButton">Show</button>
-                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                    <div class="panel panel-primary" style="margin-top: 20px">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">How likely would you be to recommend this workshop to a friend?</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="" style="text-align: center">
+                          <div class="btn-group npsButtons" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default">0</button>
+                            <button type="button" class="btn btn-default">1</button>
+                            <button type="button" class="btn btn-default">2</button>
+                            <button type="button" class="btn btn-default">3</button>
+                            <button type="button" class="btn btn-default">4</button>
+                            <button type="button" class="btn btn-default">5</button>
+                            <button type="button" class="btn btn-default">6</button>
+                            <button type="button" class="btn btn-default">7</button>
+                            <button type="button" class="btn btn-default">8</button>
+                            <button type="button" class="btn btn-default">9</button>
+                            <button type="button" class="btn btn-default">10</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel-footer" style="height: 40px">
+                        <div style="float: left">Not at likely</div>
+                        <div style="float: right">Extremely likely</div>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-primary" style="margin-top: 20px">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">What's one thing we can improve next time?</h3>
+                      </div>
+                      <div class="panel-body">
+                        <textarea id="toImprove" class="form-control" rows="3"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-primary" style="margin-top: 20px">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">What was your favorite part of the workshop?</h3>
+                      </div>
+                      <div class="panel-body">
+                        <textarea id="favoritePart" class="form-control" rows="3"></textarea>
+                      </div>
+                      <div class="panel-footer" style="text-align: center">
+                        <div class="alert alert-success alert-dismissable" id="feedbackSuccessAlert" style="display:none;">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Thank
+                          you, we got your feedback!
+                        </div>
+
+                        <button id="submitFeedbackButton" class="btn btn-large btn-primary" href="https://focus.customerdevlabs.com" target="_blank">Submit Feedback</button>
+                      </div>
+                    </div>
+
                   </div>
-
-                  <iframe id="sessionOneFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSdIxJq4orq115dtrife2yalsiZhsBpptpKLFM9rsBXad2dJwQ/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                </div>
-                <div id="sessionTwoFeedbackTabContent" class="tab-pane fade tabContent">
-                  <div class="btn-group tabButtonGroup" role="group">
-                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                    <button type="button" class="btn btn-default activeTabButton">Active</button>
-                    <button type="button" class="btn btn-default showTabButton">Show</button>
-                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                  </div>
-
-                  <iframe id="sessionTwoFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLScw2hXLoTXEh0ar9IeZXTMolTo0Lmd2UpeVP_sBkXjSyQSUJw/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                </div>
-                <div id="sessionThreeFeedbackTabContent" class="tab-pane fade tabContent">
-                  <div class="btn-group tabButtonGroup" role="group">
-                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
-                    <button type="button" class="btn btn-default activeTabButton">Active</button>
-                    <button type="button" class="btn btn-default showTabButton">Show</button>
-                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
-                  </div>
-
-                  <iframe id="sessionThreeFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSd7CtTqLQRdjlwOCXVaE10cj7BPsvcU5kpZcFzmuXa-JaQBiQ/viewform?embedded=true" data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
                 </div>
               </div>
             </div>
@@ -2489,18 +2513,6 @@
   <script src="js/jquery.ajaxchimp.js"></script>
 
   <script src="focuscon.js"></script>
-
-<script type="text/javascript">
-(function() {
-var s = document.createElement("script");
-s.type = "text/javascript";
-s.async = true;
-s.src = '//api.usersnap.com/load/'+
-        '5b8cbdbf-b9d1-487d-bf09-bac5e6e7d46f.js';
-var x = document.getElementsByTagName('script')[0];
-x.parentNode.insertBefore(s, x);
-})();
-</script>
 
 </body>
 
