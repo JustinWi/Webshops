@@ -1512,7 +1512,7 @@ function setRouletteText(html) {
 }
 
 function joinRTCRoom(room) {
-    $("#rouletteIFrame").attr('src', RTC_URL + room);
+    $("#rouletteIFrame").attr('src', RTC_URL + room + "p2p");
 
     $("#rouletteIFrameHolder").show();
     $("#rouletteControls").addClass("inConversationNetworkingButtons");
