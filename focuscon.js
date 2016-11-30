@@ -1495,14 +1495,35 @@ function joinPartnership(user, partnership) {
 
             return;
         }
+        else if (part.hangoutUrl != null) {
+            leaveRTCRoom();
+            setRouletteText("We couldn't connect you directly to your partner, so we created a Google Hangout for you two!");
+
+            showNetworkingHangoutButton(part.hangoutUrl);
+        }
         else if (part.room != null) {
-            console.log("Entering our partner chat room: " + part.room);
-            //publicChat._chat.enterRoom(part.room);
+            console.log("Update for partnership room: " + part.room);
 
-            joinRTCRoom(part.room);
+            if (part.routedFailed && part.room.startsWith(loggedInUserId)) {
+                // This code should only be executed by one of the partners to prevent them both from picking different hangout urls
+                console.log("Routed connection failed. Attempting hangout connection.");
 
-            user.partnerChatRoom = part.room;
-            attendeesRef.child(user.uid).update(user);
+                part.hangoutUrl = getHangoutUrl();
+                partnershipsRef.child(part.room).update(part);
+            }
+            else if (part.p2pFailed) {
+                console.log("P2P connection failed. Attempted routed connection.");
+                joinRTCRoom(part.room, false);
+            }
+            else {
+                console.log("Entering our partner chat room: " + part.room);
+                //publicChat._chat.enterRoom(part.room);
+
+                joinRTCRoom(part.room, true);
+
+                user.partnerChatRoom = part.room;
+                attendeesRef.child(user.uid).update(user);
+            }
         }
     });
 
@@ -1514,6 +1535,10 @@ function joinPartnership(user, partnership) {
     showStopRTCConversationButton();
 
     //getMeetYourPartnerUpdates(user);
+}
+
+function getHangoutUrl() {
+    return "https://hangouts.google.com/hangouts/_/calendar/anVzdGlud2lAZ21haWwuY29t.fsfp5vbgi02231kh7kh3m35g74";
 }
 
 function setRouletteText(html) {
@@ -1528,8 +1553,8 @@ function setRouletteText(html) {
     $("#dynamic-networking-text").show();
 }
 
-function joinRTCRoom(room) {
-    $("#rouletteIFrame").attr('src', RTC_URL + room + "p2p");
+function joinRTCRoom(room, isP2P) {
+    $("#rouletteIFrame").attr('src', RTC_URL + room + (isP2P ? "p2p" : ""));
 
     $("#rouletteIFrameHolder").show();
     $("#rouletteControls").addClass("inConversationNetworkingButtons");
@@ -1548,18 +1573,32 @@ function showStopRTCConversationButton() {
     $("#stopNetworkingBtn").show();
     $("#startNetworkingBtn").hide();
     $("#cancelNetworkingBtn").hide();
+    $("#networkingHangoutBtn").hide();
 }
 
 function showNewRTCConversationButton() {
     $("#stopNetworkingBtn").hide();
     $("#startNetworkingBtn").show();
     $("#cancelNetworkingBtn").hide();
+    $("#networkingHangoutBtn").hide();
 }
 
 function showCancelNewRTCConversationButton() {
     $("#stopNetworkingBtn").hide();
     $("#startNetworkingBtn").hide();
     $("#cancelNetworkingBtn").show();
+    $("#networkingHangoutBtn").hide();
+}
+
+function showNetworkingHangoutButton(hangoutUrl) {
+    $("#networkingHangoutBtn").click(function () {
+        window.open(hangoutUrl, '_blank');
+    });
+
+    $("#stopNetworkingBtn").show();
+    $("#startNetworkingBtn").hide();
+    $("#cancelNetworkingBtn").hide();
+    $("#networkingHangoutBtn").show();
 }
 
 function lookingForPartnerUI() {
