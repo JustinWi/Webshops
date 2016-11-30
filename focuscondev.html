@@ -112,7 +112,7 @@
               <br/>
               <label class="control-label">Webpage About You</label>
               <p>LinkedIn profile, Twitter, etc.</p>
-              <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?"
+              <input type="text" class="form-control" name="attendeeUrl" id="attendeeUrl" data-fv-uri-allowemptyprotocol="true" placeholder="Where's your online presence (LinkedIn, Twitter, etc.)?"
                 value="http://">
               <br/>
               <label class="control-label">Profile Pic</label>
@@ -295,7 +295,13 @@
                 <!--<li><a data-toggle="tab" id="ideaGenerationTab" href="#ideaGenerationTabContent">Idea Generation</a></li>-->
 
                 <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Upgrade</a></li>
-                <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
+
+                <li><a data-toggle="tab" id="registrationFeedbackTab" href="#registrationFeedbackTabContent">Reg Feedback</a></li>
+                <li><a data-toggle="tab" id="sessionOneFeedbackTab" href="#sessionOneFeedbackTabContent">Feedback 1</a></li>
+                <li><a data-toggle="tab" id="sessionTwoFeedbackTab" href="#sessionTwoFeedbackTabContent">Feedback 2</a></li>
+                <li><a data-toggle="tab" id="sessionThreeFeedbackTab" href="#sessionThreeFeedbackTabContent">Feedback 3</a></li>
+
+                <!--<li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>-->
 
               </ul>
               <div class="tab-content">
@@ -385,7 +391,6 @@
                         <center>
                           <div id="networking-text"><span id="default-networking-text">Want to grow your network?</span><span id="dynamic-networking-text"></span></div>
                           <button id="startNetworkingBtn" class="btn btn-success">Start Networking</button>
-                          <button id="networkingHangoutBtn" class="btn btn-success">Connect via Hangout</button>                          
                           <button id="stopNetworkingBtn" class="btn btn-success">Leave Conversation</button>
                           <button id="cancelNetworkingBtn" class="btn btn-success">Cancel</button>
                         </center>
@@ -796,7 +801,7 @@
                     <button type="button" class="btn btn-default showTabButton">Show</button>
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
-                  <div class="btn-group tabButtonGroup saveWorksheetButton" role="group" style="z-index: 20">
+                  <div class="btn-group saveWorksheetButton" role="group" style="z-index: 20">
                     <button type="button" class="btn btn-default saveToGoogleButton" data-template-id="1fCY_TpKBj_MYISKAr5oniwHjj5EMVpBlImQHYdQhEnQ">Save to Google Drive</button>
                   </div>
                   <div class="fluid-container">
@@ -941,7 +946,7 @@
                     <button type="button" class="btn btn-default showTabButton">Show</button>
                     <button type="button" class="btn btn-default hideTabButton">Hide</button>
                   </div>
-                  <div class="btn-group tabButtonGroup saveWorksheetButton" role="group" style="z-index: 20">
+                  <div class="btn-group saveWorksheetButton" role="group" style="z-index: 20">
                     <button type="button" class="btn btn-default saveToGoogleButton" data-template-id="1KJ4DafxmaLhclhtzmrrY_1g6LzNPUYHzOmHZEdSDC-A">Save to Google Drive</button>
                   </div>
                   <div class="fluid-container">
@@ -2402,7 +2407,8 @@
                       </div>
                       <div class="panel-body">
                         <center>
-                          <h3><b><a href="https://thefocusframework.com/?vn=1#videos" target="_blank">Video</a> or <a href="https://thefocusframework.com/?vn=1" target="_blank">Printed FOCUS Framework</b></a></h3>
+                          <h3><b><a href="https://thefocusframework.com/?vn=1#videos" target="_blank">Video</a> or <a href="https://thefocusframework.com/?vn=1" target="_blank">Printed FOCUS Framework</b></a>
+                          </h3>
                           <h4><b>Plus:</b></h4>
                           <h4>Lifetime access to FOCUS Con recordings</h4>
                           <h4>Small-group Mentoring</h4>
@@ -2412,13 +2418,58 @@
                         <div style="padding: 0px">
                           <center>
                             <h4>Normally $499.<br/><b>Upgrade:<a href="http://thefocusframework.com/product/focus-con-gold-upgrade/"> Only $299</a></b></h4>
-                            <a class="btn btn-success" href="http://thefocusframework.com/product/focus-con-gold-upgrade/" target="_blank">Upgrade</a>                            
+                            <a class="btn btn-success" href="http://thefocusframework.com/product/focus-con-gold-upgrade/" target="_blank">Upgrade</a>
                           </center>
                         </div>
                       </div>
                     </div>
 
                   </div>
+                </div>
+
+                <div id="registrationFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+
+                  <iframe id="registrationFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSeZkSY49Ji01UHihyRR5fd9VYSMo6VXj_UOBdDciZsI0385jA/viewform?embedded=true"
+                    data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                </div>
+
+                <div id="sessionOneFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+
+                  <iframe id="sessionOneFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSdIxJq4orq115dtrife2yalsiZhsBpptpKLFM9rsBXad2dJwQ/viewform?embedded=true"
+                    data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                </div>
+                <div id="sessionTwoFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+
+                  <iframe id="sessionTwoFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLScw2hXLoTXEh0ar9IeZXTMolTo0Lmd2UpeVP_sBkXjSyQSUJw/viewform?embedded=true"
+                    data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                </div>
+                <div id="sessionThreeFeedbackTabContent" class="tab-pane fade tabContent">
+                  <div class="btn-group tabButtonGroup" role="group">
+                    <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                    <button type="button" class="btn btn-default activeTabButton">Active</button>
+                    <button type="button" class="btn btn-default showTabButton">Show</button>
+                    <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                  </div>
+                  <iframe id="sessionThreeFeedbackTabIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSd7CtTqLQRdjlwOCXVaE10cj7BPsvcU5kpZcFzmuXa-JaQBiQ/viewform?embedded=true"
+                    data-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
                 </div>
 
                 <div id="feedbackTabContent" class="tab-pane fade tabContent">

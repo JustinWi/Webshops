@@ -544,6 +544,52 @@ function initUI() {
     if (isSimpleMode()) {
         setupSimpleTabButtons();
     }
+
+    setupSaveToGoogleButtons();
+}
+
+function setupSaveToGoogleButtons() {
+    $(".saveToGoogleButton").click(function (obj) {
+        $('#worksheetSavedModalSaving').show();
+        $('#worksheetSavedModalSaved').hide();
+        $('#worksheetSavedModalSavingBody').show();
+        $('#worksheetSavedModalSavedBody').hide();
+        $('#worksheetSavedModalErrorBody').hide();
+        $('#savedWorksheetUrl').attr("href", "");
+
+        $('#worksheetSavedModalOKButton').hide();
+
+        $('#worksheetSavedModal').modal({
+            keyboard: true,
+            backdrop: 'static'
+        });
+
+        var exerciseName = getExerciseName(this);
+        var userId = loggedInUserId;
+        var templateId = $(this).attr('data-template-id');
+
+        $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbwVlyn5ntlr1HRXap69I66sdG7TYCiPQKHxNkPSzTajHvbZZVY/exec?userId=" + userId + "&worksheetName=" + exerciseName + "&templateId=" + templateId,
+            method: "GET",
+            jsonp: "callback",
+            dataType: "jsonp",
+            success: function (response) {
+                $('#worksheetSavedModalSaving').hide();
+                $('#worksheetSavedModalSaved').show();
+                $('#worksheetSavedModalSavingBody').hide();
+                $('#worksheetSavedModalSavedBody').show();
+                $('#savedWorksheetUrl').attr("href", response);
+
+                $('#worksheetSavedModalOKButton').show();
+            },
+            error: function (xhr, status, error) {
+                $('#worksheetSavedModalSavingBody').hide();
+                $('#worksheetSavedModalErrorBody').show();
+
+                $('#worksheetSavedModalOKButton').show();
+            }
+        });
+    });
 }
 
 function setupTextEditors() {
@@ -685,48 +731,6 @@ function setupSimpleTabButtons() {
         var exerciseName = getExerciseName(this);
 
         spotlightTab(exerciseName + "Tab");
-    });
-
-    $(".saveToGoogleButton").click(function (obj) {
-        $('#worksheetSavedModalSaving').show();
-        $('#worksheetSavedModalSaved').hide();
-        $('#worksheetSavedModalSavingBody').show();
-        $('#worksheetSavedModalSavedBody').hide();
-        $('#worksheetSavedModalErrorBody').hide();
-        $('#savedWorksheetUrl').attr("href", "");
-
-        $('#worksheetSavedModalOKButton').hide();
-
-        $('#worksheetSavedModal').modal({
-            keyboard: true,
-            backdrop: 'static'
-        });
-
-        var exerciseName = getExerciseName(this);
-        var userId = loggedInUserId;
-        var templateId = $(this).attr('data-template-id');
-
-        $.ajax({
-            url: "https://script.google.com/macros/s/AKfycbwVlyn5ntlr1HRXap69I66sdG7TYCiPQKHxNkPSzTajHvbZZVY/exec?userId=" + userId + "&worksheetName=" + exerciseName + "&templateId=" + templateId,
-            method: "GET",
-            jsonp: "callback",
-            dataType: "jsonp",
-            success: function (response) {
-                $('#worksheetSavedModalSaving').hide();
-                $('#worksheetSavedModalSaved').show();
-                $('#worksheetSavedModalSavingBody').hide();
-                $('#worksheetSavedModalSavedBody').show();
-                $('#savedWorksheetUrl').attr("href", response);
-
-                $('#worksheetSavedModalOKButton').show();
-            },
-            error: function (xhr, status, error) {
-                $('#worksheetSavedModalSavingBody').hide();
-                $('#worksheetSavedModalErrorBody').show();
-
-                $('#worksheetSavedModalOKButton').show();
-            }
-        });
     });
 }
 
