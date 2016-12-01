@@ -17,6 +17,7 @@ var feedbackRef = new Firebase(firebaseRoot + "/feedback");
 var notesRef = new Firebase(firebaseRoot + "/notes");
 var exerciseValuesRef = new Firebase(firebaseRoot + "/exerciseValues");
 var youTubeStreamsUrlRef = new Firebase(firebaseRoot + "/youTubeStreams");
+var hangoutUrlsRef = new Firebase(firebaseRoot + "/hangouts");
 
 var declaringVictoryRef = exerciseValuesRef.child("declaringVictory");
 var earlyAdoptersRef = exerciseValuesRef.child("earlyAdopters");
@@ -1508,12 +1509,12 @@ function joinPartnership(user, partnership) {
         else if (part.room != null) {
             console.log("Update for partnership room: " + part.room);
 
-            if (part.routedFailed && part.room.startsWith(loggedInUserId)) {
+            if (part.routedFailed /*&& part.room.startsWith(loggedInUserId)*/) {
                 // This code should only be executed by one of the partners to prevent them both from picking different hangout urls
-                console.log("Routed connection failed. Attempting hangout connection.");
+                // console.log("Routed connection failed. Attempting hangout connection.");
 
-                part.hangoutUrl = getHangoutUrl();
-                partnershipsRef.child(part.room).update(part);
+                // getHangoutUrl(part);
+                leavePartnership(true);
             }
             else if (part.p2pFailed) {
                 console.log("P2P connection failed. Attempted routed connection.");
@@ -1541,8 +1542,7 @@ function joinPartnership(user, partnership) {
     //getMeetYourPartnerUpdates(user);
 }
 
-function getHangoutUrl() {
-    return "https://hangouts.google.com/hangouts/_/calendar/anVzdGlud2lAZ21haWwuY29t.fsfp5vbgi02231kh7kh3m35g74";
+function getHangoutUrl(partnership) {
 }
 
 function setRouletteText(html) {
@@ -1888,7 +1888,7 @@ function getParameterByName(name) {
     return results == null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function leavePartnership() {
+function leavePartnership(failedConnection) {
     console.log("Request to leave partnership.");
 
     if (loggedInUserId == null) {
@@ -1906,7 +1906,6 @@ function leavePartnership() {
         else {
             console.log("This user is requesting to leave partnership.");
             showNewRTCConversationButton();
-            setRouletteText();
 
             var partnership = user.partnership;
 
@@ -1922,7 +1921,12 @@ function leavePartnership() {
                 }
             });
 
-            setRouletteText();
+            if (failedConnection) {
+                setRouletteText("We had trouble connecting you with that partner. Let's try again!");
+            }
+            else {
+                setRouletteText();
+            }
         }
     });
 }
