@@ -240,6 +240,12 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
 
     var InterviewTemplateFactory = $firebaseObject.$extend({
         $$defaults: {
+            problem: "What's the hardest part about being a ___________?",
+            lastTime: "Can you tell me about the last time that happened?",
+            why: "In your words, why is that hard for you?",
+            solutions: "When was the last time you tried to solve the problem?",
+            deficiencies: "What's not ideal about your current solution?",
+            channels: "How did you find out about your current solution?"
         }
     });
 
