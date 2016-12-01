@@ -1225,7 +1225,8 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
                     "<a id='q-" + questionId + "-top' class='topOfTheListQuestionButton' onClick='moveQuestionToTop(&quot;" + questionId + "&quot;);'>Top</a> | " +
                     "<a id='q-" + questionId + "-middle' class='middleOfTheListQuestionButton' onClick='moveQuestionToMiddle(&quot;" + questionId + "&quot;);'>Middle</a> | " +
                     "<a id='q-" + questionId + "' class='answerQuestionButton' onClick='answerQuestion(&quot;" + questionId + "&quot;);'>" + answerText + "</a> | " +
-                    "<a id='q-" + questionId + "-hide' class='toggleQuestionVisibilityButton' onClick='toggleQuestionVisibility(&quot;" + questionId + "&quot;);'>" + hideText + "</a>";
+                    "<a id='q-" + questionId + "-hide' class='toggleQuestionVisibilityButton' onClick='toggleQuestionVisibility(&quot;" + questionId + "&quot;);'>" + hideText + "</a> | " +
+                    "<a id='q-" + questionId + "-archive' class='archiveQuestionButton' onClick='moveQuestionToArchive(&quot;" + questionId + "&quot;);'>Archive</a>";
             }
             else if (userAskedQuestion) {
                 // This user submitted the question
@@ -1268,6 +1269,9 @@ function postAuthConfig(authData, chatUI, roomId, getPartner) {
                 else if (data.votes > 0) {
                     // divmediabody2.css('background', "#73B3D7");
                     divmediabody2.addClass('bg-primary');
+                }
+                else if (data.votes <= -10000) {
+                    divmediabody2.css('background', "#808080");
                 }
                 else {
                     divmediabody2.addClass('this-class-does-not-exist');
@@ -1999,6 +2003,7 @@ var authUserName = '';
 const DEFAULT_QUESTION_VOTES = 0;
 const MIDDLE_OF_LIST_VOTES = 50;
 const TOP_OF_LIST_VOTES = 100;
+const ARCHIVE_VOTES = -10000;
 
 $(document).ready(function () {
     initUI();
@@ -2030,6 +2035,12 @@ function moveQuestionToMiddle(questionId) {
     var elem = $("#q-" + questionId);
 
     questionsRef.child(questionId).update({ votes: MIDDLE_OF_LIST_VOTES });
+}
+
+function moveQuestionToArchive(questionId) {
+    var elem = $("#q-" + questionId);
+
+    questionsRef.child(questionId).update({ votes: ARCHIVE_VOTES });
 }
 
 function moveQuestionToTop(questionId) {
