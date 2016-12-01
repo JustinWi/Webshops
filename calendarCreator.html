@@ -73,12 +73,12 @@
        */
       function createEvents() {
         const CALENDAR_ID = '8kka5lipm7s7o0k6c971pkjm7g@group.calendar.google.com';
-        const EVENTS_TO_CREATE = 50;
+        const EVENTS_TO_CREATE = 5;
 
         var event = {
           'summary': 'FOCUS Con Hangout',
           'start': {
-            'dateTime': '2017-05-28T09:00:00-07:00',
+            'dateTime': new Date(),
             'timeZone': 'America/Los_Angeles'
           },
           'end': {
@@ -96,9 +96,9 @@
           createRequest.execute(function(event) {
             appendPre('Event created. Hangout link: ' + event.hangoutLink);
 
-            if (event.hangoutLink) {
-              hangoutsRef.child(event.id).set({hangoutLink: event.hangoutLink});
-            }
+            // if (event.hangoutLink) {
+            //   hangoutsRef.child(event.id).set({hangoutLink: event.hangoutLink});
+            // }
           });
         }
 
@@ -156,7 +156,7 @@
         Authorize
       </button>
   </div>
-  <pre id="output"></pre>
+  <div id="output"></div>
 </body>
 
 </html>
