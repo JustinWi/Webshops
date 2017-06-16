@@ -1,0 +1,70 @@
+.currency-channel-blank {
+  top: 13.5%;
+  left: 30%;
+  width: 62%;
+  text-align: left !important;
+}
+
+.currency-mvp-blank {
+  top: 21%;
+  left: 9%;
+  width: 82%;
+  height: 24%;
+  text-align: left !important;
+}
+
+.currency-start-blank {
+  top: 52.5%;
+  left: 15%;
+  width: 36%;
+  text-align: left !important;
+}
+
+.currency-end-blank {
+  top: 52.5%;
+  left: 56%;
+  width: 35%;
+  text-align: left !important;
+}
+
+.currency-metric-blank {
+  top: 64%;
+  left: 16%;
+  width: 22%;
+  text-align: left !important;
+}
+
+.currency-success-blank {
+  top: 71.5%;
+  left: 30%;
+  width: 8%;
+  text-align: left !important;
+}
+
+.currency-fail-blank {
+  top: 80.5%;
+  left: 30%;
+  width: 8%;
+  text-align: left !important;
+}
+
+.currency-proceed-blank {
+  top: 67%;
+  left: 62%;  
+  width: 31%;
+  text-align: left !important;
+}
+
+.currency-optimize-blank {
+  top: 77%;
+  left: 62%;  
+  width: 31%;
+  text-align: left !important;
+}
+
+.currency-pivot-blank {
+  top: 85.5%;
+  left: 62%;  
+  width: 31%;
+  text-align: left !important;
+}
