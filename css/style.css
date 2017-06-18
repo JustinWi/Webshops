@@ -1,3 +1,67 @@
+#welcomeForm > .bg-primary{
+	background-color: #333;
+}
+
+#welcomeForm .btn-success{
+	background-color: #fec503;
+	border: none;
+}
+
+#welcomeForm .btn-success:hover{
+	background-color: #e6b202;
+	border: none;
+}
+
+a {
+	color: #fec503;
+	font-weight: bold;
+}
+
+.header {
+	background-color: #333; 
+	color: #eee;
+}
+
+.footer {
+	background-color: #333; 
+	color: #eee;
+}
+
+.nav-tabs>li>a {
+		background-color: #666;
+    border: 1px solid #666;
+    border-radius: 6px 6px 0 0;
+}
+
+.nav>li>a {	
+	color: #eee;
+	font-weight: bold;
+}
+
+.nav>li>a:hover, .nav>li>a:focus {	
+	color: #eee;
+	background-color: #333;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #fec503;
+		font-weight: bold;
+    background-color: #eee;
+    border: 1px solid #666;
+    border-bottom-color: transparent;
+    cursor: default;
+}
+
+#pane-container {
+		background:	#999;
+		height:		100%;
+		margin:		0 auto;
+		width:		100%;
+		max-width:	900px;
+		min-width:	700px;
+		_width:		700px; /* min-width for IE6 */
+}
+
 .exerciseTabs {
 	overflow-x: auto;
   overflow-y: hidden;
@@ -77,7 +141,7 @@
 }
 
 .text-editor-header {
-	color: #F39C12;
+	color: #fec503;
 }
 
 ﻿textarea, .questions-wysiwyg {
@@ -291,9 +355,9 @@ body * {
 }
 
 .currentExercise {
-	color: #31708f;
-	background-color: #d9edf7;
-	border-color: #9acfea;
+	color: #fec503;
+	background-color: #333 !important;
+	border-color: black !important;
 }
 
 .tabContent th, td {

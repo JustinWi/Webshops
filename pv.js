@@ -24,12 +24,17 @@ var earlyAdoptersRef = exerciseValuesRef.child("earlyAdopters");
 var offerDesignRef = exerciseValuesRef.child("offerDesign");
 var pmfAssessmentRef = exerciseValuesRef.child("pmfAssessment");
 var interviewTemplateRef = exerciseValuesRef.child("interviewTemplate");
+var currencyTestRef = exerciseValuesRef.child("currencyTest");
+var problemsNotProductsRef = exerciseValuesRef.child("problemsNotProducts");
+var ideaGenerationStudentRef = exerciseValuesRef.child("ideaGenerationStudent");
 
 var loggedInUserId;
 var globalUser;
 var questionPad, responsePad;
 var myPMFAssessmentRef;
 var thisUsersProfileRef;
+
+var uiLayout;
 
 const PROFILE_PIC_URL = 'https://s3-us-west-2.amazonaws.com/focus-con-avatars/';
 const PUBLIC_CHAT_ROOM_ID = '-JjXjD6_LIzT4f5DS9jP';
@@ -91,6 +96,10 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
   var vm2 = this;
   var vm3 = this;
   var vm4 = this;
+  var vm5 = this;
+  var vm6 = this;
+  var vm7 = this;
+
 
   var VictoryDeclarationFactory = $firebaseObject.$extend({
     // each time an update arrives from the server, apply the change locally
@@ -249,6 +258,37 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     }
   });
 
+  var ProblemsNotProductsFactory = $firebaseObject.$extend({
+    $$defaults: {
+      airWho: 'Write here',
+      airWhere: 'Write here',
+      airProblem: ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br/>Write here',
+      faceProblem: ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br/>&nbsp; ',
+      uberProblem: ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br/>&nbsp; ',
+      classProblem: ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br/>&nbsp; ',
+      yelpProblem: ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br/>&nbsp; ',
+      dropProblem: ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br/>&nbsp; ',
+    }
+  });
+
+  var IdeaGenerationStudentFactory = $firebaseObject.$extend({
+    $$defaults: {
+      memberOf: '1. <br/>2. <br/>3. <br/>4. <br/>5. <br/>6. <br/>7. <br/>8. <br/>',
+      formerMemberOf: '1. <br/>2. <br/>3. <br/>4. <br/>5. <br/>6. <br/>7. <br/>8. <br/>',
+      passionate: '1. <br/>2. <br/>3. <br/>4. <br/>5. <br/>6. <br/>7. <br/>8. <br/>',
+      everyday1: '1. <br/>2. <br/>3. <br/>4. <br/>5. ',
+      everyday2: '1. <br/>2. <br/>3. <br/>4. <br/>5. ',
+      everyday3: '1. <br/>2. <br/>3. <br/>4. <br/>5. '
+    }
+  });
+
+  var CurrencyTestFactory = $firebaseObject.$extend({
+    $$defaults: {
+      channel: 'Write here',
+      mvp: 'Write here'
+    }
+  });
+
   if (isSimpleMode()) {
     vm.properties = $firebaseArray(declaringVictoryRef);
     vm.properties.$loaded().then(function () {
@@ -322,6 +362,8 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     return;
   }
 
+  setupiFrames();
+
   var auth = $firebaseAuth(rootRef);
   var dataFromAuth = auth.$getAuth();
 
@@ -353,6 +395,10 @@ app.controller('MainCtrl', ['$scope', '$firebaseArray', '$firebaseAuth', '$fireb
     var itRef = interviewTemplateRef.child(uid);
     var itSyncObj = InterviewTemplateFactory(itRef);
     itSyncObj.$bindTo($scope, "interviewTemplate");
+
+    CurrencyTestFactory(currencyTestRef.child(uid)).$bindTo($scope, "currencyTest");
+    ProblemsNotProductsFactory(problemsNotProductsRef.child(uid)).$bindTo($scope, "problemsNotProducts");
+    IdeaGenerationStudentFactory(ideaGenerationStudentRef.child(uid)).$bindTo($scope, "ideaGenerationStudent");
   });
 }]);
 
@@ -483,6 +529,10 @@ function getFeedback() {
 }
 
 function initUI() {
+
+  setupResizer();
+  // setupBigVideo();
+
   $('.carousel').carousel({
     interval: 5000
   });
@@ -531,9 +581,6 @@ function initUI() {
   initEnrollForm();
   setupFeedbackForm();
   //setupInterviewScriptGenerator();
-  //setupQuizzes();
-
-  setupiFrames();
 
   if (isWebViewerMode()) {
     // load video stream
@@ -553,6 +600,73 @@ function initUI() {
   }
 
   setupSaveToGoogleButtons();
+  setupFullScreenVideoButton();
+}
+
+function setupFullScreenVideoButton() {
+  $("#fullscreen-button").click(function () {
+    var iframe = $('#video-iframe')[0];
+
+    var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
+
+    if (requestFullScreen) {
+      requestFullScreen.bind(iframe)();
+    }
+  });
+}
+
+function setupBigVideo() {
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    var target = $(e.target).attr("href"); // activated tab
+
+    if (target.toLowerCase() == "#bigvideotabcontent") {
+      goBigVideo();
+    }
+    else {
+      goSmallVideo();
+    }
+  });
+}
+
+function goBigVideo() {
+  $('#bigVideoGoesHere').append($('#video-panel'));
+}
+
+function goSmallVideo() {
+  $('#video-container').append($('#video-panel'));
+}
+
+function setupResizer() {
+  uiLayout = $('body').layout({
+    north__enableCursorHotkey: false,
+    north__closable: false,
+    north__resizable: false,
+    north__spacing_open: 0,
+    north__spacing_closed: 0,
+    south__enableCursorHotkey: false,
+    south__closable: false,
+    south__resizable: false,
+    south__spacing_open: 0,
+    south__spacing_closed: 0,
+    west__closable: false,
+    /* required for iframes */
+    center__maskContents: true,
+    west__maskContents: true,
+    onresize: function () {
+      setVideoHeightProportionalToWidth();
+    }
+  });
+  uiLayout.sizePane("west", "40%");
+
+  setVideoHeightProportionalToWidth();
+}
+
+function setVideoHeightProportionalToWidth() {
+  // Set the height of the video player to a 9:16 ratio based on the new width
+  $("#video-container").height(uiLayout.state.west.size * 9 / 16);
+
+  var availableHeight = $("#video-container").parent().height();
+  $("#questions-container").height(availableHeight - $("#video-container").height());
 }
 
 function setupSaveToGoogleButtons() {
@@ -576,7 +690,7 @@ function setupSaveToGoogleButtons() {
     var templateId = $(this).attr('data-template-id');
 
     $.ajax({
-      url: "https://script.google.com/macros/s/AKfycbwVlyn5ntlr1HRXap69I66sdG7TYCiPQKHxNkPSzTajHvbZZVY/exec?userId=" + userId + "&worksheetName=" + exerciseName + "&templateId=" + templateId,
+      url: "https://script.google.com/macros/s/AKfycbwVlyn5ntlr1HRXap69I66sdG7TYCiPQKHxNkPSzTajHvbZZVY/exec?userId=" + userId + "&worksheetName=" + exerciseName + "&templateId=" + templateId + "&fbRootNode=" + firebaseRoot,
       method: "GET",
       jsonp: "callback",
       dataType: "jsonp",
@@ -601,32 +715,34 @@ function setupSaveToGoogleButtons() {
 
 function setupTextEditors() {
 
-  tinymce.init({
-    selector: '.text-editor',
-    menubar: false,
-    plugins: 'autoresize autosave',
-    autosave_interval: "2s",
-    setup: function (ed) {
-      ed.on('init', function () {
-        this.getDoc().body.style.fontSize = '16px';
-        this.getDoc().body.style.fontName = 'Lato';
-        // ed.target.editorCommands.execCommand("fontSize", false, "2");
-        // ed.target.editorCommands.execCommand("fontName", false, "Lato");
-      });
-    }
-  });
+  // tinymce.init({
+  //   selector: '.text-editor',
+  //   menubar: false,
+  //   plugins: 'autoresize autosave',
+  //   autosave_interval: "2s",
+  //   setup: function (ed) {
+  //     ed.on('init', function () {
+  //       this.getDoc().body.style.fontSize = '16px';
+  //       this.getDoc().body.style.fontName = 'Lato';
+  //       // ed.target.editorCommands.execCommand("fontSize", false, "2");
+  //       // ed.target.editorCommands.execCommand("fontName", false, "Lato");
+  //     });
+  //   }
+  // });
 }
 
 function setupiFrames() {
+  // personalize each of the google form quizzes to include the student's number
+  $("iframe[data-src*='[']").each(function () {
+    $(this).attr('data-src', $(this).attr('data-src')
+      // .replace('[studentNum]', studentNum)
+      // .replace('[studentCampus]', studentCampus)
+      .replace('[email]', attendeeEmail)
+      .replace('[name]', firstName));
+  });
+
   $("iframe[data-src*='.']").each(function () {
     $(this).attr('src', $(this).attr('data-src'));
-  });
-}
-
-function setupQuizzes() {
-  // personalize each of the google form quizzes to include the student's number
-  $("iframe[data-src*='[studentNum]']").each(function () {
-    $(this).attr('data-src', $(this).attr('data-src').replace('[studentNum]', studentNum).replace('[studentCampus]', studentCampus));
   });
 }
 
@@ -946,6 +1062,7 @@ function initModal() {
   });
 
   $("#welcomeForm").submit(function (event) {
+    window.onbeforeunload = null;
     console.log("submit hit");
     firstName = $("#attendeeName").val();
   });
@@ -971,11 +1088,11 @@ function initModal() {
     // Add a button to call component.destroy() to close the component.
   });*/
 
-  if (OT.checkSystemRequirements() == 0) {
-    console.log("your camera isn't working (checkSystemRequirements)");
-    displayNoWebRtcErrorMessage();
-    return;
-  }
+  // if (OT.checkSystemRequirements() == 0) {
+  //   console.log("your camera isn't working (checkSystemRequirements)");
+  //   displayNoWebRtcErrorMessage();
+  //   return;
+  // }
 
   // OT.getDevices(function (error, devices) {
   //     videoInputDevices = devices.filter(function (element) {
@@ -1129,15 +1246,15 @@ function enterRoomAfterUserSessionCreated(chatUI, roomId) {
 }
 
 function loadUserSnap() {
-  (function () {
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = '//api.usersnap.com/load/' +
-      '5b8cbdbf-b9d1-487d-bf09-bac5e6e7d46f.js';
-    var x = document.getElementsByTagName('script')[0];
-    x.parentNode.insertBefore(s, x);
-  })();
+  // (function () {
+  //   var s = document.createElement("script");
+  //   s.type = "text/javascript";
+  //   s.async = true;
+  //   s.src = '//api.usersnap.com/load/' +
+  //     '5b8cbdbf-b9d1-487d-bf09-bac5e6e7d46f.js';
+  //   var x = document.getElementsByTagName('script')[0];
+  //   x.parentNode.insertBefore(s, x);
+  // })();
 }
 
 function postAuthConfig(authData, chatUI, roomId, getPartner) {
