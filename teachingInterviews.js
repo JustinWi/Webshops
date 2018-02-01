@@ -596,6 +596,8 @@ function initUI() {
 
   if (isSimpleMode()) {
     setupSimpleTabButtons();
+
+    $("#questionPanel").show();
   }
 
   setupSaveToGoogleButtons();
@@ -655,7 +657,7 @@ function setupResizer() {
       setVideoHeightProportionalToWidth();
     }
   });
-  uiLayout.sizePane("west", "40%");
+  uiLayout.sizePane("west", "50%");
 
   setVideoHeightProportionalToWidth();
 }
@@ -1439,20 +1441,6 @@ function configWhoIsHere() {
     });
   });
 }
-
-// function initRocketChatSetup() {
-//    document.getElementById("rocketChatWindow").contentWindow.postMessage("hellow world", "http://localhost:88");
-// }
-
-// function receiveMessage(event) {
-//   if (event.origin !== "http://localhost:88") {
-//     return;
-//   }
-
-//   // we need to wait until the iframes are setup before we can send a message to our rocketchat iframe
-//   initRocketChatSetup();
-// }
-// window.addEventListener("message", receiveMessage, false);
 
 // function logInToChat(ref, chatUI, roomId, getPartner) {
 //   var dataFromAuth = ref.getAuth();

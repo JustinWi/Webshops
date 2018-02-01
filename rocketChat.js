@@ -1,33 +1,38 @@
-var ROCKET_CHAT_SERVER = "http://webshop-rocket-chat.herokuapp.com";
+var ROCKET_CHAT_SERVER = "https://webshop-rocket-chat.herokuapp.com";
 
 var database = firebase.database();
 
-// firebase.auth().signInAnonymously().catch(function(error) {
-//   console.error("Error logging into Firebase: " + JSON.stringify(error));
-// });
+function getParentParameterByName(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(window.parent.parent.location.search);
+  return results == null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     database.ref(workshopRoot + "/profiles").child(user.uid).on('value', function (snap) {
-//       var userData = snap.val();
-//       var userCreds = generateUserCreds(userData);
+$(document).ready(function () {
+  var rocketUser = getParentParameterByName("rocketUser");
+  var rocketPass = getParentParameterByName("rocketPass");
 
-//       attemptRocketChatLogin(userCreds, function (errorResult) {
-//         createRocketChatUser(userData, userCreds);
-//       });
-//     });
-//   } else {
-//     // User is signed out.
-//     // ...
-//   }
-// });
+  if (rocketPass && rocketUser) {
+    attemptRocketChatLogin(
+      {
+        email: rocketUser, 
+        password: rocketPass
+      }, function (errorResult) {
+      genericRocketChatLogin();
+    });
+  }
+  else {
+    genericRocketChatLogin();
+  }
+});
 
-$(document).ready(function() {
+function genericRocketChatLogin() {
   var userId = localStorage.getItem("firebaseUserId");
 
   database.ref(workshopRoot + "/profiles").child(userId).on('value', function (snap) {
     var userData = snap.val();
-    
+
     userData.uid = userId;
 
     var userCreds = generateUserCreds(userData);
@@ -36,7 +41,7 @@ $(document).ready(function() {
       createRocketChatUser(userData, userCreds);
     });
   });
-});
+}
 
 // function receiveMessage(event) {
 //   if (event.origin !== "http://localhost:88") {
@@ -98,32 +103,11 @@ function createRocketChatUser(userData, userCreds) {
   });
 }
 
-function attemptRocketChatLogin(userCreds, errorCallback) {
- $.ajax({
-    url: "http://webshop-rocket-chat.herokuapp.com/api/v1/login",
-    type: "POST",
-    data: JSON.stringify({"email": 'justin@teachinge.org', "password": 'w3Br7%SWtszyT$2!'}),
-    contentType: "application/json",
-    success: function (result) {
-      console.log("Successful user login: " + JSON.stringify(result));
-
-      window.parent.postMessage({
-        event: 'login-with-token',
-        loginToken: result.data.authToken
-      }, "http://webshop-rocket-chat.herokuapp.com/");
-    },
-    error: function (result) {
-      console.log("Error attempting RocketChat login: " + JSON.stringify(result));
-    }
-  });
-}
 // function attemptRocketChatLogin(userCreds, errorCallback) {
-//   console.log("Attempting RocketChat Login.")
-
 //   $.ajax({
-//     url: ROCKET_CHAT_SERVER + "/api/v1/login",
+//     url: "http://webshop-rocket-chat.herokuapp.com/api/v1/login",
 //     type: "POST",
-//     data: JSON.stringify(userCreds),
+//     data: JSON.stringify({ "email": 'justin@teachinge.org', "password": 'w3Br7%SWtszyT$2!' }),
 //     contentType: "application/json",
 //     success: function (result) {
 //       console.log("Successful user login: " + JSON.stringify(result));
@@ -131,17 +115,38 @@ function attemptRocketChatLogin(userCreds, errorCallback) {
 //       window.parent.postMessage({
 //         event: 'login-with-token',
 //         loginToken: result.data.authToken
-//       }, ROCKET_CHAT_SERVER);
+//       }, "http://webshop-rocket-chat.herokuapp.com/");
 //     },
 //     error: function (result) {
 //       console.log("Error attempting RocketChat login: " + JSON.stringify(result));
-
-//       if (errorCallback) {
-//         errorCallback(result);
-//       }
 //     }
 //   });
 // }
+function attemptRocketChatLogin(userCreds, errorCallback) {
+  console.log("Attempting RocketChat Login.")
+
+  $.ajax({
+    url: ROCKET_CHAT_SERVER + "/api/v1/login",
+    type: "POST",
+    data: JSON.stringify(userCreds),
+    contentType: "application/json",
+    success: function (result) {
+      console.log("Successful user login: " + JSON.stringify(result));
+
+      window.parent.postMessage({
+        event: 'login-with-token',
+        loginToken: result.data.authToken
+      }, ROCKET_CHAT_SERVER);
+    },
+    error: function (result) {
+      console.log("Error attempting RocketChat login: " + JSON.stringify(result));
+
+      if (errorCallback) {
+        errorCallback(result);
+      }
+    }
+  });
+}
 
 function generateUserCreds(userData) {
   var LENGTH_OF_USERNAME_RAND = 5;
