@@ -1,0 +1,88 @@
+.interview-template-worksheet .blank {
+  text-align: left;
+}
+
+.interview-template-worksheet .fill-in {
+  text-align: left;
+}
+
+.question-problem {
+  top: 21%;
+  left: 8%;
+  width: 55%;  
+}
+
+.question-last-time {
+  top: 36.5%;
+  left: 8%;
+  width: 55%;  
+}
+
+.question-why {
+  top: 21%;
+  left: 63.5%;
+  width: 29%;
+}
+
+.question-current-solutions {
+  top: 59%;
+  left: 8%;
+  width: 26%;
+  height: 7%;
+}
+
+.question-deficiencies {
+  top: 59%;
+  left: 34%;
+  width: 29%;
+  height: 7%;
+}
+
+.question-channels {
+  top: 59%;
+  left: 63.5%;
+  width: 29%;
+  height: 7%;
+}
+
+.question-problem-response {
+  top: 26.5%;
+  left: 8%;
+  width: 55%;
+  height: 10%;
+}
+
+.question-last-time-response {
+  top: 40.5%;
+  left: 8%;
+  width: 55%;
+  height: 11%;
+}
+
+.question-why-response {
+  top: 26.5%;
+  left: 64%;
+  width: 28%;
+  height: 25%;  
+}
+
+.question-current-solutions-response {
+  top: 67%;
+  left: 8%;
+  width: 25%;
+  height: 22%;  
+}
+
+.question-deficiencies-response {
+  top: 67%;
+  left: 34.5%;
+  width: 28%;
+  height: 22%;
+}
+
+.question-channels-response {
+  top: 67%;
+  left: 64%;
+  width: 28%;
+  height: 22%;
+}

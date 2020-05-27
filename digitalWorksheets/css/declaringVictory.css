@@ -1,0 +1,334 @@
+.worksheet-container {
+  background-image: url("../img/wood.jpg");
+  height: 100%;
+  width: 100%;
+}
+
+@font-face {
+    font-family: 'CaptureIt';
+    src: url('../fonts/Capture_it-webfont.eot');
+    src: url('../fonts/Capture_it-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Capture_it-webfont.woff') format('woff'),
+         url('../fonts/Capture_it-webfont.ttf') format('truetype'),
+         url('../fonts/Capture_it-webfont.svg#capture_itregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* .declaring-victory */ .worksheet {
+  position: absolute;
+  width: 100%;
+  top: 50px;
+}
+
+.instruction-panel {
+  top: 0%;
+  width: 0%;
+  left: 0%;
+  position: absolute;
+
+  background-color: rgba(255, 255, 255, 0.5);
+  display: none;
+}
+
+.instruction-panel .panel-body {
+  background-color: rgba(130,130,130,.8);
+}
+
+.instruction-panel > .panel-heading {
+  background-color: #3e444c;
+  font-weight: normal;
+}
+
+.jumbotron {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #FFFFFF;
+  font-size: 18pt;
+  width: 50%;
+  color: #A00101;
+  border: 0px solid transparent;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: none;
+}
+
+.instruction-panel > .panel-footer {
+}
+
+.worksheet .btn-primary {
+    background-image: -webkit-linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+    background-image: -o-linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6d94bf), color-stop(50%, #446e9b), to(#3e648d));
+    background-image: linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+    background-repeat: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff6d94bf', endColorstr='#ff3e648d', GradientType=0);
+    -webkit-filter: none;
+    filter: none;
+    border: 1px solid #345578;
+}
+
+.worksheet .btn-primary:hover {
+    background-image: -webkit-linear-gradient(#5f8ab9, #3e648d 50%, #385a7f);
+    background-image: -o-linear-gradient(#5f8ab9, #3e648d 50%, #385a7f);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5f8ab9), color-stop(50%, #3e648d), to(#385a7f));
+    background-image: linear-gradient(#5f8ab9, #3e648d 50%, #385a7f);
+    background-repeat: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5f8ab9', endColorstr='#ff385a7f', GradientType=0);
+    -webkit-filter: none;
+    filter: none;
+    border: 1px solid #2e4b69;
+}
+
+.instructions .content {
+  margin-bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: black;
+  border: 1px solid #B9B9B9;
+  overflow-y: auto;
+
+  max-height: 80%;
+}
+
+textarea {
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 100px;
+  vertical-align:middle;
+}
+
+/* .declaring-victory */ .blank {
+  position: absolute;
+  font-family: 'Shadows Into Light Two', cursive;
+  font-size: 14pt;
+  font-weight: bold;
+  color: #B30000;
+  outline: 0px solid transparent;
+  display: none;
+  text-align: center;
+}
+
+.feedback-blank {
+  display: inherit;
+}
+
+.steps {
+  display: none;
+}
+
+.stepNumber {
+  float: right;
+  color: #999;
+  display: none;
+}
+
+.date-field {
+  bottom: 90.75%;
+  left: 65%;
+  width: 20%;
+}
+
+.step1-field {
+  bottom: 75.25%;
+  left: 65%;
+  width: 20%;
+}
+
+.step2-field {
+  bottom: 52.5%;
+  left: 65%;
+  width: 20%;
+}
+
+.number-field {
+  bottom: 18.5%;
+  left: 42%;
+  width: 7%;
+}
+
+.things-field {
+  bottom: 18.5%;
+  left: 50.5%;
+  width: 15%;
+}
+
+.feedback-opt-in-field {
+  bottom: 18.5%;
+  left: 65%;
+  width: 20%;
+}
+
+.emotion-field {
+  bottom: 5.5%;
+  left: 51.5%;
+  width: 14%;
+}
+
+.signature-field {
+  bottom: 5.5%;
+  left: 65%;
+  width: 20%;
+}
+
+.instruction-panel {
+  /*animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;*/
+}
+
+.transitions-1s {
+  -webkit-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+}
+
+.transitions {
+  -webkit-transition: all 1.2s ease-in-out;
+  transition: all 1.2s ease-in-out;
+  width: 50%;
+}
+
+/* .declaring-victory */ .worksheet-img {
+  width: 70%;
+  top: -1000px;
+  left: 100%;
+
+  position: relative;
+}
+
+/* .declaring-victory */ .worksheet-img {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+
+/* .declaring-victory */ .fly-in {
+  -ms-transform: rotate(360deg); /* IE 9 */
+  -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+  transform: rotate(360deg);
+
+  top: 0px;
+  left: 15%;
+}
+
+/* .declaring-victory */ .centered-medium {
+  top: 30%;
+  width: 40%;
+  left: 30%;
+}
+
+/* .declaring-victory */ .centered-top {
+  top: 0%;
+  width: 40%;
+  left: 30%;
+}
+
+/* .declaring-victory */ .full-page {
+  top: 0px;
+  width: 80%;
+  left: 10%;
+}
+
+/* .declaring-victory */ .left {
+  top: 10%;
+  width: 30%;
+  left: 5%;
+}
+
+/* .declaring-victory */ .top-left {
+  top: 0%;
+  width: 34%;
+  left: 5%;
+}
+
+/* .declaring-victory */ .top-right {
+  top: 10%;
+  width: 30%;
+  left: 50%;
+}
+
+.worksheet-shadow {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #DDD;
+}
+
+/*@-webkit-keyframes centered-medium {
+  to {
+    top: 30%;
+    width: 50%;
+    left: 25%;
+  }
+}
+
+@keyframes centered-medium {
+  to {
+    top: 30%;
+    width: 50%;
+    left: 25%;
+  }
+}
+
+@-webkit-keyframes full-page {
+  to {
+    top: 0%;
+    width: 80%;
+    left: 10%;
+    height: 100%;
+  }
+}
+
+@keyframes full-page {
+  to {
+    top: 0%;
+    width: 80%;
+    left: 10%;
+  }
+}
+
+@-webkit-keyframes date {
+  to {
+    top: 0%;
+    width: 20%;
+    left: 40%;
+  }
+}
+
+@keyframes date {
+  to {
+    top: 0%;
+    width: 20%;
+    left: 40%;
+  }
+}
+
+.step2-animation {
+  animation-name: example;
+  -webkit-animation-name: example;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes example {
+  to {width: 90%;}
+}
+
+/* Standard syntax */
+@keyframes example {
+  to {width: 90%;}
+}
+
+/* .declaring-victory */ .absoluteContainer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 10%;
+	margin-left: auto;
+ 	margin-right: auto;
+	max-width: 740px;
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Webshops: Better Online Learning | Customer Development Labs</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+        <!-- Firepad -->
+        <!-- <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script> -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.min.js"></script>
+
+        <!-- Firechat -->
+        <link rel="stylesheet" href="firechat/firechat-default-custom.css" />
+        <script src="firechat/firechat-default.js"></script>
+
+        <!-- BootstrapValidator -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+        <!-- Bootbox for Alerts -->
+        <script src="bootbox.min.js"></script>
+
+        <!-- This app  -->
+        <link rel="stylesheet" href="css/style.css">
+        <script src="debug.js"></script>
+        <script src="debug-controller.js"></script>
+
+        <style type="text/css">
+
+
+        </style>
+    </head>
+
+    <body>
+
+        <header class="fixed-header-main">
+          <div style="float:left;">
+            <center><span style="font-size:2em"><b>Fundraising, M&amp;A and Pitching</b></span> with <a href="http://www.startupexperience.com/" target="_blank">Henrik Scheel</a> &amp; <a href="http://customerdevlabs.com" target="_blank">Justin Wilcox</a></center>
+          </div>
+        </header>
+        <div class="fixed-container-inner">
+          <div class="fluid-container">
+            <div class="fluid-box full-height left-column">
+              <div class="top-row">
+                <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i><b>Questions:</b></i> Ask and up vote.</h3>
+                  </div>
+                  <div class="panel-body" style="position: absolute; top: 38px; left: 0px; right: 0px; bottom: 50px; overflow-y: scroll;">
+                    <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                  </div>
+                  <div class="panel-footer" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
+                    <div style="overflow: hidden; padding-right: .5em;">
+                      <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+                    </div>
+                    <div class="input-group"  style="display:none;">
+                      <h3>Value:</h3>
+                      <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bottom-row">
+                <div class="panel panel-info chatPanel" style="height: 100%; position: relative">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i><b>Chat:</b></i> <span id="partnerName" style="">Looking for a partner for you...</span><button id="newPartner" type="button" class="btn btn-sm btn-primary" style="float: right;margin-top: -5px;margin-right: -10px;">Get New Partner</button></h3>
+                  </div>
+                  <div class="panel-body" style="position: absolute; top: 38px; right: 0px; bottom: 0px; left: 0px;">
+                    <div style="position: relative; height: 100%; width: 100%; padding:0px">
+                      <div id="public-firechat-wrapper" class="firechatUI"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fluid-box full-height right-column">
+              <div class="panel panel-info exercisesPanel" style="height: 100%">
+                <div class="panel-body" style="position: relative; height: 100%">
+                  <div class="exercisesPanel">
+                      <ul class="nav nav-tabs exerciseTabs">
+                      </ul>
+                      <div class="tab-content">
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          </div>
+            <footer class="fixed-footer-main" style="padding: 5px">
+                &copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015
+            </footer>
+
+    </body>
+
+</html>

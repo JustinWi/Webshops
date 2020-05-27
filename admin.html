@@ -1,0 +1,302 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Bad Ass Customer Interviews...Live! | Customer Development Labs</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+
+        <!-- Bootstrap -->
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+        <!-- Firepad -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
+
+        <!-- Firechat -->
+        <link rel="stylesheet" href="firechat/firechat-default.css" />
+        <script src="firechat/firechat-default.js"></script>
+
+        <!-- BootstrapValidator -->
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+        <!-- Bootbox for Alerts -->
+        <script src="bootbox.min.js"></script>
+
+        <!-- This app  -->
+        <link rel="stylesheet" href="css/style.css">
+        <script src="webshops.js"></script>
+
+        <style type="text/css">
+            body {
+                padding-top: 20px;
+                padding-bottom: 20px;
+                font-family: helvetica; arial;
+            }
+
+            .fpad {
+              height: 300px;
+              margin-top: 10px;
+            }
+
+            .interviewRow {
+              background-color: #eee;
+              /*padding: 20px;*/
+              padding-top: 0px;
+            }
+
+            #firepad-container {
+              /*width: 300px;*/
+              height: 250px;
+            }
+
+            .firechatUI {
+              height: 475px;
+              /*max-width: 325px;*/
+              padding: 10px;
+              border: 1px solid #ccc;
+              background-color: #fff;
+              margin: 0px auto;
+              text-align: center;
+              -webkit-border-radius: 4px;
+              -moz-border-radius: 4px;
+              border-radius: 4px;
+              -webkit-box-shadow: 0 5px 25px #666;
+              -moz-box-shadow: 0 5px 25px #666;
+              box-shadow: 0 5px 25px #666;
+            }
+
+            .my-fluid-container {
+              padding-left: 15px;
+              padding-right: 15px;
+              margin-left: auto;
+              margin-right: auto;
+            }
+
+            .tabButtonGroup {
+              display: none;
+            }
+        </style>
+
+    <script>
+      function isSimpleMode() {
+        return true;
+      }
+    </script>
+
+    </head>
+
+    <body>
+
+        <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form class="form-horizontal" id="welcomeForm">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="myModalLabel">Welcome to <b>Customer Interviews...Live</b>!</h2>
+                </div>
+                <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
+                    <div class="form-group">
+                      <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Let's go!</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <p>Welcome to...</p>
+                <center>
+                    <h1>Interviewing your Customers</h1>
+                    <h2>...the Right Way</h2>
+                </center>
+                <p style="float:right">By <a href="http://customerdevlabs.com" target="_blank">Customer Development Labs</a></p><!-- <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>        -->
+            </div>
+        </div>
+        <div class="my-fluid-container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-lg-7">
+                    <h2>Live Stream</h2>
+                    <iframe width="100%" height="400px" src="//www.youtube.com/embed/mB3lFUKJoPY?rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="col-lg-5">
+                  <h2><a name="chat"></a>Questions</h2>
+                  <div class="panel panel-info">
+                      <div class="panel-body" style="height: 350px; overflow-y: scroll;">
+                          <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                      </div>
+                      <div class="panel-footer">
+                          <button class="btn btn-info" type="button" id='btnSend' style="float: right">ASK</button>
+                          <div style="overflow: hidden; padding-right: .5em;">
+                              <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+                          </div>
+
+                          <div class="input-group"  style="display:none;">
+                                  <h3>Value:</h3>
+                                  <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:30px">
+                <div class="col-sm-12">
+                  <h2><span id="partnerName">Looking for a partner for you...</span></h2>
+                    <!-- <div class="alert alert-info" role="alert">
+                    </div> -->
+                </div>
+                <div class="col-sm-4">
+                    <button id="newPartner" type="button" class="btn">Request New Partner</button>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-7">
+                  <h2>Excercises</h2>
+                  <div class="bs-example">
+                      <ul class="nav nav-tabs exerciseTabs">
+                          <li class="active"><a data-toggle="tab" id="whoIsHereTab" href="#whoIsHereTabContent">Who's Here?</a></li>
+                          <li><a data-toggle="tab" id="notesTab" href="#notesTabContent">My Notes and Takeaways</a></li>
+                          <li><a data-toggle="tab" id="meetYourPartnerTab" href="#meetYourPartnerTabContent">Meet your Partner</a></li>
+                          <li><a data-toggle="tab" id="liveInterviewTab" href="#liveInterviewTabContent">Live Interview</a></li>
+                      </ul>
+                      <div class="tab-content">
+                        <div id="whoIsHereTabContent" class="tab-pane fade in active tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+
+                          <h3>Who's here?</h3>
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                Stats
+                              </div>
+                              <div class="col-sm-6">
+                                Map
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="notesTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+
+                          <h3>Notes and Takeaways</h3>
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <h2>Your Private Notepad</h2>
+                                <p>Take any notes you like here. They won't be shared with your partner</p>
+                                <input type="text" class="notes" id="notes" rows="20">
+                              </div>
+                              <div class="col-sm-6">
+                                <p>Live Interview Takeaway: <input type="text" class="takeaway" id="liveInterviewTakeaway" placeholder="I'm taking away..."></p>
+                                <p>Interview Practice Takeaway: <input type="text" class="takeaway" id="practiceInterviewTakeaway" placeholder="I'm taking away..."></p>
+                                <p>Overall Takeaway(s): <input type="text" class="takeaway" id="overallTakeaway" placeholder="I'm taking away..."></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="meetYourPartnerTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+
+                          <h3>Meet your Partner</h3>
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <p>Where do you live?<input type="text" class="meetYourPartnerMe" id="location" placeholder="City, Country"></p>
+                                <p>What's your company name?<input type="text" placeholder="" class="meetYourPartnerMe" id="companyName"></p>
+                                <p>Do you have a company website?<input type="text" placeholder="http://CustomerDevLabs.com" class="meetYourPartnerMe" id="website"></p>
+                                <p>Who are your target customers?<input type="text" placeholder="Single moms, Utility companies, Insurance Adjusters, etc." class="meetYourPartnerMe" id="customers"></p>
+                                <p>What problem will you solve for them?<input type="text" placeholder="Too hard to go grocery shopping w/ a 3 year old, etc." class="meetYourPartnerMe" id="problem"></p>
+                                <p>What do you hope to get out of this workshop?<input type="text" placeholder="How will you know it's been worth your time?" class="meetYourPartnerMe" id="defineSuccess"></p>
+                                <p>Do you have a LinkedIn or Twitter profile?<input type="text" placeholder="http://twitter.com/customerdevlabs" class="meetYourPartnerMe" id="profileURL"></p>
+                              </div>
+                              <div class="col-sm-6">
+                                <p>Your partner lives in: <span id="locationPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>Your partner's company is: <span id="companyNamePartner" class="meetYourPartnerPartner"></span></p>
+                                <p>The URL is: <a id="websitePartner" class="meetYourPartnerPartner" href="" target="_blank"></a></p>
+                                <p>Your partner's is serving: <span id="customersPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>Helping them: <span id="problemPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>Your partner is here to: <span id="defineSuccessPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>More about them is here: <a id="profileURLPartner" class="meetYourPartnerPartner" href="" target="_blank"></a></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="liveInterviewTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+
+                          <div class="container well well-small" style="margin-top:30px">
+                            <div class="row">
+                              <div class="col-sm-5" id="questionsContainer">
+                                  <h2>Interview Questions</h2>
+                                  This notepad is <b>shared</b> with your Workshop Partner.
+                                  <div id="questionsPad" class="fpad"></div>
+                              </div>
+                              <div class="col-sm-5" id="responsesContainer">
+                                  <h2>Interview Responses</h2>
+                                  This notepad is <b>shared</b> with your Workshop Partner.
+                                  <div id="responsesPad" class="fpad"></div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <p>Where do you live?<input type="text" class="meetYourPartnerMe" id="location" placeholder="City, Country"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                  </div>
+
+
+                </div>
+                <div class="col-lg-5">
+                  <h2><a name="Chat"></a>Chat</h2>
+                  <p>Use the <b>tabs</b> below to switch between chatting with your <b>partner</b> and <b>everyone</b>.</p>
+                  <div id="public-firechat-wrapper" class="firechatUI"></div>
+                </div>
+            </div>
+
+            <footer>
+                <p>&copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015 - Powered by <a href="http://firebase.com" target="_blank">Firebase</a></p>
+            </footer>
+        </div><!-- /container -->
+
+    </body>
+
+</html>

@@ -1,0 +1,38 @@
+.cross-out {
+  top: 5.5%;
+  left: 8%;
+  width: 16%;
+  font-size: 20pt !important;
+}
+
+.idea-column-blank {
+  width: 26%;
+  height: 27%;
+  text-align: left !important;
+}
+
+.idea-left-blank {
+  left: 9%;  
+}
+
+.idea-middle-blank {
+  left: 37%;  
+}
+
+.idea-right-blank {
+  left: 65.5%;  
+}
+
+.idea-top-blank {
+  top: 22.5%;
+}
+
+.idea-bottom-blank {
+  top: 67.5%;
+}
+
+.idea-segment-blank {
+  width: 26%;
+  height: 4%;  
+  top: 60%
+}

@@ -1,0 +1,56 @@
+.channel1-field {
+  bottom: 79%;
+  left: 8%;
+  width: 27%;
+}
+
+.channel2-field {
+  bottom: 74%;
+  left: 8%;
+  width: 27%;
+}
+
+.channel3-field {
+  bottom: 69.5%;
+  left: 8%;
+  width: 27%;
+}
+
+.channel4-field {
+  bottom: 65%;
+  left: 8%;
+  width: 27%;
+}
+
+.channel5-field {
+  bottom: 60%;
+  left: 8%;
+  width: 27%;
+}
+
+.pcm-fields {
+  left: 12%;
+  width: 78.5%;
+  text-align: left !important;
+}
+
+.pcm1-field {
+  bottom: 51%;
+}
+
+.pcm2-field {
+  bottom: 47.5%;
+}
+
+.pcm3-field {
+  bottom: 44.5%;
+}
+
+.pcm4-field {
+  bottom: 41.5%;
+}
+
+.pcm5-field {
+  bottom: 38.5%;
+}
+

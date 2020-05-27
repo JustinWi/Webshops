@@ -1,0 +1,137 @@
+.treeTable td {
+  padding: 3px 1em;
+  /*border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #FeF;*/
+}
+
+.treeTable {
+  width: 100%;
+  border-spacing: 0.5em
+}
+
+.treeTable li {
+  cursor: pointer
+}
+
+.qTable tr {
+  display: none
+}
+
+.treeTable p {
+  font-weight: bold;
+  /*line-height: 50%*/
+}
+
+#errdiv {
+  display: none;
+  font-weight: bold;
+  color: #903;
+  padding: 0.3em
+}
+
+.selectedAnswer {
+  font-weight: bold;
+  color: #060
+}
+
+.treeTable i {
+  display: none
+}
+
+.hintLabel {
+  font-weight: bold;
+  padding-left: 40px;
+}
+
+.btn {
+  font-size: 16px;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.assumptionLabel {
+  font-weight: bold;
+}
+
+.exercisePic {
+  float: right;
+  background-color: white;
+  max-width: 50%;
+  width: 500px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  margin-left: 10px;
+  box-shadow: 8px 8px 5px #bbb;
+  padding: 0px;
+}
+
+.exerciseHeader {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.panel-success {
+  border-color: #474949;
+}
+
+.panel-success > .panel-heading {
+  color: #ffffff;
+  background-color: #474949;
+  border-color: #474949;
+}
+
+.phaseTitle {
+  margin-bottom: 10px;
+}
+
+.exerciseLabel {
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.exerciseName {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.exerciseDiv {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.recommendedExercise {
+  margin-top: 20px;
+}
+
+.exerciseDescription {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.descriptionHeader {
+  font-weight: bold;
+  color: #444;
+}
+
+.workbookLabel {
+  font-weight: normal;
+  ;
+  text-align: center;
+}
+
+.workbookDiv {
+  margin-top: 40px;
+}
+
+.workbookHeader {
+  font-weight: bold;
+}
+
+.assessmentIntro {
+  margin-left: 20px;
+}

@@ -7,7 +7,8 @@ this["FirechatDefaultTemplates"]["templates/layout-popout.html"] = function(obj)
 
 this["FirechatDefaultTemplates"]["templates/message-context-menu.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape, __j = Array.prototype.join;function print() { __p += __j.call(arguments, '') }with (obj) {__p += '<div data-toggle=\'firechat-contextmenu\' class=\'contextmenu\' data-message-id=\'' +__e( id ) +'\'>\n<ul>\n<li><a href=\'#!\' data-event=\'firechat-user-warn\'>Warn User</a></li>\n'; if (allowKick) { ;__p += '\n<li><a href=\'#!\' data-event=\'firechat-user-kick\'>Kick User</a></li>\n'; } ;__p += '\n<li><a href=\'#!\' data-event=\'firechat-user-suspend-hour\'>Suspend User (1 Hour)</a></li>\n<li><a href=\'#!\' data-event=\'firechat-user-suspend-day\'>Suspend User (1 Day)</a></li>\n<li><a href=\'#!\' data-event=\'firechat-message-delete\'>Delete Message</a></li>\n</ul>\n</div>';}return __p};
 
-this["FirechatDefaultTemplates"]["templates/message.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape, __j = Array.prototype.join;function print() { __p += __j.call(arguments, '') }with (obj) {__p += '<div class=\'message message-' +__e( type ) +' '; if (isSelfMessage) { ;__p += ' message-self '; } ;__p += '\' data-message-id=\'' +__e( id ) +'\' data-user-id=\'' +__e( userId ) +'\' data-user-name=\'' +__e( name ) +'\' data-class="firechat-message">\n<div class=\'clearfix\'>\n<label class=\'fourfifth\'>\n<strong class=\'name\' title=\'' +__e( name ) +'\'>' +__e( name ) +'</strong>\n<em>(' +__e( localtime ) +')</em>:\n</label>'; if (!disableActions) { ;__p += '\n<label class=\'fifth alignright\'>\n<a href=\'#!\' data-event=\'firechat-user-chat\' class=\'icon user-chat\' title=\'Invite to Private Chat\'>&nbsp;</a>\n<a href=\'#!\' data-event=\'firechat-user-mute-toggle\' class=\'icon user-mute\' title=\'Mute User\'>&nbsp;</a>\n</label>\n'; } ;__p += '</div>\n<div class=\'clearfix message-content\'>\n' +((__t = ( message )) == null ? '' : __t) +'\n</div>\n</div>';}return __p};
+//this["FirechatDefaultTemplates"]["templates/message.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape, __j = Array.prototype.join;function print() { __p += __j.call(arguments, '') }with (obj) {__p += '<div class=\'message message-' +__e( type ) +' '; if (isSelfMessage) { ;__p += ' message-self '; } ;__p += '\' data-message-id=\'' +__e( id ) +'\' data-user-id=\'' +__e( userId ) +'\' data-user-name=\'' +__e( name ) +'\' data-class="firechat-message">\n<div class=\'clearfix\'>\n<label class=\'fourfifth\'>\n<strong class=\'name\' title=\'' +__e( name ) +'\'>' +__e( name ) +'</strong>\n<em>(' +__e( localtime ) +')</em>:\n</label>'; if (!disableActions) { ;__p += '\n<label class=\'fifth alignright\'>\n<a href=\'#!\' data-event=\'firechat-user-chat\' class=\'icon user-chat\' title=\'Invite to Private Chat\'>&nbsp;</a>\n<a href=\'#!\' data-event=\'firechat-user-mute-toggle\' class=\'icon user-mute\' title=\'Mute User\'>&nbsp;</a>\n</label>\n'; } ;__p += '</div>\n<div class=\'clearfix message-content\'>\n' +((__t = ( message )) == null ? '' : __t) +'\n</div>\n</div>';}return __p};
+this["FirechatDefaultTemplates"]["templates/message.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape, __j = Array.prototype.join;function print() { __p += __j.call(arguments, '') }with (obj) {__p += '<div class=\'message message-' +__e( type ) +' '; if (isSelfMessage) { ;__p += ' message-self '; } ;__p += '\' data-message-id=\'' +__e( id ) +'\' data-user-id=\'' +__e( userId ) +'\' data-user-name=\'' +__e( name ) +'\' data-class="firechat-message">\n<label class=\'\' style=\'float:left; margin-right: 5px\'>\n<strong class=\'name\' title=\'' +__e( name ) +'\'>' +__e( name ) +'</strong>:\n</label>'; if (!disableActions) { ;__p += '\n<label class=\'fifth alignright\'>\n<a href=\'#!\' data-event=\'firechat-user-chat\' class=\'icon user-chat\' title=\'Invite to Private Chat\'>&nbsp;</a>\n<a href=\'#!\' data-event=\'firechat-user-mute-toggle\' class=\'icon user-mute\' title=\'Mute User\'>&nbsp;</a>\n</label>\n'; } ;__p += '\n<div class=\'clearfix message-content\'>\n' +((__t = ( message )) == null ? '' : __t) +'\n</div>\n</div>';}return __p};
 
 this["FirechatDefaultTemplates"]["templates/prompt-alert.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape;with (obj) {__p += '<div class=\'aligncenter clearfix\'>\n<h6>' +__e( message ) +'</h6>\n<p class=\'clearfix\'>\n<button type=\'button\' class=\'btn quarter right close\'>Close</button>\n</p>\n</div>';}return __p};
 
@@ -42,15 +43,15 @@ this["FirechatDefaultTemplates"]["templates/user-search-list-item.html"] = funct
       if (typeof this !== "function") {
         throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
       }
-  
-      var aArgs = Array.prototype.slice.call(arguments, 1), 
-          fToBind = this, 
+
+      var aArgs = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
           fNOP = function() {},
           fBound = function() {
             return fToBind.apply(this instanceof fNOP && oThis ? this : oThis,
                                  aArgs.concat(Array.prototype.slice.call(arguments)));
           };
-   
+
       fNOP.prototype = this.prototype;
       fBound.prototype = new fNOP();
       return fBound;
@@ -58,14 +59,14 @@ this["FirechatDefaultTemplates"]["templates/user-search-list-item.html"] = funct
   }
 
   // Shim for Object.keys(...) - (Required by IE < 9, FF < 4)
-  Object.keys = Object.keys || function(oObj) {  
-    var result = [];  
-    for (var name in oObj) {  
+  Object.keys = Object.keys || function(oObj) {
+    var result = [];
+    for (var name in oObj) {
       if (oObj.hasOwnProperty(name)) {
-        result.push(name);  
+        result.push(name);
       }
-    }  
-    return result;  
+    }
+    return result;
   };
 
 })();
@@ -406,6 +407,8 @@ this["FirechatDefaultTemplates"]["templates/user-search-list-item.html"] = funct
         });
 
         // Set presence bit for the room and queue it for removal on disconnect.
+        console.log("self session: " + self._sessionId);
+
         var presenceRef = self._firebase.child('room-users').child(roomId).child(self._userId).child(self._sessionId);
         self._queuePresenceOperation(presenceRef, {
           id: self._userId,
@@ -1755,7 +1758,7 @@ this["FirechatDefaultTemplates"]["templates/user-search-list-item.html"] = funct
     var date = (timestamp) ? new Date(timestamp) : new Date(),
         hours = date.getHours() || 12,
         minutes = '' + date.getMinutes(),
-        ampm = (date.getHours() >= 12) ? 'pm' : 'am'; 
+        ampm = (date.getHours() >= 12) ? 'pm' : 'am';
 
     hours = (hours > 12) ? hours - 12 : hours;
     minutes = (minutes.length < 2) ? '0' + minutes : minutes;

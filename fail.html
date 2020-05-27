@@ -1,0 +1,895 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Bad Ass Customer Interviews...Live! | Customer Development Labs</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+
+        <!-- This app  -->
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+        <!-- Firepad -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
+
+        <!-- Firechat -->
+        <link rel="stylesheet" href="firechat/firechat-default.css" />
+        <script src="firechat/firechat-default.js"></script>
+
+        <!-- BootstrapValidator -->
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+        <!-- Bootbox for Alerts -->
+        <script src="js/bootbox.min.js"></script>
+
+<!-- LeanConf -->
+<!--<link href="http://leanconf.co.uk/assets/application-48e69d65484c73c576ddeaf7a3ea34ee.css" media="screen" rel="stylesheet" type="text/css" />-->
+
+    </head>
+
+    <body>
+      <div class="wrapper">
+        <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form class="form-horizontal" id="welcomeForm">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="myModalLabel">Welcome to <b>Customer Interviews...Live</b>!</h2>
+                </div>
+                <div class="modal-body" style="padding-left:40px; padding-right:40px">
+                    <div class="form-group">
+                      <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+                      <button type="submit" class="btn btn-primary">Let's go!</button>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <p>Welcome to...</p>
+                <center>
+                    <h1>Interviewing your Customers</h1>
+                    <h2>...the Right Way</h2>
+                </center>
+                <p style="float:right">By <a href="http://customerdevlabs.com" target="_blank">Customer Development Labs</a></p><!-- <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>        -->
+            </div>
+        </div>
+        <div class="my-fluid-container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-lg-7 live-stream">
+                    <h2>Live Stream</h2>
+                    <iframe width="100%" height="400px" src="//www.youtube.com/embed/mB3lFUKJoPY?rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="col-lg-5 questions">
+                  <h2><a name="chat"></a>Questions</h2>
+                  <div class="panel panel-info">
+                      <div class="panel-body" style="height: 350px; overflow-y: scroll;">
+                          <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                      </div>
+                      <div class="panel-footer">
+                          <button class="btn btn-info" type="button" id='btnSend' style="float: right">ASK</button>
+                          <div style="overflow: hidden; padding-right: .5em;">
+                              <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+                          </div>
+
+                          <div class="input-group"  style="display:none;">
+                                  <h3>Value:</h3>
+                                  <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:30px">
+                <div class="col-sm-12">
+                  <h2><span id="partnerName">Looking for a partner for you...</span></h2>
+                    <!-- <div class="alert alert-info" role="alert">
+                    </div> -->
+                </div>
+                <div class="col-sm-4">
+                    <button id="newPartner" type="button" class="btn">Request New Partner</button>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-7">
+                  <h2>Excercises</h2>
+                  <div class="bs-example">
+                      <ul class="nav nav-tabs">
+                          <li><a data-toggle="tab" href="#sectionA">Excercise 2</a></li>
+                          <li class="active"><a data-toggle="tab" href="#sectionB">Exercise 1</a></li>
+                      </ul>
+                      <div class="tab-content">
+                        <div id="sectionB" class="tab-pane fade in active">
+                          <h3>Meet your Partner</h3>
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <p>Where do you live?<input type="text" class="meetYourPartnerMe" id="location" placeholder="City, Country"></p>
+                                <p>What's your company name?<input type="text" placeholder="" class="meetYourPartnerMe" id="companyName"></p>
+                                <p>Do you have a company website?<input type="text" placeholder="http://CustomerDevLabs.com" class="meetYourPartnerMe" id="website"></p>
+                                <p>Who are your target customers?<input type="text" placeholder="Single moms, Utility companies, Insurance Adjusters, etc." class="meetYourPartnerMe" id="customers"></p>
+                                <p>What problem will you solve for them?<input type="text" placeholder="Too hard to go grocery shopping w/ a 3 year old, etc." class="meetYourPartnerMe" id="problem"></p>
+                                <p>What do you hope to get out of this workshop?<input type="text" placeholder="How will you know it's been worth your time?" class="meetYourPartnerMe" id="defineSuccess"></p>
+                                <p>Do you have a LinkedIn or Twitter profile?<input type="text" placeholder="http://twitter.com/customerdevlabs" class="meetYourPartnerMe" id="profileURL"></p>
+                              </div>
+                              <div class="col-sm-6">
+                                <p>Your partner lives in: <span id="locationPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>Your partner's company is: <span id="companyNamePartner" class="meetYourPartnerPartner"></span></p>
+                                <p>The URL is: <a id="websitePartner" class="meetYourPartnerPartner" href="" target="_blank"></a></p>
+                                <p>Your partner's is serving: <span id="customersPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>Helping them: <span id="problemPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>Your partner is here to: <span id="defineSuccessPartner" class="meetYourPartnerPartner"></span></p>
+                                <p>More about them is here: <a id="profileURLPartner" class="meetYourPartnerPartner" href="" target="_blank"></a></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="sectionA" class="tab-pane fade">
+                          <div class="container well well-small" style="margin-top:30px">
+                            <div class="row">
+                              <div class="col-sm-5" id="questionsContainer">
+                                  <h2>Interview Questions</h2>
+                                  This notepad is <b>shared</b> with your Workshop Partner.
+                                  <div id="questionsPad" class="fpad"></div>
+                              </div>
+                              <div class="col-sm-5" id="responsesContainer">
+                                  <h2>Interview Responses</h2>
+                                  This notepad is <b>shared</b> with your Workshop Partner.
+                                  <div id="responsesPad" class="fpad"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                  </div>
+
+
+                </div>
+                <div class="col-lg-5">
+                  <h2><a name="Chat"></a>Chat</h2>
+                  <p>Use the <b>tabs</b> below to switch between chatting with your <b>partner</b> and <b>everyone</b>.</p>
+                  <div id="public-firechat-wrapper" class="firechatUI"></div>
+                </div>
+            </div>
+
+            <footer>
+                <p>&copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015 - Powered by <a href="http://firebase.com" target="_blank">Firebase</a></p>
+            </footer>
+        </div><!-- /container -->
+      </div>
+      <script>
+        var firebaseRoot = "https://webshop-questions.firebaseio.com";
+
+        var firepadRef      = new Firebase(firebaseRoot + "/firepads");
+        var publicChatRef   = new Firebase(firebaseRoot);
+        var attendeesRef    = new Firebase(firebaseRoot + "/attendees");
+        var soloRef         = new Firebase(firebaseRoot + "/solos");
+        var partnershipsRef = new Firebase(firebaseRoot + "/partnerships");
+        var questionsRef    = new Firebase(firebaseRoot + "/questions");
+        var meetPartnerRef  = new Firebase(firebaseRoot + "/meetYourPartner");
+
+        var loggedInUserId;
+        var questionPad, responsePad;
+
+        var publicChat = new FirechatUI(publicChatRef, document.getElementById("public-firechat-wrapper"));
+        publicChat.maxLengthMessage = 1024;
+
+        var firstName = null;
+        var lastSoloPriority = 0;
+
+        function init() {
+          firstName = getParameterByName('firstName');
+
+          $('.carousel').carousel({
+            interval: 5000
+          });
+
+          if (firstName == null) {
+            initModal();
+            return;
+          }
+
+          logInToChat(publicChatRef, publicChat, '-JjaITAHsCWXcpp-_FX1', true);
+
+          // REGISTER DOM ELEMENTS
+          questionField = $('#question-txt');
+          questionList = $('#example-questions');
+
+          // LISTEN FOR KEYPRESS EVENT
+          questionField.keypress(function (e) {
+             if (e.keyCode == 13) {
+                  pushData();
+                  return false;
+              }
+          });
+
+          $("#btnSend").click(function () {
+              pushData();
+          });
+
+          $("#newPartner").hide();
+          $("#newPartner").click(function () {
+              leavePartnership();
+          });
+
+          $('.meetYourPartnerMe').focusout(function(obj) {
+            updateMeetYourPartner($(this).attr('id'), $(this).val());
+          });
+        }
+
+        function updateMeetYourPartner(field, value) {
+          var update = {};
+          update[field] = value;
+
+          meetPartnerRef.child(loggedInUserId).update(update);
+        }
+
+        function getMeetYourPartnerUpdates(user) {
+          meetPartnerRef.child(user.id).once('value', function(snap) {
+            console.log('updating my own partner details');
+
+            if (snap == null) {
+              console.log("I don't have any details yet.");
+              return;
+            }
+
+            setPartnerDetails(snap.val(), true);
+          });
+
+          meetPartnerRef.child(user.lastPartner).on('value', function(snap) {
+            console.log('partner updated their details');
+
+            setPartnerDetails(snap.val(), false);
+          });
+        }
+
+        function setPartnerDetails(details, isMyDetails) {
+          var idQualifier = isMyDetails ? "" : "Partner";
+
+          for (property in details) {
+            var elem = $('#' + property + idQualifier);
+
+            if (elem.is('a')) {
+              elem.attr("href", "http://" + details[property].replace("http://", '').replace("https://", ''));
+              elem.text(details[property]);
+            }
+            else if (elem.is('input')) {
+              elem.val(details[property]);
+            }
+            else {
+              elem.text(details[property]);
+            }
+          }
+        }
+
+        function initModal() {
+          $('#welcomeForm').bootstrapValidator({
+              message: 'This value is not valid',
+              feedbackIcons: {
+                  valid: 'glyphicon glyphicon-ok',
+                  invalid: 'glyphicon glyphicon-remove',
+                  validating: 'glyphicon glyphicon-refresh'
+              },
+              fields: {
+                  firstName: {
+                      message: "That's not your name",
+                      validators: {
+                          notEmpty: {
+                              message: 'We need your name'
+                          },
+                          stringLength: {
+                              min: 2,
+                              max: 20,
+                              message: 'We can do names between 2 and 20 characters'
+                          }
+                      }
+                  }
+              }
+          });
+
+          $( "#welcomeForm" ).submit(function(event) {
+            firstName = $("#attendeeName").val();
+          });
+
+          $('#welcomeModal').modal({
+            keyboard: false,
+            backdrop: 'static'
+          });
+        }
+
+        function initPad(url, div, msg) {
+          // Create CodeMirror (with lineWrapping on).
+          var codeMirror = CodeMirror(document.getElementById(div), { lineWrapping: true });
+
+          var firepad = Firepad.fromCodeMirror(firepadRef.child(url), codeMirror,
+              { richTextToolbar: false, richTextShortcuts: true });
+
+          firepad.on('ready', function() {
+            if (firepad.isHistoryEmpty()) {
+              firepad.setHtml(msg);
+            }
+          });
+
+          return firepad;
+        }
+
+        function logInToChat(chatRef, chatUI, roomId, getPartner) {
+          var simpleLogin = new FirebaseSimpleLogin(chatRef, function(err, user) {
+            if (user) {
+              loggedInUserId = user.id;
+
+              user.firstName = firstName;
+              chatUI.setUser(user.id, firstName);
+
+              if (roomId != null) {
+                setTimeout(function() {
+                  chatUI._chat.enterRoom(roomId);
+                }, 500);
+              }
+
+              if (getPartner) {
+                searchForPartner(user);
+              }
+
+              authUserName = firstName;
+              fbid = user.id;
+
+              // Add a callback that is triggered for each chat question.
+              questionsRef.orderByChild('votes').on('value', function (allQuestionsSnapshot) {
+                  questionList.empty();
+
+                  allQuestionsSnapshot.forEach(function(snapshot) {
+
+                    //GET DATA
+                    var questionId = snapshot.key();
+                    var data = snapshot.val();
+                    var fbid_d = data.fbid;
+                    var username_d = data.name;
+                    var question_d = data.text;
+                    var date_d = data.currentdate;
+                    var votes_d = data.votes;
+
+                    divdir = "";
+
+                    //CREATE ELEMENTS question & SANITIZE TEXT
+                    var questionElement = $("<li class='media' f='" + fbid_d + "'>");
+                    var divmediabody = $("<div class='media-body'>");
+                    var divmedia = $("<div class='media'>");
+
+                    var a;
+                    if (fbid_d == fbid) {
+                      // This user submitted the question
+                      a = $("<a id='q-" + questionId + "' class='deleteButton' onClick='deleteQuestion(&quot;" + questionId + "&quot;);'>Delete</a>");
+                    }
+                    else {
+                      var voteText = data.voters && data.voters.hasOwnProperty(fbid) ? "Unvote" : "Vote";
+                      a = $("<a id='q-" + questionId + "' onClick='toggleVote(&quot;" + questionId + "&quot;);'>" + voteText + "</a>");
+                    }
+
+                    var voteCount = data.votes ? data.votes : 1;
+                    var votesElement = " <span style='float:right'>Votes: " + voteCount + "</span>";
+                    var userNameElement = " <span>From " + username_d + "</span>";
+                    var dateElement = " <span style='float:right'>" + date_d + "</span>";
+
+                    var divmediabody2 = $("<div class='media-body divTxtL' style='color:#FDFDFD; padding:5px'>");
+                    divmediabody2.css('background', "#83CDE6");
+                    questionElement.append(divmediabody);
+                    divmediabody.append(divmedia);
+                    divmedia.append(a);
+                    divmedia.append(votesElement);
+                    divmedia.append(divmediabody2);
+
+                    var usernamediv = $("<small class='text-muted'>");
+                    divmediabody2.html(question_d);
+
+                    divmediabody2.append(usernamediv);
+                    usernamediv.html("<br />" + userNameElement + dateElement);
+
+                    //ADD question
+                    questionList.prepend(questionElement);
+
+                  });
+              });
+
+            } else {
+              simpleLogin.login('anonymous', {
+                rememberMe: true
+              });
+            }
+          });
+        }
+
+        function loadFirepads(user, addDefaultText) {
+          questionPad = initPad(user.questionsPad, 'questionsPad', addDefaultText ? "Work with your partner to record the <b>questions</b> Justin asks during the customer interview here!<p/><br/><p/>You'll see what your partner types, as she/he does.<p/><br/><p/>Delete this intro once you <b>and your partner</b> have read it. Ask if she/he's finished in the chat below!" : "");
+          responsePad = initPad(user.responsesPad, 'responsesPad', addDefaultText ? "Work with your partner to take <b>extensive notes</b> on the customer's resposes.<p/><br/><p/>(Delete this too :)"  : "");
+        }
+
+        function unloadFirepads() {
+          console.log("unloading firepads");
+
+          $('#questionsPad').hide().attr('id', 'oldQuestionsPad').clone().show().attr('id', 'questionsPad').html('').appendTo("#questionsContainer");
+          $('#responsesPad').hide().attr('id', 'oldResponsesPad').clone().show().attr('id', 'responsesPad').html('').appendTo("#responsesContainer");
+
+          try {
+            questionPad.dispose();
+          } catch (exc) {
+            console.log("Error disposing question pad: " + exc.message);
+          }
+
+          try {
+            responsePad.dispose();
+          } catch (exc) {
+            console.log("Error disposing response pad: " + exc.message);
+          }
+
+          $('#oldQuestionsPad').remove();
+          $('#oldResponsesPad').remove();
+        }
+
+        function joinPartnership(user, partnership) {
+          user.partnership = partnership;
+          user.lastPartner = partnership.replace(user.id, "");
+
+          attendeesRef.child(user.id).update(user);
+
+          // join chat room
+          partnershipsRef.child(partnership).on('value', function(partSnap) {
+            var part = partSnap.val();
+
+            if (part == null) {
+              console.log("Partnership is null. Request to be terminated.");
+              forgetPartnership(false);
+              $("#partnerName").html("You partner is no longer available, but we can find a new one for you!");
+
+              return;
+            }
+            else if (part.room != null) {
+              console.log("Entering our partner chat room: " + part.room);
+              publicChat._chat.enterRoom(part.room);
+
+              user.partnerChatRoom = part.room;
+              attendeesRef.child(user.id).update(user);
+            }
+          });
+
+          soloRef.off('child_changed');
+
+          // intro partners
+          $("#partnerName").html("Hey " + user.firstName + ", say hi to your workshop partner...<b><a href='#chat'>" + user.partnerName + "</a></b>!");
+          $("#newPartner").show();
+
+          getMeetYourPartnerUpdates(user);
+        }
+
+        function lookingForPartnerUI() {
+          $("#partnerName").html("Looking for a partner for you...");
+          $("#newPartner").hide();
+        }
+
+        function joinSoloList(user) {
+          soloRef.child(user.id).setWithPriority(user, new Date().getTime());
+          console.log("Added myself to the solo list.");
+
+          lookingForPartnerUI();
+
+          // since I'm the first to the meeting, use my id to key the firepads
+          // my partner will hook into these pads
+          user.questionsPad = "q-" + user.id;
+          user.responsesPad = "r-" + user.id;
+
+          // store my pad addresses
+          attendeesRef.child(user.id).update(user);
+
+          loadFirepads(user, true);
+
+          soloRef.on('child_changed', function(soloSnap) {
+            var solo = soloSnap.val();
+
+            if (solo.id != user.id) {
+              console.log("Someone else's solo changed");
+              return;
+            }
+
+            console.log("Our solo changed...");
+
+            if (solo.partnership == null) {
+              console.log("but no one added a partnership. Not sure what's up.");
+            }
+            else {
+              console.log("and we have a new partnership!");
+
+              soloRef.child(user.id).remove(function(error) {
+                if (error) {
+                  console.log("Error removing myself from the solo list", error);
+                }
+                else {
+                  console.log("Successfully removed myself from the solo list", error);
+                }
+              });
+
+              user.partnerName = solo.partnerName;
+              user.partnership = solo.partnership;
+
+              publicChat._chat.createRoom("Private: " + user.firstName + " and " + user.partnerName, 'private', function(roomId) {
+                console.log('Created our partnership chat room');
+                partnershipsRef.child(solo.partnership).set({"room": roomId});
+
+                user.partnerChatRoom = roomId;
+                joinPartnership(user, solo.partnership);
+              });
+            }
+          });
+        }
+
+        function searchForNextSolo(user, attemptNum) {
+          // There were solos available, but we had a conflict trying to partner with one
+          // Wait a bit and try again
+          var MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO = 100;
+          var attempt = attemptNum == null ? 0 : attemptNum;
+
+          if (attempt >= MAX_ATTEMPTS_TO_SEARCH_FOR_ANOTHER_SOLO) {
+            console.log("Exceeded max # of attempts to find a partner on the solo list. Skipping the solo search");
+
+            joinSoloList(user);
+          }
+          else {
+            setTimeout(partnerWithFirstSolo(user, ++attempt), 500);
+            return;
+          }
+        }
+
+        function partnerWithFirstSolo(user, attemptNum) {
+          if (attemptNum != null) {
+            console.log("This is attempt #" + (attemptNum + 1) + " to find a partner on the solo list.");
+          }
+
+          var firstSolo = soloRef.startAt(lastSoloPriority + 1).limit(1);
+
+          firstSolo.once('value', function(solosSnap) {
+            // Are there any solos?
+
+            var solos = solosSnap.val();
+
+            if (solos == null) {
+              console.log('There are no available solos.');
+              joinSoloList(user);
+              return;
+            }
+
+            firstSolo.once('child_added', function(soloSnap) {
+              // iterate the solos
+              var solo = soloSnap.val();
+
+              lastSoloPriority = soloSnap.getPriority();
+
+              if (solo.id == user.lastPartner) {
+                console.log("Found potential partner, but I just left a partnership with them. Skipping.");
+
+                searchForNextSolo(user, attemptNum);
+                return;
+              }
+
+              soloRef.child(solo.id).transaction(function(currentData) {
+                if (currentData == null) {
+                  // This is just an inconsistent state. Keep going.
+                  return null;
+                }
+
+                if (currentData.partnership == null) {
+                  // let's make a baby!
+                  var partnership;
+
+                  if (user.id.localeCompare(solo.id) < 0) {
+                    partnership = user.id + solo.id;
+                  }
+                  else {
+                    partnership = solo.id + user.id;
+                  }
+
+                  user.partnership = partnership;
+                  user.partnerName = currentData.firstName;
+                  user.questionsPad = "q-" + solo.id;
+                  user.responsesPad = "r-" + solo.id;
+
+                  currentData.partnership = partnership;
+                  currentData.partnerName = user.firstName;
+
+                  return currentData;
+                }
+
+                // user already has a partnership, let's get out of here
+                // not returning anything so we can retry on the solo list
+              }, function(error, committed, snapshot) {
+                if (error != null) {
+                  console.log('Transaction failed abnormally!', error);
+                }
+                else if (!committed) {
+                  console.log("This solo is no longer solo!");
+
+                  searchForNextSolo(user, attemptNum);
+                }
+                else {
+                  console.log('Successfully claimed this solo');
+
+                  // Wait for potential partner to confirm our hookup
+                  setTimeout(function(){confirmPartnershipAccepted(user)}, 3000);
+                }
+              }, true);
+            });
+
+          });
+        }
+
+        function confirmPartnershipAccepted(user) {
+          partnershipsRef.child(user.partnership).once('value', function(partSnap) {
+            var part = partSnap.val();
+
+            if (part == null) {
+              console.log("Potential parternship didn't consummate the partnership.");
+
+              var flakySolo = user.partnership.replace(user.id, "");
+
+              clearPartnerFromUser(user);
+
+              console.log("Removing flaky partner from solo list: " + flakySolo);
+              soloRef.child(flakySolo).remove(function(error) {
+                if (error) {
+                  console.log('Error removing flaky solo: ' + error);
+                } else {
+                  console.log('Flaky solo removed. Looking for another partner.');
+                  searchForSolos(user);
+                }
+              });
+
+              return;
+            }
+
+            loadFirepads(user, false);
+            joinPartnership(user, user.partnership);
+          });
+        }
+
+        function searchForSolos(user) {
+          // Make sure we're not on the solo list
+          soloRef.child(user.id).transaction(function(currentData) {
+
+            // Always return null because we want off this list
+            return null;
+
+          }, function(error, committed, snapshot) {
+            if (error != null) {
+              console.log('Transaction failed abnormally!', error);
+              return;
+            }
+            else if (!committed) {
+              console.log("I wasn't on the solo list. Proceed as planned.");
+            }
+            else {
+              console.log('Successfully removed myself from the solo list');
+            }
+
+            lastSoloPriority = 0;
+            partnerWithFirstSolo(user);
+          }, true);
+        }
+
+        function checkAttendeeList(user) {
+          attendeesRef.child(user.id).once('value', function(attendeeSnap) {
+            var attendee = attendeeSnap.val();
+
+            if (attendee == null) {
+              console.log("I am not on the attendee list. Let's add me!");
+
+              attendeesRef.child(user.id).set(user);
+            }
+            else if (attendee.partnership != null) {
+              console.log("I already have a partnership: " + attendee.partnership);
+
+              partnerFound = true;
+              loadFirepads(attendee);
+              joinPartnership(attendee, attendee.partnership);
+              return;
+            }
+            else {
+              console.log("I am an attendee without a partnership");
+            }
+
+            searchForSolos(user);
+          });
+        }
+
+        function searchForPartner(user) {
+          console.log("My user id is: " + user.id);
+
+          checkAttendeeList(user);
+        }
+
+        function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+              results = regex.exec(location.search);
+          return results == null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function leavePartnership() {
+          console.log("Request to leave partnership.");
+
+          if (loggedInUserId == null) {
+            console.log("User isn't logged in.");
+            return;
+          }
+
+          attendeesRef.child(loggedInUserId).once('value', function(attendeeSnap) {
+            var user = attendeeSnap.val();
+
+            if (user.partnership == null) {
+              console.log("User doesn't have a partnership to leave. Partner already left.");
+              searchForSolos(user);
+            }
+            else {
+              console.log("This user is requesting to leave partnership.");
+              lookingForPartnerUI();
+
+              var partnership = user.partnership;
+
+              partnershipsRef.child(user.partnership).off('value');
+
+              partnershipsRef.child(partnership).remove(function(error) {
+                if (error) {
+                  console.log('Error removing partnership: ' + error);
+                } else {
+                  console.log('Partnership removed.');
+
+                  forgetPartnership(true);
+                }
+              });
+            }
+          });
+        }
+
+        function clearPartnerFromUser(user) {
+          user.partnership = null;
+          user.partnerName = null;
+          user.questionsPad = null;
+          user.responsesPad = null;
+          user.partnerChatRoom = null;
+
+          clearMeetYourPartner();
+        }
+
+        function clearMeetYourPartner() {
+          $(".meetYourPartnerPartner").text('');
+        }
+
+        function forgetPartnership(searchForPartnerImmediately) {
+          console.log("Forgetting my partnership.");
+
+          attendeesRef.child(loggedInUserId).once('value', function(attendeeSnap) {
+            var user = attendeeSnap.val();
+
+            if (user.partnerChatRoom) {
+              publicChat._chat.leaveRoom(user.partnerChatRoom);
+            }
+              clearPartnerFromUser(user);
+              unloadFirepads();
+
+              attendeesRef.child(user.id).update(user);
+
+              if (searchForPartnerImmediately) {
+                // Need to search for new partner only after we clean up our partner data
+                // because the partner data is how we determine if we should remove a solo from the solo list
+                searchForSolos(user);
+              }
+          });
+        }
+
+        /* Questions */
+        var fbid = '';
+        var divdir = '';
+        var questionField;
+        var questionList;
+        var lastfid = '1';
+        var lastdir = 'L';
+        var newdir = 'L';
+        var authUserName = '';
+
+        $(document).ready( function() {
+          init();
+        });
+
+        function deleteQuestion(questionId) {
+          bootbox.confirm("Are you sure?", function(confirmed) {
+            if (confirmed) {
+              questionsRef.child(questionId).remove();
+            }
+          });
+        }
+
+        function toggleVote(questionId) {
+          questionsRef.child(questionId).transaction(function(currentData) {
+            var question = $('#q-' + questionId);
+
+            if (currentData.votes == null) {
+              currentData.votes = 1;
+            }
+
+            if (currentData.voters && currentData.voters.hasOwnProperty(fbid)) {
+              delete currentData.voters[fbid];
+
+              currentData.votes--;
+            }
+            else if (currentData.voters == null){
+              var newVoter = {};
+              newVoter[fbid] = true;
+
+              currentData.voters = newVoter;
+
+              currentData.votes++;
+            }
+            else {
+              currentData.voters[fbid] = true;
+              currentData.votes++;
+            }
+
+            return currentData;
+
+          }, function(error, committed, snapshot) {
+            if (error != null) {
+              console.log('Transaction failed abnormally!', error);
+            }
+            else if (!committed) {
+              console.log("Transaction was aborted by us.");
+            }
+            else {
+              console.log('Successfully voted');
+            }
+          }, true);
+        }
+
+        function pushData() {
+
+            //FIELD VALUES
+            var username = authUserName;
+            var question = $("#question-txt").val();
+            //Clientside Datetime
+            var cdate = new Date();
+
+            //***********************************************************
+            //Set current text question direction to push it to firebase.
+            //***********************************************************
+
+            var newQ = questionsRef.push({ name: username, text: question, fbid: fbid, currentdate: cdate.toLocaleString(), votes: 1 });
+
+            $("#question-txt").val('');
+
+        }
+
+      </script>
+
+    </body>
+
+</html>

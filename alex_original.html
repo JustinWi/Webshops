@@ -1,0 +1,839 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Webshops: Better Online Learning | Customer Development Labs</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+
+        <!-- Firepad -->
+        <!-- <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script> -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.css" />
+        <script src="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.min.js"></script>
+
+        <!-- Firechat -->
+        <link rel="stylesheet" href="firechat/firechat-default-custom.css" />
+        <script src="firechat/firechat-default.js"></script>
+
+        <!-- BootstrapValidator -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+        <!-- Bootbox for Alerts -->
+        <script src="bootbox.min.js"></script>
+
+        <!-- This app  -->
+        <link rel="stylesheet" href="css/style.css">
+        <script src="alex.js"></script>
+
+        <style type="text/css">
+
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form id="welcomeForm">
+                <div class="modal-header alert-success">
+                  <h2 class="modal-title" id="myModalLabel"><center>Welcome to<br/><b>Value Proposition Workshop</b>!</center></h2>
+                </div>
+                <div class="modal-body" style="padding-left:40px; padding-right:40px; padding-top:40px">
+                  <div class="form-group">
+                    <label class="control-label">First Name</label>
+                    <input type="name" class="form-control" id="attendeeName" name="firstName" placeholder="What's your first name?">
+                  </div>
+                </div>
+                <div class="modal-footer alert-success">
+                  <button type="submit" class="btn btn-success">Let's go!</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <!-- <div class="jumbotron">
+            <div class="container">
+                <p>Welcome to...</p>
+                <center>
+                    <h1>Interviewing your Customers</h1>
+                    <h2>...the Right Way</h2>
+                </center>
+                <p style="float:right">By <a href="http://customerdevlabs.com" target="_blank">Customer Development Labs</a></p>
+            </div>
+        </div> -->
+
+        <header class="fixed-header-main">
+          <div style="float:left;">
+                        <center><span style="font-size:2em"><b>Value Proposition Workshop</b></span> from <a href="http://www.startupexperience.com/" target="_blank">Strategizer</a></center>
+          </div>
+          <!-- <a href="http://fi.co" target="_blank"><img src="img/founder-institute.png" style="display: inline-block; width: 100px; float:right; margin-top:-10px"/></a> -->
+        </header>
+        <div class="fixed-container-inner">
+          <div class="fluid-container">
+            <div class="fluid-box full-height left-column">
+              <div class="top-row">
+                <div class="panel panel-info" style="position: relative; height: 100%; width: 100%; padding:0px;">
+                  <iframe width="100%" height="100%" src="http://www.youtube.com/embed/VLNAJSUexf0?rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+
+              <div class="bottom-row">
+                <div class="panel panel-info chatPanel" style="height: 100%; position: relative">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i><b>Questions:</b></i> Ask and up vote.</h3>
+                  </div>
+                  <div class="panel-body" style="position: absolute; top: 38px; left: 0px; right: 0px; bottom: 50px; overflow-y: scroll;">
+                    <ul class="media-list example-chat-questions" id="example-questions"></ul>
+                  </div>
+                  <div class="panel-footer" style="position: absolute; height: 50px; bottom: 0px; left: 0px; right: 0px;">
+                    <div style="overflow: hidden; padding-right: .5em;">
+                      <textarea rows="5" class="questions-wysiwyg" placeholder="What's your question?" id="question-txt" style="width: 100%;"></textarea>
+                    </div>
+                    <div class="input-group"  style="display:none;">
+                      <h3>Value:</h3>
+                      <div class="value"><pre id="questions-wysiwyg-value"></pre></div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:none">
+                                    <div id="public-firechat-wrapper" class="firechatUI"></div>
+                                  </div>
+              </div>
+            </div>
+
+            <div class="fluid-box full-height right-column">
+              <div class="panel panel-info exercisesPanel" style="height: 100%">
+                <div class="panel-body" style="position: relative; height: 100%">
+                  <div class="exercisesPanel">
+                      <ul class="nav nav-tabs exerciseTabs">
+                          <!-- <li><a data-toggle="tab" id="whoIsHereTab" href="#whoIsHereTabContent">Who's Here?</a></li>
+                          <li><a data-toggle="tab" id="notesTab" href="#notesTabContent">My Notes</a></li> -->
+                          <!-- <li><a data-toggle="tab" id="slidesTab" href="#slidesTabContent">Slides</a></li> -->
+
+                          <!-- <li><a data-toggle="tab" id="iframeTab" href="#iframeTabContent">iFrame Example</a></li> -->
+                          <li><a data-toggle="tab" id="slidesTab" href="#slidesTabContent">Slides</a></li>
+                          <li><a data-toggle="tab" id="presenterValuePropTab" href="#presenterValuePropTabContent">Example</a></li>
+                          <li><a data-toggle="tab" id="attendeeValuePropTab" href="#attendeeValuePropTabContent">Canvas</a></li>
+                          <li><a data-toggle="tab" id="interviewScriptTab" href="#interviewScriptTabContent">Script</a></li>
+                          <li><a data-toggle="tab" id="bonusTab" href="#bonusTabContent">Bonuses</a></li>
+                          <li><a data-toggle="tab" id="feedbackTab" href="#feedbackTabContent">Feedback</a></li>
+
+                          <!-- <li><a data-toggle="tab" id="meetYourPartnerTab" href="#meetYourPartnerTabContent">Meet your Partner</a></li>
+                          <li><a data-toggle="tab" id="quiz1QuestionsTab" href="#quiz1QuestionsTabContent">Seed Funding</a></li>
+                          <li><a data-toggle="tab" id="quiz1AnswersTab" href="#quiz1AnswersTabContent">Leaderboard</a></li> -->
+
+                          <!-- <li><a data-toggle="tab" id="quiz3QuestionsTab" href="#quiz3QuestionsTabContent">Series B</a></li>
+                          <li><a data-toggle="tab" id="quiz3AnswersTab" href="#quiz3AnswersTabContent">Series B: Answers</a></li> -->
+                          <!-- <li><a data-toggle="tab" id="practiceInterviewTab" href="#practiceInterviewTabContent">You Try It</a></li>
+                          <li><a data-toggle="tab" id="quiz2QuestionsTab" href="#quiz2QuestionsTabContent">Series A</a></li>
+                          <li><a data-toggle="tab" id="quiz2AnswersTab" href="#quiz2AnswersTabContent">Series A: Answers</a></li>
+                          <li><a data-toggle="tab" id="feedbackFormTab" href="#feedbackFormTabContent">Feedback</a></li>
+                          <li><a data-toggle="tab" id="interviewScriptGeneratorTab" href="#interviewScriptGeneratorTabContent">Interview Script Generator</a></li>
+                           -->
+                      </ul>
+                      <div class="tab-content">
+                        <!-- <div id="whoIsHereTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+
+                          <h3>Who's here?</h3>
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                Stats
+                              </div>
+                              <div class="col-sm-6">
+                                Map
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                        <!-- <div id="notesTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <h3>Notes and Takeaways</h3>
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <h2>Your Private Notepad</h2>
+                                <p>Take any notes you like here. They won't be shared with your partner</p>
+                                <input type="text" class="notes" id="notes" rows="20">
+                              </div>
+                              <div class="col-sm-6">
+                                <p>Live Interview Takeaway: <input type="text" class="takeaway" id="liveInterviewTakeaway" placeholder="I'm taking away..."></p>
+                                <p>Interview Practice Takeaway: <input type="text" class="takeaway" id="practiceInterviewTakeaway" placeholder="I'm taking away..."></p>
+                                <p>Overall Takeaway(s): <input type="text" class="takeaway" id="overallTakeaway" placeholder="I'm taking away..."></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <div id="meetYourPartnerTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <table class="table table-striped">
+                            <form>
+                              <thead>
+                                <tr class="info">
+                                  <th style="border-top: none; padding-top: 15px" class="">Please, introduce yourself...</th>
+                                  <th style="	border-top: none;" class="">...and meet your partner, <span class="partnerName bold"></span>!</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      Where do you live?
+                                      <input type="text" class="form-control meetYourPartnerMe" id="location" placeholder="City, State">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div><span class="partnerName"></span> lives in:</div>
+                                    <div id="locationPartner" class="bold partnerData"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      What year are you?
+                                      <input type="text" placeholder="" class="form-control meetYourPartnerMe" id="companyName">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div><span class="partnerName"></span>'s year:</div>
+                                    <div id="companyNamePartner" class="bold partnerData"></div>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      Do you have a Twitter, Instagram or Facebook page?
+                                      <input type="text" placeholder="http://twitter.com/justin_wilcox" class="form-control meetYourPartnerMe" id="website">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div>Check out <span class="partnerName"></span>'s profile at:</div>
+                                    <div style="padding-top: 7px"><a id="websitePartner" class="bold partnerData" href="" target="_blank"></a></div>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      What's your major?
+                                      <input type="text" placeholder="Business Administration" class="form-control meetYourPartnerMe" id="customers">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div><span class="partnerName"></span>'s major is:</div>
+                                    <div id="customersPartner" class="bold partnerData"></div>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      What do you do for fun?
+                                      <input type="text" placeholder="Juggle puppies" class="form-control meetYourPartnerMe" id="defineSuccess">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div>For fun <span class="partnerName"></span>:</div>
+                                    <div id="defineSuccessPartner" class="bold partnerData"></div>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="2" style="text-align: center; padding-top: 20px">
+                                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-left" style="margin-left: -5px" aria-hidden="true"></span> Ask <span class="partnerName"></span> more questions in your private chat window.
+                                  </td>
+                              </tbody>
+                            </form>
+                          </table>
+                        </div>
+
+                        <div id="iframeTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="https://strategyzer.com/" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="slidesTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="http://www.slideshare.net/slideshow/embed_code/key/CQsq2GmLpEHWbp" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="valuePropCompTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="https://strategyzer.com/exercises/value-map/products-and-services" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="presenterValuePropTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="https://docs.google.com/presentation/d/1OEcU621cgQP8dp1pgMY44fe6txoNOLFNrolXmEcoAAY/edit" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="attendeeValuePropTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="https://docs.google.com/presentation/d/1W5BiICctnMFkB8KIU_OykEvA-eUVjvZGijf1U6YpBhg/edit" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="quiz1QuestionsTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="https://docs.google.com/forms/d/1KRTNrnorl0XfPN016HB8YU1zXb_MsdJQ9CBF0WT4XDI/viewform?entry.1033504782=[studentNum]&entry.1746922172=[studentCampus]&embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="quiz1AnswersTabContent" class="tab-pane fade tabContent" style="overflow: auto;">
+                          <div class="btn-group tabButtonGroup" role="group" style="z-index: 20">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="fluid-container">
+                            <div class="fluid-box full-height full-width">
+                              <iframe src="" data-src="https://docs.google.com/spreadsheets/d/1VnSGLPVjxQ-3zUII-0IP-Dl00MRnHFh3BUdPc9jcZSM/view?headers=false" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="practiceInterviewTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div class="alert alert-success" style="margin:15px">
+                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-left" style="margin-left: -5px" aria-hidden="true"></span>Share your Skype username with <span class="partnerName"></span> in the chat room. Then interview each other!
+                          </div>
+                          <table class="table table-striped" style="margin: 15px">
+                              <thead>
+                                <tr>
+                                  <th>Ask <span class="partnerName"></span> these questions:</th>
+                                  <th>Listen for:</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>1.</label> What's the biggest challenge you're facing as a founder?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Anything to dig into.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>2.</label> When was the last time you tried to solve that problem?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Have they tried to solve it in the last <b>3 months</b> (B2C) or last <b>12 months</b> (B2B)?</p>
+                                      If not, start over asking about a different challenge.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>3.</label> Can you tell me about the last time that problem happened?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Opportunities to clarify - this is your chance to ask <b>"dumb" questions</b>.</p>
+                                      <b>Phrases</b> and <b>jargon</b> you can turn into marketing copy.</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>4.</label> Why is it a problem for you?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      The <b>real</b> problem they're trying to solve.</p>
+                                      <b>Emotions</b> you can evoke in your marketing copy.</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>5.</label> Are you looking for alternative solutions? If yes, why?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      <b>No</b>? They're not early adopters yet. Start again.</p>
+                                      <b>Yes</b>? This is how to differentiate your solution from the competition.</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                          </table>
+                        </div>
+
+                        <div id="interviewScriptGeneratorTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+
+                          <strong>Click here:</strong><a href="http://customerdevlabs.com/script" target="_blank">to Generate your Interview Script</a>
+                        </div>
+
+                        <div id="interviewScriptTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+
+                          <div style="width: 80%; max-width: 600px; padding: 15px; padding-bottom: 0px; float: none; margin: 0 auto;">
+                            <div class="panel panel-info">
+                              <div class="panel-heading">
+                                <h3 class="panel-title bold">Interview Script Creator</h3>
+                              </div>
+                              <div class="panel-body">
+                                <form class="form-horizontal">
+                                  <div class="form-group">
+                                    <label for="customerRole" class="col-sm-4 control-label">Customer "Role"
+                                      <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="How would your customer identify themselves?"></span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                      <input type="text" class="form-control" id="customerRole" placeholder="Single mom, HR manager, person w/ ADHD, etc.">
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="problemContext" class="col-sm-4 control-label">Problem "Context"
+                                      <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="When might your hypothesized problem happen?"></span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                      <input type="text" class="form-control" id="problemContext" placeholder="Going grocery shopping, retaining talent, being on time, etc.">
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+                          <table class="table table-striped" style="margin: 15px; margin-top:0px">
+                              <thead>
+                                <tr>
+                                  <th>Your Interview Script (repeat 2-3 times):</th>
+                                  <th>Listen for:</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>1.</label> What's the biggest challenge you're facing as a <b><span class="insertCustomerRole">CUSTOMER ROLE</span></b>?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Anything to dig into.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>2.</label> When was the last time you tried to solve that problem?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Have they tried to solve it in the last <b>3 months</b> (B2C) or last <b>12 months</b> (B2B)?</p>
+                                      If not, start over asking about a different challenge.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>3.</label> Can you tell me about the last time that problem happened?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Opportunities to clarify - this is your chance to ask <b>"dumb" questions</b>.</p>
+                                      <b>Phrases</b> and <b>jargon</b> you can turn into marketing copy.</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>4.</label> Why is it a problem for you?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      The <b>real</b> problem they're trying to solve.</p>
+                                      <b>Emotions</b> you can evoke in your marketing copy.</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label>5.</label> Are you looking for alternative solutions? If yes, why?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      <b>No</b>? They're not early adopters yet. Start again.</p>
+                                      <b>Yes</b>? This is how to differentiate your solution from the competition.</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: center; font-weight: " class="info">
+                                    <div class="form-group" style="position: relative; top: 50%; transform: translateY(40%);">
+                                      No mention of the problem you hoped?
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      What's the biggest challenge you're facing as a <b><span class="insertCustomerRole">CUSTOMER ROLE</span></b> with respect to <b><span class="insertProblemContext">PROBLEM CONTEXT</span></b>?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      <b>Note:</b> Pay extra close attention to how recently they've <b>looked for a solution</b>.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: center; font-weight: " class="info">
+                                    <div class="form-group" style="position: relative; top: 50%; transform: translateY(40%);">
+                                      Bonus Questions
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      How did you find out about the solution you're trying now?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Your <b>marketing channels</b>.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      I'm actually exploring a solution to the <u> &nbsp; &nbsp; &nbsp;[Insert their Problem] &nbsp; &nbsp; &nbsp;</u> problem. Can I contact you if we find a viable solution?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      Contact information, in case you end up solving their problem.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      Do you know 1 or 2 other people who are struggling with <u> &nbsp; &nbsp; &nbsp;[Insert their Problem] &nbsp; &nbsp; &nbsp;</u> problem I could talk to?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      More customer interviews.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      How much money are you spending to try and solve this problem now?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      A potential <a href="https://www.google.com/webhp?sourceid=chrome-instant&rlz=1C1CHMO_enUS591US591&ion=1&espv=2&ie=UTF-8#q=anchor%20pricing" target="_blank">anchor price</a>.
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      How often do you encounter this problem?
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-group">
+                                      How often they might use your solution.
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                          </table>
+                        </div>
+
+                        <div id="bonusTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+                            <div class="panel panel-success">
+                              <div class="panel-heading">
+                                <h3 class="panel-title bold">Bonus #1</h3>
+                              </div>
+                              <div class="panel-body">
+                                <center>
+                                  <h3>
+                                    <span style="">$50</span> Customer Interview Email Course<br/>
+                                    <span style="font-weight: bold; color: #428bca">FREE</span>
+                                  </h3>
+                                </center>
+                                You'll learn...
+                                <ul>
+                                  <li>Which customers to ask for interviews</li>
+                                  <li>A cold email script that works to get interviews</li>
+                                  <li>How to analyze your interview answers</li>
+                                </ul>
+                                <p>Plus: Get free <a href="http://customerdiscovery.ninja" target="_blank">Customer Discovery Ninja</a> coupon codes.</p>
+                              </div>
+                              <div class="panel-footer">
+                                <form class="form-inline" id="enrollForm" style="text-align: center">
+                                  <div class="form-group">
+                                    Enroll now:
+                                    <input type="email" class="form-control" name="enrollEmail" id="enrollEmail" placeholder="your@email.com">
+                                    <button id="enrollButton" type="submit" class="btn btn-success">Enroll</button>
+                                  </div>
+                                </form>
+                                <div class="alert alert-success alert-dismissable" id="enrollSuccessAlert" style="display:none;">
+                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                   Success! You have been enrolled.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-success" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title bold">Bonus #2</h3>
+                              </div>
+                              <div class="panel-body">
+                                <center>
+                                  <h3><a href="http://focus.customerdevlabs.com" target="_blank"><b>FOCUS Framework Pre-Order</b></a></h3>
+                                  <a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/All-Bookshops.png" style="width: 400px"></a>
+                                </center>
+
+                                <div style="padding: 20px">
+                                  <center>
+                                    Step by step instructions on:</p>
+                                      <b>What</b> to test<br/>
+                                      <b>When</b> to test<br/>
+                                      <b>How</b> to test<br/>
+                                    </ul>
+                                    <!-- <ul>
+                                      <li><b>What</b> to test</li>
+                                      <li><b>When</b> to test</li>
+                                      <li><b>How</b> to test</li>
+                                    </ul> -->
+                                  </center>
+                                  <center><a href="http://focus.customerdevlabs.com" target="_blank"><img src="img/Inside-workbook-Rendered---800---Transparent.png" style="width: 400px"></a></center>
+                                  <div>Use coupon code "<a href="http://focus.customerdevlabs.com" target="_blank">FounderInstitute</a>" by <b>March 13th</b> for:</div>
+                                  <ul>
+                                    <li>25% off</li>
+                                    <li>Early access to chapters</li>
+                                  </ul>
+                                  Check out the <a href="http://focus.customerdevlabs.com" target="_blank">FOCUS Framework</a>.
+                                </div>
+                              </center>
+                              </div>
+                              <div class="panel-footer" style="text-align: center">
+                                <a class="btn btn-large btn-success" href="http://focus.customerdevlabs.com" target="_blank">Find your Focus</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="feedbackTabContent" class="tab-pane fade tabContent">
+                          <div class="btn-group tabButtonGroup" role="group">
+                            <button type="button" class="btn btn-default soloTabButton">Solo</button>
+                            <button type="button" class="btn btn-default activeTabButton">Active</button>
+                            <button type="button" class="btn btn-default showTabButton">Show</button>
+                            <button type="button" class="btn btn-default hideTabButton">Hide</button>
+                          </div>
+                          <div style="width: 80%; max-width: 600px; height: 100%; padding: 15px; float: none; margin: 0 auto;">
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">How likely would you be to recommend this workshop to a friend?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <div class="" style="text-align: center">
+                                  <div class="btn-group npsButtons" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-default">0</button>
+                                    <button type="button" class="btn btn-default">1</button>
+                                    <button type="button" class="btn btn-default">2</button>
+                                    <button type="button" class="btn btn-default">3</button>
+                                    <button type="button" class="btn btn-default">4</button>
+                                    <button type="button" class="btn btn-default">5</button>
+                                    <button type="button" class="btn btn-default">6</button>
+                                    <button type="button" class="btn btn-default">7</button>
+                                    <button type="button" class="btn btn-default">8</button>
+                                    <button type="button" class="btn btn-default">9</button>
+                                    <button type="button" class="btn btn-default">10</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="panel-footer" style="height: 40px">
+                                <div style="float: left">Not at likely</div><div style="float: right">Extremely likely</div>
+                              </div>
+                            </div>
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">What's one thing we can improve next time?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <textarea id="toImprove" class="form-control" rows="3"></textarea>
+                              </div>
+                            </div>
+
+                            <div class="panel panel-info" style="margin-top: 20px">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">What was your favorite part of the workshop?</h3>
+                              </div>
+                              <div class="panel-body">
+                                <textarea id="favoritePart" class="form-control" rows="3"></textarea>
+                              </div>
+                              <div class="panel-footer" style="text-align: center">
+                                <div class="alert alert-success alert-dismissable" id="feedbackSuccessAlert" style="display:none;">
+                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                   Thank you, we got your feedback!
+                                </div>
+
+                                <button id="submitFeedbackButton" class="btn btn-large btn-primary" href="http://focus.customerdevlabs.com" target="_blank">Submit Feedback</button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          </div>
+            <footer class="fixed-footer-main" style="padding: 5px">
+                &copy; <a href="http://www.customerdevlabs.com" target="_blank">Customer Development Labs</a> 2015
+            </footer>
+
+    </body>
+
+</html>

@@ -1,0 +1,69 @@
+.behavior-curve .yes-field {
+  color: #36B363;
+}
+
+.segment-field {
+  bottom: 85%;
+  left: 19%;
+  width: 41%;
+}
+
+.problem-field {
+  bottom: 54%;
+  left: 26%;
+  width: 66.5%;
+}
+
+.grid-field {
+  width: 16%;
+}
+
+.laggard {
+  left: 76%;
+}
+
+.late {
+  left: 59.5%;
+}
+
+.early {
+  left: 43%;
+}
+
+.adopters {
+  left: 26%
+}
+
+.have-problem {
+  bottom: 49%;
+}
+
+.know-problem {
+  bottom: 44.5%;
+}
+
+.paying-problem {
+  bottom: 40%;
+}
+
+.behavior-curve .behaviors-field {
+  text-align: left;
+}
+
+.internal {
+  left: 9.5%;
+  top: 69.5%;
+  width: 40%;
+}
+
+.external {
+  left: 51%;
+  top: 72.5%;
+  width: 41.5%;
+}
+
+.ea-feedback-opt-in-field {
+  bottom: 4.5%;
+  left: 20%;
+  width: 20%;
+}

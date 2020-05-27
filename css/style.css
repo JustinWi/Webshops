@@ -1,0 +1,405 @@
+#welcomeForm > .bg-primary{
+	background-color: #333;
+}
+
+#welcomeForm .btn-success{
+	background-color: #fec503;
+	border: none;
+}
+
+#welcomeForm .btn-success:hover{
+	background-color: #e6b202;
+	border: none;
+}
+
+a {
+	color: #fec503;
+	font-weight: bold;
+}
+
+.header {
+	background-color: #333; 
+	color: #eee;
+}
+
+.footer {
+	background-color: #333; 
+	color: #eee;
+}
+
+.nav-tabs>li>a {
+		background-color: #666;
+    border: 1px solid #666;
+    border-radius: 6px 6px 0 0;
+}
+
+.nav>li>a {	
+	color: #eee;
+	font-weight: bold;
+}
+
+.nav>li>a:hover, .nav>li>a:focus {	
+	color: #eee;
+	background-color: #333;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #fec503;
+		font-weight: bold;
+    background-color: #eee;
+    border: 1px solid #666;
+    border-bottom-color: transparent;
+    cursor: default;
+}
+
+#pane-container {
+		background:	#999;
+		height:		100%;
+		margin:		0 auto;
+		width:		100%;
+		max-width:	900px;
+		min-width:	700px;
+		_width:		700px; /* min-width for IE6 */
+}
+
+.exerciseTabs {
+	overflow-x: auto;
+  overflow-y: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+}
+
+.exerciseTabs>li {
+  float: none;
+}
+
+.saveWorksheetButton {
+	float: left;
+}
+
+.defaultNetworkingButtons {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.inConversationNetworkingButtons {
+	position: absolute; 
+	height: 80px; 
+	bottom: 0px; 
+	left: 0px; 
+	right: 0px;
+}
+
+#rouletteIFrameHolder {
+	position: absolute; 
+	bottom: 80px; 
+	left: 0px; 
+	right: 0px; 
+	top: 0px;
+	display: none;
+}
+
+#profile-pics {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.profileHolder {
+	  width: 225px;
+    height: 203px;
+    flex-grow: 1;
+    flex-shrink: 0;
+		position: relative;
+}
+
+.profileOverlay {
+	width: 100%;
+	position: absolute;
+	left: 0px;
+	top: 126px;
+	z-index: 5;
+	background-color: rgba(20,20,20,0.5);
+	padding: 5px;
+	color: #FFFFFF;	
+}
+
+.profileOverlay:hover {
+	background-color: rgba(20,20,20,0.8);
+	font-weight: bold;
+}
+.profilePic {
+	width: 100%;
+}
+
+.note-dialog .modal-dialog {
+	z-index:1050;
+}
+
+.text-editor-header {
+	color: #fec503;
+}
+
+﻿textarea, .questions-wysiwyg {
+	height: 30px;
+	border: 1px solid #d0d0d0;
+	padding: 5px;
+	font-size: 13px;
+	font-family: Helvetica, arial, sans-serif;
+	font-weight: normal;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+    background-color:#fff;
+}
+
+.fpad {
+	height: 100%;
+	margin-top: 10px;
+}
+
+.interviewRow {
+	background-color: #eee;
+	/*padding: 20px;*/
+	padding-top: 0px;
+}
+
+#firepad-container {
+	/*width: 300px;*/
+	height: 250px;
+}
+
+.firechatUI {
+	/*height: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	margin: 0px auto;
+	text-align: center;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 5px 25px #666;
+	-moz-box-shadow: 0 5px 25px #666;
+	box-shadow: 0 5px 25px #666;*/
+}
+
+#firechat .chat {
+	top: 0px;
+	margin: 0px;
+}
+
+/*.my-fluid-container {
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}*/
+
+.tabButtonGroup {
+	display: none;
+	float: right;
+}
+
+body {
+		padding-top: 0px;
+		padding-bottom: 0px;
+		font-family: helvetica, arial;
+		width: 100%;
+		height: 100%;
+}
+
+body, div {
+	margin: 0px;
+}
+
+header {
+	display: block;
+	padding: 10px;
+	background: white;
+}
+
+footer {
+	display: block;
+}
+
+h1 {
+	margin: 0px;
+}
+
+body * {
+	box-sizing: border-box; /* makes sizing by percentage in combination with padding possible */
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+/* layout styles */
+
+.fluid-container {
+	display: inline-block;
+	position: absolute;
+	top: 0px; /* same as inner header height */
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.fluid-box {
+	display: inline-block;
+	float: left;
+	min-height: 200px;
+	padding: 5px;
+}
+
+.half-height {
+	height: 50%;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.top-row {
+	height: 40%
+}
+
+.bottom-row {
+	height: 60%;
+}
+
+.left-column {
+		width: 40%;
+}
+
+.right-column {
+		width: 60%;
+}
+
+.half-column {
+	width: 50%;
+}
+
+.fluid-box-text {
+	text-align: center;
+	line-height: 33.33%;
+}
+
+.fixed-container-outer {
+	position: absolute;
+	top: 80px; /* same as main header height */
+	right: 0px;
+	bottom: 80px;
+	left: 0px;
+}
+
+.fixed-container-inner {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	bottom: 30px;
+	left: 0px;
+}
+
+.fixed-header-main {
+	height: 50px;
+}
+
+.fixed-footer-main {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	height: 30px;
+}
+
+.exercisesPanel .tab-pane{
+	position: absolute;
+	top: 72px;
+	bottom: 15px;
+	right: 15px;
+	left: 15px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	border: 1px solid #CCC;
+	border-top: none;
+  background-color: white;
+}
+
+.talkingPanel .tab-pane{
+	position: absolute;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	top: 56px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+
+.example-chat-questions a {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.currentExercise {
+	color: #fec503;
+	background-color: #333 !important;
+	border-color: black !important;
+}
+
+.tabContent th, td {
+	width: 50%;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.partnerData {
+	margin-top: 7px;
+}
+
+.powered-by-firepad {
+	display: none;
+}
+
+.CodeMirror-scroll {
+	-webkit-box-shadow: inset 2px 2px 2px 0px #dddddd; 
+  -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  box-shadow: inset 0px 2px 0px 0px #dddddd;
+  padding-top: 2px;
+}
+
+.firePadContainer {
+	position: absolute;
+	top: 18px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	padding: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#bonusTabContent ul {
+	margin-top:10px;
+}
+
+#rtc-shot {
+	height: 198px;
+	width: 264px;
+}

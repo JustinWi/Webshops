@@ -1,0 +1,65 @@
+.left-column-blank {
+  left: 15%;
+  width: 33%;
+  height: 4%;
+  text-align: left !important;
+}
+
+.right-column-blank {
+  left: 58%;
+  width: 33%;
+  height: 4%;
+  text-align: left !important;
+}
+
+.top-who-blank {
+  top: 14.5%
+}
+
+.top-where-blank {
+  top: 19%
+}
+
+.middle-who-blank {
+  top: 37.5%
+}
+
+.middle-where-blank {
+  top: 42%
+}
+
+.bottom-who-blank {
+  top: 60.5%
+}
+
+.bottom-where-blank {
+  top: 65%
+}
+
+.left-problem-blank {
+  left: 17%;
+  width: 30%;
+  height: 8%;
+  text-align: left !important;
+}
+
+.right-problem-blank {
+  left: 60%;
+  width: 30%;
+  height: 8%;  
+  text-align: left !important;
+}
+
+.top-problem-blank {
+  top: 22.5%;
+}
+
+.middle-problem-blank {
+  top: 45.5%;
+}
+
+.bottom-problem-blank {
+  top: 68.5%;
+}
+
+
